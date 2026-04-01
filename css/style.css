@@ -1,4 +1,6 @@
-
+body,html{
+    overflow-x: hidden;
+}
 
 .hero-bg{
     background-image: linear-gradient(to right,  rgba(255,255,255) 40%,  transparent 100%), url('../img/hero_bg.webp');
