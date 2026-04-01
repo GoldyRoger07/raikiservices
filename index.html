@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RaikiServices - Flyers, CV et Miniature Youtube</title>
+    <link rel="icon" type="image/png" href="img/logo/logo.png">
     <link rel="stylesheet" href="css/output.css">
     <link rel="stylesheet" href="css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
@@ -14,13 +15,14 @@
 
 <!-- HERO -->
  <header class="py-5 px-3 sticky top-0 z-9">
-  <nav class="flex items-center justify-between py-3 px-5 bg-white/50 border backdrop-blur-sm border-gray-200 mx-auto max-w-5xl w-[95%] lg:w-full rounded-full">
+  <nav class="flex items-center justify-between py-3 px-5 bg-white/60 border backdrop-blur-sm border-gray-200 mx-auto max-w-6xl w-[95%] lg:w-full rounded-full">
     <a class="text-2xl translate-y-[-5%] text-gray-700 font-bold" href="#">Raiki<span class="text-green-500">Services</span></a>
     <div class="hidden items-center gap-5 lg:flex">
       <a href="#services" class="text-gray-700 hover:text-gray-900 ">Services</a>
       <a href="#howItWorks" class="text-gray-700 hover:text-gray-900 ">Comment ça marche ?</a>
       <a href="#portfolio" class="text-gray-700 hover:text-gray-900 ">Portfolio</a>
       <a href="#tarifs" class="text-gray-700 hover:text-gray-900 ">Tarifs</a>
+      <a href="#faq" class="text-gray-700 hover:text-gray-900 ">FAQ</a>
     </div>
 
     <a href="https://wa.me/50934977530"
@@ -39,16 +41,17 @@
     <header  class="shadow w-full max-w-80 ml-auto bg-white h-full ">
         <nav class="flex gap-5 flex-col justify-between px-3 py-5 bg-white/50   w-full ">
           <div class="flex justify-between items-center w-full">
-            <a class="text-xl text-gray-700 font-bold" href="#">Raiki<span class="text-green-500">Services</span></a>
+            <a class="text-xl text-gray-700 font-bold" href="#" onclick="closeMenuMobile()">Raiki<span class="text-green-500">Services</span></a>
             <button id="closeMenuBtn">
               <i class="fa-solid fa-xmark"></i>
             </button>
           </div>
           <div class="flex flex-col items-start gap-5">
-            <a href="#howItWorks" class="text-gray-700 hover:text-gray-900 ">Comment ça marche ?</a>
-            <a href="#services" class="text-gray-700 hover:text-gray-900 ">Services</a>
-            <a href="#tarifs" class="text-gray-700 hover:text-gray-900 ">Tarifs</a>
-            <a href="#portfolio" class="text-gray-700 hover:text-gray-900 ">Portfolio</a>
+            <a href="#services" class="text-gray-700 hover:text-gray-900 " onclick="closeMenuMobile()">Services</a>
+            <a href="#howItWorks" class="text-gray-700 hover:text-gray-900 " onclick="closeMenuMobile()">Comment ça marche ?</a>
+            <a href="#tarifs" class="text-gray-700 hover:text-gray-900 " onclick="closeMenuMobile()">Tarifs</a>
+            <a href="#portfolio" class="text-gray-700 hover:text-gray-900 " onclick="closeMenuMobile()">Portfolio</a>
+            <a href="#faq" class="text-gray-700 hover:text-gray-900 " onclick="closeMenuMobile()">FAQ</a>
           </div>
           <a href="https://wa.me/50934977530"
                 class="bg-green-600 text-white px-3 py-2 rounded-full font-semibold shadow flex items-center justify-center gap-2">
@@ -62,7 +65,7 @@
  </div>
 
   <section class="w-full py-5 ">
-    <div class="mx-auto max-w-5xl flex flex-col  lg:flex-row items-center  gap-10 lg:gap-1 ">
+    <div class="mx-auto max-w-6xl flex flex-col  lg:flex-row items-center  gap-10 lg:gap-1 ">
       <div class=" flex flex-col items-center lg:items-start text-gray-700 w-[80%] lg:w-[55%]" >
     
         <!-- <h1 class="text-apparition text-3xl md:text-5xl text-center lg:text-start font-bold mb-4 ">
@@ -96,9 +99,9 @@
     </div>
   </section>
 
-<!-- SERVICES -->
+  <!-- SERVICES -->
   <section class="scroll-mt-10 py-16 px-6 bg-white" id="services">
-    <div class="mx-auto max-w-5xl">
+    <div class="mx-auto max-w-6xl">
       <h2 class="text-3xl font-bold text-center mb-10">Nos Services</h2>
 
       <div class="grid md:grid-cols-3 gap-6">
@@ -127,7 +130,7 @@
   </section>
 
   <section class="scroll-mt-10  py-16 px-6 bg-cover bg-center" style="background-image: url(img/colorFlow_bg.webp);" id="howItWorks">
-    <div class="mx-auto max-w-5xl">
+    <div class="mx-auto max-w-6xl">
 
         <h2 class="text-3xl font-bold text-center mb-10">Comment ça marche ?</h2>
 
@@ -159,12 +162,13 @@
   </section>
 
 <!-- PORTFOLIO -->
+  
   <section class="relative scroll-mt-10 bg-white py-16 px-6" id="portfolio">
-    <img src="img/stars_3D.png" class="z-2 absolute top-5" style="width: 250px; right: 2px; top: 1px;" alt="stars 3D">
-    <img src="img/stars_3D.png" class="z-4 absolute top-[50%] left-2" style="width: 250px; top: 50%;" alt="stars 3D">
-    <img src="img/stars_3D.png" class="z-4 absolute top-[50%] left-2" style="width: 250px; right: 2px; top: 80%;" alt="stars 3D">
+    <img src="img/stars_3D.png" class="hidden lg:block z-2 absolute top-5 left-2" style="width: 150px; top: 1px;" alt="stars 3D">
+    <img src="img/stars_3D.png" class="hidden lg:block z-4 absolute top-[50%] right-2" style="width: 200px;" alt="stars 3D">
+    <img src="img/stars_3D.png" class="hidden lg:block z-4 absolute top-[80%] left-2" style="width: 100px; " alt="stars 3D">
 
-    <div class="mx-auto max-w-5xl">
+    <div class="mx-auto max-w-6xl">
       <h2 class="text-3xl font-bold text-center mb-10">Nos Réalisations</h2>
   
       <div class="grid md:grid-cols-4 gap-4 z-3">
@@ -202,12 +206,26 @@
   </section>
 
 <!-- PRIX -->
-  <section style="background-image: url(img/colorFlow_bg_2.webp);" class="bg-cover bg-center scroll-mt-10 py-16 px-6 h-150" id="tarifs">
-    <div class="mx-auto max-w-5xl">
+  <section  class="bg-white scroll-mt-10 py-16 px-6 " id="tarifs">
+    <div class="mx-auto max-w-6xl">
 
-      <h2 class="text-3xl font-bold text-center mb-10 text-gray-300">Tarifs</h2>
+      <h2 class="text-3xl font-bold text-center mb-10 text-gray-700">Tarifs</h2>
+
+      <div class="flex justify-center mb-10">
+        <div class="inline-flex bg-gray-100 rounded-full p-1">
+          <button data-type="cv" class="tarif-btn flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-medium transition-all bg-white shadow-sm text-gray-900">
+            CV 
+          </button>
+          <button data-type="flyer" class="tarif-btn flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-medium transition-all text-gray-500 hover:text-gray-700">
+            Flyer
+          </button>
+          <button data-type="miniature" class="tarif-btn flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-medium transition-all text-gray-500 hover:text-gray-700">
+            Miniature
+          </button>
+        </div>
+      </div>
   
-      <div class="grid md:grid-cols-4 h-100 gap-6 text-center">
+      <!-- <div class="grid md:grid-cols-4 h-100 gap-6 text-center">
   
         <div class="bg-white p-6 rounded-xl shadow flex flex-col justify-between">
           <div>
@@ -236,7 +254,7 @@
             <h3 class="text-xl font-semibold">Flyer Simple</h3>
             <p class="text-2xl font-bold my-4">750 HTG</p>
           </div>
-          <a href="https://wa.me/509XXXXXXXX" class="bg-green-500 rounded-full text-white px-4 py-2 rounded w-full">
+          <a href="https://wa.me/509XXXXXXXX" class="bg-green-500 rounded-full text-white px-4 py-2 w-full">
             Commander
           </a>
         </div>
@@ -252,7 +270,195 @@
           </a>
         </div>
   
-      </div>
+      </div> -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl">
+        <div id="basic" class="rounded-[20px] py-7 px-12 bg-white max-w-[380px] border border-[rgba(0,0,0,0.1)]">
+        <div class="flex justify-between items-center">
+          <div class="font-semibold mb-2.5">Basic</div>
+          <!----><!---->
+        </div>
+        <div class="flex items-baseline gap-2.5 mb-2.5">
+          <strong class="font-semibold text-5xl prix">250 HTG</strong>
+          
+        </div>
+        
+          
+            <ul class="flex flex-col gap-2.5 mb-12 mt-5">
+              <li class="flex flex-col items-start gap-2.5 text-landing-gray-400">
+                <div class="flex items-center gap-2.5">
+                  <img src="/img/pricing-checkmark.svg" alt="checkmark">
+                  <span>Design simple et propre</span>
+                </div>
+                <div class="w-full h-px bg-landing-gray-50"></div>
+              </li>
+              <li class="flex flex-col items-start gap-2.5 text-landing-gray-400">
+                <div class="flex items-center gap-2.5">
+                  <img src="/img/pricing-checkmark.svg" alt="checkmark">
+                  <span>1 page</span>
+                </div>
+                <div class="w-full h-px bg-landing-gray-50"></div>
+              </li>
+            <li class="flex flex-col items-start gap-2.5 text-landing-gray-400">
+              <div class="flex items-center gap-2.5">
+                <img src="/img/pricing-checkmark.svg" alt="checkmark">
+                <span>Format PDF</span>
+              </div>
+              <div class="w-full h-px bg-landing-gray-50"></div>
+            </li>
+            <li class="flex flex-col items-start gap-2.5 text-landing-gray-400">
+              <div class="flex items-center gap-2.5"><img src="/img/pricing-checkmark.svg" alt="checkmark">
+                <span>1 modification incluse</span>
+              </div>
+              <div class="w-full h-px bg-landing-gray-50"></div>
+            </li>
+            <li class="flex flex-col items-start gap-2.5 text-landing-gray-400">
+                <div class="flex items-center gap-2.5"><img src="/img/pricing-checkmark.svg" alt="checkmark">
+                  <span>Livraison : 24h</span>
+                </div>
+                <div class="w-full h-px bg-landing-gray-50"></div>
+            </li>
+          </ul>
+          <button class="p-4 rounded-[100px] font-medium transition-all duration-200 flex items-center cursor-pointer text-white bg-black hover:bg-opacity-90 w-full justify-center shadow-[0px_2.333px_11.667px_rgba(0,0,0,0.1)] shadow-inner border-t-[1.167px] border-white/50">
+              Commander
+          </button>
+        </div>
+                    <div id="pro" class="rounded-[20px] py-7 px-12 bg-white max-w-[380px] border border-emerald-500" style="box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 100px;">
+                      <div class="flex justify-between items-center">
+                        <div class="font-semibold mb-2.5">Pro</div>
+                        <div class="flex items-center justify-center gap-1 px-[10px] py-[5px] bg-emerald-500 text-white font-semibold text-[12px] rounded-[5px] shadow-[0px_2.333px_11.667px_rgba(0,0,0,0.1)] shadow-inner border-t-[1.167px] border-white/50">
+                          Populaire 
+                          <i class="fa-solid fa-star text-[10px]"></i>
+                          <!-- <span class="iconify i-heroicons:star text-[14px]" aria-hidden="true"></span> -->
+                        </div><!---->
+                      </div>
+                        <div class="flex items-baseline gap-2.5 mb-2.5">
+                          <strong class="font-semibold text-5xl prix">450 HTG</strong>
+                          
+                        </div>
+                          
+                          <ul class="flex flex-col gap-2.5 mb-12 mt-5">
+                            <li class="flex flex-col items-start gap-2.5 text-landing-gray-400">
+                              <div class="flex items-center gap-2.5">
+                                <img src="/img/pricing-checkmark.svg" alt="checkmark">
+                                <span>Design moderne et professionnel</span>
+                              </div>
+                              <div class="w-full h-px bg-landing-gray-50">
+
+                              </div>
+                            </li>
+                            <li class="flex flex-col items-start gap-2.5 text-landing-gray-400">
+                              <div class="flex items-center gap-2.5">
+                                <img src="/img/pricing-checkmark.svg" alt="checkmark">
+                                <span>1–2 pages</span>
+                              </div>
+                              <div class="w-full h-px bg-landing-gray-50"></div>
+                            </li>
+                            <li class="flex flex-col items-start gap-2.5 text-landing-gray-400">
+                              <div class="flex items-center gap-2.5">
+                                <img src="/img/pricing-checkmark.svg" alt="checkmark">
+                                <span>Mise en valeur des compétences</span>
+                              </div>
+                              <div class="w-full h-px bg-landing-gray-50"></div>
+                            </li>
+                            <li class="flex flex-col items-start gap-2.5 text-landing-gray-400">
+                              <div class="flex items-center gap-2.5">
+                                <img src="/img/pricing-checkmark.svg" alt="checkmark">
+                                <span>Format PDF + image</span>
+                              </div>
+                              <div class="w-full h-px bg-landing-gray-50"></div>
+                            </li>
+                            <li class="flex flex-col items-start gap-2.5 text-landing-gray-400">
+                              <div class="flex items-center gap-2.5">
+                                <img src="/img/pricing-checkmark.svg" alt="checkmark">
+                                <span>2 modifications incluses</span>
+                              </div>
+                              <div class="w-full h-px bg-landing-gray-50"></div>
+                            </li>
+                            <li class="flex flex-col items-start gap-2.5 text-landing-gray-400">
+                              <div class="flex items-center gap-2.5">
+                                <img src="/img/pricing-checkmark.svg" alt="checkmark">
+                                <span>Livraison : 3 Jours</span>
+                              </div>
+                              <div class="w-full h-px bg-landing-gray-50"></div>
+                            </li>
+                            <li class="flex flex-col items-start gap-2.5 text-landing-gray-400">
+                              <div class="flex items-center gap-2.5">
+                                <img src="/img/pricing-checkmark.svg" alt="checkmark">
+                                <span>Priorité moyenne</span>
+                              </div>
+                              <div class="w-full h-px bg-landing-gray-50"></div>
+                            </li>
+                            <li class="flex flex-col items-start gap-2.5 text-landing-gray-400">
+                              <div class="flex items-center gap-2.5">
+                                <img src="/img/pricing-checkmark.svg" alt="checkmark">
+                                <span>Meilleure lisibilité pour recruteur</span>
+                              </div>
+                              <div class="w-full h-px bg-landing-gray-50"></div>
+                            </li>
+                            
+                          </ul>
+                          <button class="p-4 rounded-[100px] font-medium transition-all duration-200 flex items-center cursor-pointer bg-green-500 text-white hover:bg-green-600 w-full justify-center shadow-inner border-t-[1.167px] border-white/50">Commander</button>
+                    </div>
+
+                        <div id="premium" class="rounded-[20px] py-7 px-12 bg-white max-w-[380px] border border-[rgba(0,0,0,0.1)]">
+                          <div class="flex justify-between items-center">
+                            <div class="font-semibold mb-2.5">Premium</div>
+                            <!----><!---->
+                          </div>
+                          <div class="flex items-baseline gap-2.5 mb-2.5">
+                            <strong class="font-semibold text-5xl prix">850 HTG</strong>
+                          </div>
+                          <ul class="flex flex-col gap-2.5 mb-12 mt-5">
+                              <li class="flex flex-col items-start gap-2.5 text-landing-gray-400">
+                                <div class="flex items-center gap-2.5">
+                                  <img src="/img/pricing-checkmark.svg" alt="checkmark">
+                                  <span>Design haut de gamme (style international)</span>
+                                </div>
+                                <div class="w-full h-px bg-landing-gray-50"></div>
+                              </li>
+                              <li class="flex flex-col items-start gap-2.5 text-landing-gray-400">
+                                <div class="flex items-center gap-2.5">
+                                  <img src="/img/pricing-checkmark.svg" alt="checkmark">
+                                  <span>1–2 pages optimisées</span>
+                                </div>
+                                <div class="w-full h-px bg-landing-gray-50"></div>
+                              </li>
+                              <li class="flex flex-col items-start gap-2.5 text-landing-gray-400">
+                                <div class="flex items-center gap-2.5">
+                                  <img src="/img/pricing-checkmark.svg" alt="checkmark">
+                                  <span>Optimisation du contenu (impact + structure)</span>
+                                </div>
+                                <div class="w-full h-px bg-landing-gray-50"></div>
+                              </li>
+                              <li class="flex flex-col items-start gap-2.5 text-landing-gray-400"><div class="flex items-center gap-2.5">
+                                <img src="/img/pricing-checkmark.svg" alt="checkmark">
+                                <span>Format PDF + image + version modifiable</span>
+                                </div>
+                                <div class="w-full h-px bg-landing-gray-50"></div>
+                              </li>
+                              <li class="flex flex-col items-start gap-2.5 text-landing-gray-400">
+                                <div class="flex items-center gap-2.5">
+                                  <img src="/img/pricing-checkmark.svg" alt="checkmark">
+                                  <span>Modifications illimitées (raisonnables)</span>
+                                </div>
+                                <div class="w-full h-px bg-landing-gray-50"></div>
+                              </li>
+                              <li class="flex flex-col items-start gap-2.5 text-landing-gray-400">
+                                <div class="flex items-center gap-2.5">
+                                  <img src="/img/pricing-checkmark.svg" alt="checkmark">
+                                  <span>Livraison : 5 Jours</span>
+                                </div><!---->
+                              </li>
+                              <li class="flex flex-col items-start gap-2.5 text-landing-gray-400">
+                                <div class="flex items-center gap-2.5">
+                                  <img src="/img/pricing-checkmark.svg" alt="checkmark">
+                                  <span>Optimisé pour maximiser vos chances d’embauche</span>
+                                </div><!---->
+                              </li>
+                            </ul>
+                            <button class="p-4 rounded-[100px] font-medium transition-all duration-200 flex items-center cursor-pointer text-white bg-black hover:bg-opacity-90 w-full justify-center shadow-inner border-t-[1.167px] border-white/50">Commander</button>
+                          </div>
+                        </div>
     </div>
   </section>
 
@@ -273,46 +479,148 @@
     </div>
   </section> -->
 
-  <section class="py-16 px-6">
-    <h2 class="text-3xl font-bold text-center mb-10">Questions fréquentes</h2>
+  <!-- FAQ -->
+  <section class="py-16 px-6 bg-black" >
+    <h2 class="text-3xl font-bold text-gray-100 text-center mb-10 scroll-mt-10" id="faq">Questions fréquentes</h2>
 
-    <div class="max-w-3xl mx-auto space-y-4">
+    <div class="max-w-210 mx-auto flex flex-col gap-5" id="faqList">
 
-      <div class="bg-white p-4 rounded-xl shadow">
-        <h3 class="font-semibold">⏱️ Combien de temps prend la livraison ?</h3>
-        <p class="mt-2 text-gray-600">La livraison se fait généralement en moins de 24h.</p>
+
+      <div class="p-5 rounded-2xl bg-[#27272a] shadow faq" style="translate: none; rotate: none; scale: none; transform: translate(0px, 0px); opacity: 1;" data-animated="true">
+        <button class="flex items-center gap-2.5 w-full text-left" data-status="close">
+          <svg class="transition-transform duration-300 rotate-0" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path opacity="0.4" d="M1.25 12C1.25 17.9371 6.06294 22.75 12 22.75C17.9371 22.75 22.75 17.9371 22.75 12C22.75 6.06294 17.9371 1.25 12 1.25C6.06294 1.25 1.25 6.06294 1.25 12Z" fill="#9CA3AF"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M12 7C12.5523 7 13 7.44772 13 8V11H16C16.5523 11 17 11.4477 17 12C17 12.5523 16.5523 13 16 13H13V16C13 16.5523 12.5523 17 12 17C11.4477 17 11 16.5523 11 16V13H8C7.44772 13 7 12.5523 7 12C7 11.4477 7.44772 11 8 11H11V8C11 7.44772 11.4477 7 12 7Z" fill="white"></path></svg>
+          <span class="font-bold text-gray-200 text-lg">Combien de temps prend la livraison ?</span>
+        </button>
+        <div class="overflow-hidden transition-[max-height] duration-300 text-container" style="max-height: 0px;">
+          <p class="mt-2 pl-9 text-gray-200 text-lg whitespace-pre-line">
+            La livraison dépend du plan choisi : entre 24h et 5 Jours. Une option express est également disponible.
+          </p>
+        </div>
       </div>
 
-      <div class="bg-white p-4 rounded-xl shadow">
-        <h3 class="font-semibold">💰 Comment se fait le paiement ?</h3>
-        <p class="mt-2 text-gray-600">Le paiement se fait facilement via MonCash ou autre méthode locale.</p>
+      <div class="p-5  rounded-2xl bg-[#27272a] shadow faq" style="translate: none; rotate: none; scale: none; transform: translate(0px, 0px); opacity: 1;" data-animated="true">
+        <button class="flex items-center gap-2.5 w-full text-left" data-status="close">
+          <svg class="transition-transform duration-300 rotate-0" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path opacity="0.4" d="M1.25 12C1.25 17.9371 6.06294 22.75 12 22.75C17.9371 22.75 22.75 17.9371 22.75 12C22.75 6.06294 17.9371 1.25 12 1.25C6.06294 1.25 1.25 6.06294 1.25 12Z" fill="#9CA3AF"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M12 7C12.5523 7 13 7.44772 13 8V11H16C16.5523 11 17 11.4477 17 12C17 12.5523 16.5523 13 16 13H13V16C13 16.5523 12.5523 17 12 17C11.4477 17 11 16.5523 11 16V13H8C7.44772 13 7 12.5523 7 12C7 11.4477 7.44772 11 8 11H11V8C11 7.44772 11.4477 7 12 7Z" fill="white"></path></svg>
+          <span class="font-bold text-gray-200 text-lg">Comment se fait le paiement ?</span>
+        </button>
+        <div class="overflow-hidden transition-[max-height] duration-300 text-container" style="max-height: 0px;">
+          <p class="mt-2 pl-9 text-gray-200 text-lg whitespace-pre-line">Le paiement se fait facilement via MonCash ou autre méthode locale. Un acompte de 50% est demandé avant le début du projet.</p>
+        </div>
       </div>
 
-      <div class="bg-white p-4 rounded-xl shadow">
-        <h3 class="font-semibold">🔄 Puis-je demander des modifications ?</h3>
-        <p class="mt-2 text-gray-600">Oui, une modification gratuite est incluse après la livraison.</p>
+      <div class="p-5  rounded-2xl bg-[#27272a] shadow faq" style="translate: none; rotate: none; scale: none; transform: translate(0px, 0px); opacity: 1;" data-animated="true">
+        <button class="flex items-center gap-2.5 w-full text-left" data-status="close">
+          <svg class="transition-transform duration-300 rotate-0" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path opacity="0.4" d="M1.25 12C1.25 17.9371 6.06294 22.75 12 22.75C17.9371 22.75 22.75 17.9371 22.75 12C22.75 6.06294 17.9371 1.25 12 1.25C6.06294 1.25 1.25 6.06294 1.25 12Z" fill="#9CA3AF"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M12 7C12.5523 7 13 7.44772 13 8V11H16C16.5523 11 17 11.4477 17 12C17 12.5523 16.5523 13 16 13H13V16C13 16.5523 12.5523 17 12 17C11.4477 17 11 16.5523 11 16V13H8C7.44772 13 7 12.5523 7 12C7 11.4477 7.44772 11 8 11H11V8C11 7.44772 11.4477 7 12 7Z" fill="white"></path></svg>
+          <span class="font-bold text-gray-200 text-lg">Puis-je demander des modifications ?</span>
+        </button>
+        <div class="overflow-hidden transition-[max-height] duration-300 text-container" style="max-height: 0px;">
+          <p class="mt-2 pl-9 text-gray-200 text-lg whitespace-pre-line">Oui, chaque plan inclut un certain nombre de modifications. Des modifications supplémentaires sont possibles si nécessaire.</p>
+        </div>
       </div>
 
-      <div class="bg-white p-4 rounded-xl shadow">
-        <h3 class="font-semibold">📱 Comment commander ?</h3>
-        <p class="mt-2 text-gray-600">Clique simplement sur le bouton WhatsApp et envoie ton besoin.</p>
+      <div class="p-5  rounded-2xl bg-[#27272a] shadow faq" style="translate: none; rotate: none; scale: none; transform: translate(0px, 0px); opacity: 1;" data-animated="true">
+        <button class="flex items-center gap-2.5 w-full text-left" data-status="close">
+          <svg class="transition-transform duration-300 rotate-0" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path opacity="0.4" d="M1.25 12C1.25 17.9371 6.06294 22.75 12 22.75C17.9371 22.75 22.75 17.9371 22.75 12C22.75 6.06294 17.9371 1.25 12 1.25C6.06294 1.25 1.25 6.06294 1.25 12Z" fill="#9CA3AF"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M12 7C12.5523 7 13 7.44772 13 8V11H16C16.5523 11 17 11.4477 17 12C17 12.5523 16.5523 13 16 13H13V16C13 16.5523 12.5523 17 12 17C11.4477 17 11 16.5523 11 16V13H8C7.44772 13 7 12.5523 7 12C7 11.4477 7.44772 11 8 11H11V8C11 7.44772 11.4477 7 12 7Z" fill="white"></path></svg>
+          <span class="font-bold text-gray-200 text-lg">Comment passer une commande ?</span>
+        </button>
+        <div class="overflow-hidden transition-[max-height] duration-300 text-container" style="max-height: 0px;">
+          <p class="mt-2 pl-9 text-gray-200 text-lg whitespace-pre-line">Il vous suffit de cliquer sur le bouton WhatsApp et de nous envoyer votre demande avec les détails de votre projet.</p>
+        </div>
       </div>
+
+      <div class="p-5  rounded-2xl bg-[#27272a] shadow faq" style="translate: none; rotate: none; scale: none; transform: translate(0px, 0px); opacity: 1;" data-animated="true">
+        <button class="flex items-center gap-2.5 w-full text-left" data-status="close">
+          <svg class="transition-transform duration-300 rotate-0" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path opacity="0.4" d="M1.25 12C1.25 17.9371 6.06294 22.75 12 22.75C17.9371 22.75 22.75 17.9371 22.75 12C22.75 6.06294 17.9371 1.25 12 1.25C6.06294 1.25 1.25 6.06294 1.25 12Z" fill="#9CA3AF"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M12 7C12.5523 7 13 7.44772 13 8V11H16C16.5523 11 17 11.4477 17 12C17 12.5523 16.5523 13 16 13H13V16C13 16.5523 12.5523 17 12 17C11.4477 17 11 16.5523 11 16V13H8C7.44772 13 7 12.5523 7 12C7 11.4477 7.44772 11 8 11H11V8C11 7.44772 11.4477 7 12 7Z" fill="white"></path></svg>
+          <span class="font-bold text-gray-200 text-lg">Quels fichiers vais-je recevoir ?</span>
+        </button>
+        <div class="overflow-hidden transition-[max-height] duration-300 text-container" style="max-height: 0px;">
+          <p class="mt-2 pl-9 text-gray-200 text-lg whitespace-pre-line">Vous recevrez votre design en haute qualité (PNG, JPG ou PDF selon le service). Certains plans incluent aussi les fichiers modifiables.</p>
+        </div>
+      </div>
+
+
+      <div class="p-5  rounded-2xl bg-[#27272a] shadow faq" style="translate: none; rotate: none; scale: none; transform: translate(0px, 0px); opacity: 1;" data-animated="true">
+        <button class="flex items-center gap-2.5 w-full text-left" data-status="close">
+          <svg class="transition-transform duration-300 rotate-0" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path opacity="0.4" d="M1.25 12C1.25 17.9371 6.06294 22.75 12 22.75C17.9371 22.75 22.75 17.9371 22.75 12C22.75 6.06294 17.9371 1.25 12 1.25C6.06294 1.25 1.25 6.06294 1.25 12Z" fill="#9CA3AF"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M12 7C12.5523 7 13 7.44772 13 8V11H16C16.5523 11 17 11.4477 17 12C17 12.5523 16.5523 13 16 13H13V16C13 16.5523 12.5523 17 12 17C11.4477 17 11 16.5523 11 16V13H8C7.44772 13 7 12.5523 7 12C7 11.4477 7.44772 11 8 11H11V8C11 7.44772 11.4477 7 12 7Z" fill="white"></path></svg>
+          <span class="font-bold text-gray-200 text-lg">Puis-je choisir le style du design ?</span>
+        </button>
+        <div class="overflow-hidden transition-[max-height] duration-300 text-container" style="max-height: 0px;">
+          <p class="mt-2 pl-9 text-gray-200 text-lg whitespace-pre-line">Oui, vous pouvez envoyer des exemples ou nous décrire vos préférences. Nous adaptons le design à votre besoin.</p>
+        </div>
+      </div>
+
+      <div class="p-5  rounded-2xl bg-[#27272a] shadow faq" style="translate: none; rotate: none; scale: none; transform: translate(0px, 0px); opacity: 1;" data-animated="true">
+        <button class="flex items-center gap-2.5 w-full text-left" data-status="close">
+          <svg class="transition-transform duration-300 rotate-0" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path opacity="0.4" d="M1.25 12C1.25 17.9371 6.06294 22.75 12 22.75C17.9371 22.75 22.75 17.9371 22.75 12C22.75 6.06294 17.9371 1.25 12 1.25C6.06294 1.25 1.25 6.06294 1.25 12Z" fill="#9CA3AF"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M12 7C12.5523 7 13 7.44772 13 8V11H16C16.5523 11 17 11.4477 17 12C17 12.5523 16.5523 13 16 13H13V16C13 16.5523 12.5523 17 12 17C11.4477 17 11 16.5523 11 16V13H8C7.44772 13 7 12.5523 7 12C7 11.4477 7.44772 11 8 11H11V8C11 7.44772 11.4477 7 12 7Z" fill="white"></path></svg>
+          <span class="font-bold text-gray-200 text-lg">Proposez-vous une livraison urgente ?</span>
+        </button>
+        <div class="overflow-hidden transition-[max-height] duration-300 text-container" style="max-height: 0px;">
+          <p class="mt-2 pl-9 text-gray-200 text-lg whitespace-pre-line">Oui, une livraison express est disponible avec un délai réduit pour les projets urgents.</p>
+        </div>
+      </div>
+
+      <div class="p-5  rounded-2xl bg-[#27272a] shadow faq" style="translate: none; rotate: none; scale: none; transform: translate(0px, 0px); opacity: 1;" data-animated="true">
+        <button class="flex items-center gap-2.5 w-full text-left" data-status="close">
+          <svg class="transition-transform duration-300 rotate-0" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path opacity="0.4" d="M1.25 12C1.25 17.9371 6.06294 22.75 12 22.75C17.9371 22.75 22.75 17.9371 22.75 12C22.75 6.06294 17.9371 1.25 12 1.25C6.06294 1.25 1.25 6.06294 1.25 12Z" fill="#9CA3AF"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M12 7C12.5523 7 13 7.44772 13 8V11H16C16.5523 11 17 11.4477 17 12C17 12.5523 16.5523 13 16 13H13V16C13 16.5523 12.5523 17 12 17C11.4477 17 11 16.5523 11 16V13H8C7.44772 13 7 12.5523 7 12C7 11.4477 7.44772 11 8 11H11V8C11 7.44772 11.4477 7 12 7Z" fill="white"></path></svg>
+          <span class="font-bold text-gray-200 text-lg">Aidez-vous à rédiger le contenu du CV ?</span>
+        </button>
+        <div class="overflow-hidden transition-[max-height] duration-300 text-container" style="max-height: 0px;">
+          <p class="mt-2 pl-9 text-gray-200 text-lg whitespace-pre-line">Oui, dans les offres avancées, nous pouvons vous aider à améliorer et structurer votre contenu pour plus d’impact.</p>
+        </div>
+      </div>
+
+      <div class="p-5  rounded-2xl bg-[#27272a] shadow faq" style="translate: none; rotate: none; scale: none; transform: translate(0px, 0px); opacity: 1;" data-animated="true">
+        <button class="flex items-center gap-2.5 w-full text-left" data-status="close">
+          <svg class="transition-transform duration-300 rotate-0" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path opacity="0.4" d="M1.25 12C1.25 17.9371 6.06294 22.75 12 22.75C17.9371 22.75 22.75 17.9371 22.75 12C22.75 6.06294 17.9371 1.25 12 1.25C6.06294 1.25 1.25 6.06294 1.25 12Z" fill="#9CA3AF"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M12 7C12.5523 7 13 7.44772 13 8V11H16C16.5523 11 17 11.4477 17 12C17 12.5523 16.5523 13 16 13H13V16C13 16.5523 12.5523 17 12 17C11.4477 17 11 16.5523 11 16V13H8C7.44772 13 7 12.5523 7 12C7 11.4477 7.44772 11 8 11H11V8C11 7.44772 11.4477 7 12 7Z" fill="white"></path></svg>
+          <span class="font-bold text-gray-200 text-lg">Le flyer est-il adapté pour impression et réseaux sociaux ?</span>
+        </button>
+        <div class="overflow-hidden transition-[max-height] duration-300 text-container" style="max-height: 0px;">
+          <p class="mt-2 pl-9 text-gray-200 text-lg whitespace-pre-line">Oui, selon le plan choisi, nous fournissons des formats adaptés à l’impression et aux réseaux sociaux.</p>
+        </div>
+      </div>
+
+      <div class="p-5  rounded-2xl bg-[#27272a] shadow faq" style="translate: none; rotate: none; scale: none; transform: translate(0px, 0px); opacity: 1;" data-animated="true">
+        <button class="flex items-center gap-2.5 w-full text-left" data-status="close">
+          <svg class="transition-transform duration-300 rotate-0" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path opacity="0.4" d="M1.25 12C1.25 17.9371 6.06294 22.75 12 22.75C17.9371 22.75 22.75 17.9371 22.75 12C22.75 6.06294 17.9371 1.25 12 1.25C6.06294 1.25 1.25 6.06294 1.25 12Z" fill="#9CA3AF"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M12 7C12.5523 7 13 7.44772 13 8V11H16C16.5523 11 17 11.4477 17 12C17 12.5523 16.5523 13 16 13H13V16C13 16.5523 12.5523 17 12 17C11.4477 17 11 16.5523 11 16V13H8C7.44772 13 7 12.5523 7 12C7 11.4477 7.44772 11 8 11H11V8C11 7.44772 11.4477 7 12 7Z" fill="white"></path></svg>
+          <span class="font-bold text-gray-200 text-lg">Que se passe-t-il si je ne suis pas satisfait ?</span>
+        </button>
+        <div class="overflow-hidden transition-[max-height] duration-300 text-container" style="max-height: 0px;">
+          <p class="mt-2 pl-9 text-gray-200 text-lg whitespace-pre-line">Nous travaillons avec vous jusqu’à obtenir un résultat satisfaisant, dans la limite des modifications incluses dans votre plan.</p>
+        </div>
+      </div>
+
+      
+
+      
 
     </div>
+      
+  
   </section>
+
 
 <!-- CTA FINAL -->
   <section class="py-16 px-6 text-center">
-    <h2 class="text-3xl font-bold mb-4">
-      Prêt à booster ton image ?
-    </h2>
+    <div class="mx-auto max-w-6xl flex flex-col">
 
-    <a href="https://wa.me/509XXXXXXXX"
-      class="bg-green-500 text-white px-8 py-4 rounded-xl text-xl font-semibold">
-      📲 Commander maintenant
-    </a>
+      <h2 class="text-3xl font-bold mb-4">
+        Prêt à booster ton image ?
+      </h2>
+  
+      <a href="https://wa.me/509XXXXXXXX"
+        class="mx-auto bg-green-500 text-white px-8 py-4 rounded-full  w-fit font-semibold flex gap-3 items-center">
+        <i class="fa-brands fa-whatsapp" style="font-size: 32px;"></i>
+        <span class="text-md lg:text-xl">
+  
+          Commander maintenant
+        </span>
+      </a>
+    </div>
   </section>
 
+  <footer>
+    <p class="text-center text-sm py-2">© Copyright 2026 RaikiServices</p>
+  </footer>
 
       <script src="js/app.js"></script>
   </body>
