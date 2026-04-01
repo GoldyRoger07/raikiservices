@@ -27,6 +27,23 @@
     opacity: 0;
 }
 
+.image-apparition{
+    animation: image-apparition ease-in-out forwards; 
+    animation-duration: 1s;
+    animation-delay: 500ms;
+    transform: scale(0.8);
+    filter: blur(5px);
+    opacity: 0;
+}
+
+@keyframes image-apparition{
+    to{
+        transform: scale(1);
+        opacity: 1;
+        filter: blur(0px);
+    }
+}
+
 @keyframes text-apparition{
     to{
         transform: translateY(0%) scale(1);
@@ -43,6 +60,49 @@
         /* "box-6 box-5 box-8 box-10 box-7 box-10" */
 }
 
+.fade-up{
+    transform: translateY(15%) scale(0.65);
+    opacity: 0;
+    transition: all 700ms ease-in-out ;
+    /* transition-delay: 500ms; */
+}
+
+.blur-up{
+    transform: scale(0.9);
+    opacity: 0;
+    filter: blur(3px);
+    transition: all 300ms ease-in-out ;
+}
+
+.blur-up.active{
+    transform: scale(1);
+    filter: blur(0px);
+    opacity: 1;
+}
+
+.fade-up.active{
+    transform: translateY(0%) scale(1);
+    opacity: 1;
+}
+
+.fade-right{
+    transform: translateX(-25%);
+    opacity: 0;
+    transition: all 700ms ease-in-out ;
+    /* transition-delay: 500ms; */
+}
+
+.fade-left{
+    transform: translateX(25%);
+    opacity: 0;
+    transition: all 700ms ease-in-out ;
+    /* transition-delay: 500ms; */
+}
+
+.fade-right.active, .fade-left.active{
+    transform: translateX(0%);
+    opacity: 1;
+}
 /* .faq .text-container{
     transition: max-height 3s ease-in-out;
 } */

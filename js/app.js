@@ -249,3 +249,23 @@ const faqContainer = document.querySelector("#faqList"),
 
       }
 
+const animatedOnScrollObjects = document.querySelectorAll(".animate-on-scroll")
+
+const observer = new IntersectionObserver((entries)=>{
+   
+    entries.forEach(entry => {
+        if(entry.isIntersecting){
+            if(!entry.target.classList.contains("active"))
+                entry.target.classList.add("active")
+        }
+    })
+
+},{
+    threshold: 0.4
+})
+
+animatedOnScrollObjects.forEach( animatedOnScrollObject => {
+    observer.observe(animatedOnScrollObject)
+})
+
+
