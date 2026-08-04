@@ -1,3 +1,42 @@
 /* You can add global styles to this file, and also import other style files */
 
+@import "primeicons/primeicons.css";
 @import 'tailwindcss';
+
+@import "./styles/fonts.css";
+
+@theme {
+
+  /* Colors */
+
+  --color-primary: var(--brand-primary);
+  --color-primary-dark: var(--brand-primary-dark);
+  --color-secondary: var(--brand-secondary);
+  --color-background: var(--brand-background);
+  --color-surface: var(--brand-surface);
+  --color-foreground: var(--brand-foreground);
+  --color-foreground-muted: var(--brand-foreground-muted);
+
+  --color-success: var(--brand-success);
+  --color-warning: var(--brand-warning);
+  --color-danger: var(--brand-danger);
+
+  /* Fonts */
+
+  --font-heading: var(--font-heading);
+  --font-accent: var(--font-accent);
+  --font-body: var(--font-body);
+
+  /* Radius */
+
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
+  --radius-lg: var(--radius-lg);
+  --radius-xl: var(--radius-xl);
+
+  /* Shadows */
+
+  --shadow-card: var(--shadow-card);
+  --shadow-button: var(--shadow-button);
+
+}

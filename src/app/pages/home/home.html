@@ -1,0 +1,264 @@
+<my-header/>
+
+<section class="bg-[url('/img/hero-raiki.png')]  bg-cover bg-no-repeat" style="background-position: 0 80%;">
+    <my-container>
+        <div class="h-screen flex flex-col gap-2 justify-center ">
+            <div class="w-[50%] flex flex-col gap-2">
+
+                <!-- <h1 class="font-accent text-gray-800 text-4xl"> -->
+                    <om-typewriter
+        [words]="[title1]"
+        [disableLoop]="true"
+        [writeDelay]="100"
+        [writeSpeed]="120"
+        [textCursorColor]="cursorColor1()"
+        styleClass="font-accent text-gray-800 text-4xl"
+    ></om-typewriter>
+    <om-typewriter
+        [words]="[title2]"
+        [disableLoop]="true"
+        [startDelay]="title1.length*120"
+        [writeDelay]="100"
+        [writeSpeed]="120"
+        [textCursorColor]="cursorColor2()"
+        styleClass="font-accent text-gray-800 text-4xl"
+    ></om-typewriter>
+                    <!-- Des sites web qui font grandir votre entreprise</h1> -->
+                <p class="font-body text-gray-700">Développement de sites vitrines, boutiques e-commerce et applications web rapides, sécurisées et optimisées pour le référencement.</p>
+                <!-- <p>Nous concevons des sites web modernes, rapides et optimisés pour tous les appareils, pensés pour renforcer votre présence en ligne et attirer plus de clients. De la stratégie à la mise en ligne, nous vous accompagnons à chaque étape de votre projet.</p> -->
+                <my-button>
+                    Commencer Maintenant
+                </my-button>
+            </div>
+            <div class="flex items-center gap-5">
+                <div class="flex flex-col items-center">
+                    <div class="flex items-center font-body text-gray-700 font-bold text-3xl text-nowrap">
+                        <om-number-ticker [countTo]="10" >+</om-number-ticker>
+                        <span>+</span>
+                    </div>
+                    <span class="text-gray-500 text-xs font-bold text-center">WEBSITES DELIVERED</span>
+                </div>
+
+                <div class="flex flex-col items-center">
+                    <span class="font-body text-gray-700 font-bold text-3xl">5 <i class="pi pi-star"></i></span>
+                    <span class="text-gray-500 text-xs font-bold text-center">CLIENT RATING</span>
+                </div>
+
+                <div class="flex flex-col items-center">
+                    <span class="font-body text-gray-700 font-bold text-3xl">1+</span>
+                    <span class="text-gray-500 text-xs font-bold text-center">YEARS IN BUSINESS</span>
+                </div>
+            </div>
+        </div>
+    </my-container>
+    <!-- <img src="img/hero-raiki.svg" class="absolute bottom-0 right-0 w-150" alt=""> -->
+</section>
+
+<section class="py-20 ">
+    <my-container>
+        <div class="flex flex-col items-center w-full">
+
+            <separator-design></separator-design>
+            <div class="text-center mb-15">
+                <span class="font-accent text-primary text-xl">Ce que nous faisons</span>
+                <h2 class="font-heading font-semibold text-gray-800 text-4xl">Creation de site web</h2>
+                <p class="font-body text-gray-800">Tout ce dont vous avez besoin pour bâtir une présence en ligne solide et attirer davantage de clients.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
+                @for(card of ourWorkCards; track $index){
+
+                    <!-- <div class="border-2 border-amber-300 bg-amber-100  p-5 rounded-2xl  flex flex-col">
+                        <div>
+                            <span class="font-heading text-gray-800 text-xl">{{card.title}}</span>
+                            <p class="font-body text-gray-700">{{card.desc}}</p>
+                        </div>
+                        <img [src]="card.cover" class="h-50 object-contain" alt="">
+                    </div> -->
+
+                    <div class="card-landscape border border-gray-200 bg-white px-5 py-2 hover:shadow-xl transition-shadow duration-300 rounded-2xl  flex flex-col items-center">
+                        <img [src]="card.cover" class="h-50 m-10 object-contain" alt="">
+                        <div>
+                            <span class="font-heading text-gray-800 text-xl">{{card.title}}</span>
+                            <p class="font-body text-gray-700">{{card.desc}}</p>
+                        </div>
+                    </div>
+                }
+
+                <!-- <div>
+                    <span>SEO</span>
+                    <p>Gagnez en visibilité sur Google grâce à un site optimisé pour apparaître devant vos concurrents.</p>
+                </div>
+
+                <div>
+                    <span>E-mail professionnel</span>
+                    <p>Une adresse e-mail professionnelle qui renforce votre crédibilité et inspire confiance à vos clients.</p>
+                </div>
+
+                <div>
+                    <span>Boutique en ligne</span>
+                    <p>Une boutique en ligne performante qui vend vos produits 24 h/24 et 7 j/7 grâce à un processus de paiement sécurisé.</p>
+                </div> -->
+
+
+
+            </div>
+        </div>
+    </my-container>
+
+</section>
+
+<section class="">
+    <my-container>
+        <div class="flex flex-col items-center w-full py-10 rounded-t-4xl">
+            <separator-design></separator-design>
+            <div class="text-center w-[70%] py-5">
+
+                <!-- <span>Ce que nous faisons</span> -->
+                <h2 class="font-heading text-3xl text-gray-800">Nos Projets</h2>
+                <p class="font-body text-gray-700">Explorez quelques-uns des projets que nous avons réalisés pour aider des entreprises de divers secteurs à développer leur présence en ligne.</p>
+            </div>
+            <div class="grid grid-cols-4 gap-3 py-10">
+                @for(project of projectCards; track $index){
+
+                    <div class="w-full flex flex-col gap-2 shadow-sm hover:shadow-xl  transition-all duration-300 border border-gray-200 bg-white rounded-sm">
+                        <!-- <img [src]="project.cover" class="h-50 object-contain" alt=""> -->
+                        <p-image [src]="project.cover" alt="Image" [preview]="true" width="100%" >
+                            <ng-template #indicator>
+                                <i class="pi pi-search-plus"></i>
+                            </ng-template>
+                            <ng-template #image>
+                                <img [src]="project.cover" alt="image" class="h-50 w-[95%] mx-auto object-contain" />
+                            </ng-template>
+                            <ng-template #preview let-style="style" let-previewCallback="previewCallback">
+                                <img [src]="project.cover" alt="image" [style]="style" (click)="previewCallback()" />
+                            </ng-template>
+                        </p-image>
+                        <div class="flex items-center justify-between p-5">
+                            <span class="font-heading text-xl text-gray-700">{{project.title}}</span>
+                            <a href="#" class="font-accent text-primary">Voir le Site</a>
+                        </div>
+                    </div>
+                }
+
+                <!-- <div>
+                    <img src="" alt="">
+                    <span>Fshop</span>
+                </div>
+
+                <div>
+                    <img src="" alt="">
+                    <span>Bowom</span>
+                </div>
+
+                <div>
+                    <img src="" alt="">
+                    <span>Michaels Restaurant</span>
+                </div> -->
+
+                
+
+            </div>
+            <my-button>Voir nos projets</my-button>
+        </div>
+    </my-container>
+</section>
+
+<section class="my-20">
+    <my-container>
+        <div class="flex flex-col items-center w-full">
+            <separator-design></separator-design>
+            <div class="py-5 text-center w-[60%] mb-10">
+                <span class="font-accent text-primary">Pourquoi nous choisir</span>
+                <h2 class="font-heading text-3xl text-gray-800">Bien plus qu'un site web : un véritable levier de croissance pour votre entreprise.</h2>
+                <!-- <h2 class="font-bold">Bien plus qu'un site web : un véritable levier de croissance pour votre entreprise.</h2> -->
+                <p class="font-body text-gray-800">
+                    Nous concevons des sites web modernes, performants et pensés pour attirer des clients, renforcer votre crédibilité et accompagner le développement de votre activité.
+                </p>
+            </div>
+
+            <div class="flex flex-col">
+                <div class="relative flex gap-20 items-center">
+                    <p class="absolute font-body w-[50%] text-xl text-gray-700 top-50 left-20">Chaque projet est conçu sur mesure pour répondre aux objectifs de votre entreprise. De la stratégie à la mise en ligne, nous combinons design, performance, référencement et expérience utilisateur afin de créer un site web qui génère de réels résultats.</p>
+                    <img src="img/home/why-choose-us/01.jpeg" class="w-full" alt="">
+                </div>
+                <!-- <div>
+                    <div>
+                        <span>Performance</span>
+                        <h3>Des sites rapides et performants</h3>
+                        <p>Nous optimisons chaque page pour offrir des temps de chargement rapides et une expérience fluide sur tous les appareils.</p>
+                    </div>
+
+                    <div>
+                        <span>Responsive Design</span>
+                        <h3>Une expérience parfaite sur tous les écrans</h3>
+                        <p>Votre site s'adapte automatiquement aux smartphones, tablettes et ordinateurs pour offrir une navigation optimale.</p>
+                    </div>
+
+                    <div>
+                        <span>SEO</span>
+                        <h3>Pensé pour être trouvé sur Google</h3>
+                        <p>Nous intégrons les meilleures pratiques du référencement naturel afin d'améliorer votre visibilité et d'attirer davantage de visiteurs qualifiés.</p>
+                    </div>
+
+                    <div>
+                        <span>Design</span>
+                        <h3>Une identité visuelle qui inspire confiance</h3>
+                        <p>Nous créons un design moderne et personnalisé qui valorise votre marque et renforce votre crédibilité.</p>
+                    </div>
+
+                    <div>
+                        <span>Sécurité</span>
+                        <h3>Un site fiable et sécurisé</h3>
+                        <p>Nous mettons en place les bonnes pratiques de sécurité pour protéger votre site et les données de vos visiteurs.</p>
+                    </div>
+
+                    <div>
+                        <span>Accompagnement</span>
+                        <h3>Un partenaire à vos côtés</h3>
+                        <p>Nous vous accompagnons avant, pendant et après la mise en ligne pour assurer le succès de votre présence en ligne.</p>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+    </my-container>
+</section>
+
+<section class="relative " style="background-position: 0 20px;">
+    <!-- <div class="bg-black/30 w-full h-full absolute top-0 z-2"></div> -->
+    <!-- <div class="w-[40%] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-10%] z-3 flex flex-col items-center text-center gap-2.5">
+        <h2 class="text-3xl font-heading text-gray-800">Prêt à donner vie à votre projet web ?</h2>
+        <p class="text-gray-700">Offrez à votre entreprise un site web moderne, performant et conçu pour atteindre vos objectifs. Contactez-nous dès aujourd'hui : nous vous répondons rapidement et vous accompagnons à chaque étape de votre projet.</p>
+        <div>
+            <my-button>Contactez-nous</my-button>
+            
+        </div>
+    </div> -->
+
+    <om-particles
+      [quantity]="150"
+      [size]="3"
+      [circleColor]="'#C89A2D'"
+      [staticity]="70"
+      [ease]="60"
+    >
+
+        <div class="w-full h-80 flex items-center justify-center bg-gray-100">
+            <div class="w-[40%] z-3 flex flex-col items-center text-center gap-2.5">
+                <h2 class="text-3xl font-heading text-gray-800">Prêt à donner vie à votre projet web ?</h2>
+                <p class="text-gray-700">Offrez à votre entreprise un site web moderne, performant et conçu pour atteindre vos objectifs. Contactez-nous dès aujourd'hui : nous vous répondons rapidement et vous accompagnons à chaque étape de votre projet.</p>
+                <div>
+                    <my-button>Contactez-nous</my-button>
+                    
+                </div>
+            </div>
+        </div>
+      <!-- <div class="container-wrapper">
+          <h1 class="particles-title">
+              Meteors
+          </h1>
+      </div> -->
+    </om-particles>
+</section>
+
+<my-footer/>
