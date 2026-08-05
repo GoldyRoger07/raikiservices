@@ -1,5 +1,72 @@
 <my-header></my-header>
 
     <my-hero-section></my-hero-section>
+    <section class=" py-20 w-full">
+        <my-container>
+            <separator-design/>
+            <div class="flex flex-col items-center gap-2 text-center">
+                <h3 class="font-accent text-primary">Contactez-nous</h3>
+                <h2 class="font-heading text-3xl text-gray-800">Prêt à lancer votre projet ?</h2>
+                <p class="text-gray-700 font-body">Créons ensemble un site web performant, moderne et conçu pour atteindre vos objectifs.</p>
+            </div>
+            <div class="grid md:grid-cols-2 mt-10 gap-5 w-full">
+                <div class="flex flex-col gap-5 w-full">
+
+                    <a href="#" class="border border-gray-300 rounded-sm flex items-center gap-2 px-5 py-2 hover:shadow-xl transition-shadow duration-200">
+                        <i class="pi pi-phone text-primary " style="font-size: 32px;"></i>
+                        <div class="flex flex-col">
+
+                            <span class="font-body text-gray-800 font-bold">Appelez-nous</span>
+                            <span class="font-body text-gray-700">(509) 34 97 7530</span>
+                        </div>    
+                    </a>
+
+                    <a href="#"  class="border border-gray-300 rounded-sm flex items-center gap-2 px-5 py-2 hover:shadow-xl transition-shadow duration-200">
+                        <i class="pi pi-envelope text-primary" style="font-size: 32px;"></i>
+                        <div class="flex flex-col">
+
+                            <span class="font-body text-gray-800 font-bold">Ecrivez-nous</span>
+                            <span class="font-body text-gray-700">contact@raikiservices.com</span>
+                        </div>   
+                    </a>
+
+                    
+
+                </div>
+                <form action="#" class="grid grid-cols-2  rounded-sm gap-5 p-5 border border-gray-300">
+                    <div class="col-span-2 flex flex-col mb-5">
+                        <h4 class="font-heading font-semibold text-gray-800 text-xl">Envoyez-nous un message</h4>
+                        <p class="font-body text-gray-700">Nous vous repondrons dans moins de 24 heures</p>
+                    </div>
+                    <div class="col-span-2 md:col-span-1 flex flex-col ">
+                        <label for="#" class="font-body text-gray-800 font-bold">Nom Complet</label>
+                        <input  type="text" class="border border-gray-300 rounded-xs py-1 px-2 focus:outline-primary">
+                    </div>
+                    
+
+                    <div class="col-span-2 md:col-span-1 flex flex-col">
+                        <label for="#"   class="font-body text-gray-800 font-bold">Email</label>
+                        <input type="email" class="border border-gray-300 rounded-xs py-1 px-2 focus:outline-primary">
+                    </div>
+
+                    <div class="flex flex-col col-span-2">
+                        <label for="#"    class="font-body text-gray-800 font-bold">Telephone</label>
+                        <input type="tel" class="border border-gray-300 rounded-xs py-1 px-2 focus:outline-primary">
+                    </div>
+
+                    <div class="col-span-2 flex flex-col">
+                        <label for="#" class="font-body text-gray-800 font-bold">Parlez nous de votre</label>
+                        <textarea  rowa="10" class="border border-gray-300 rounded-xs py-1 px-2 focus:outline-primary"></textarea>
+                    </div>
+                    <div class="col-span-2">
+
+                        <my-button>
+                           <span class="px-5">Envoyer</span> 
+                        </my-button>
+                    </div>
+                </form>
+            </div>
+        </my-container>
+    </section>
 
 <my-footer></my-footer>

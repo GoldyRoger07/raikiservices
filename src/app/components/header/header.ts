@@ -5,6 +5,9 @@ import { Container } from "../container/container";
 import { CompanyService } from '../../services/company.service';
 import { MyButton } from "../my-button/my-button";
 // import { My3dButton } from "../buttons/my3d-button/my3d-button";
+import { PopoverModule } from 'primeng/popover';
+import { RouterLink } from '@angular/router';
+
 
 interface NavItem {
   label: string;
@@ -13,7 +16,7 @@ interface NavItem {
 
 @Component({
   selector: 'my-header',
-  imports: [Container, MyButton],
+  imports: [Container, MyButton, PopoverModule, RouterLink],
   templateUrl: './header.html',
   styleUrl: './header.css',
 })

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, input } from '@angular/core';
 
 @Component({
   selector: 'my-button',
@@ -6,4 +6,7 @@ import { Component } from '@angular/core';
   templateUrl: './my-button.html',
   styleUrl: './my-button.css',
 })
-export class MyButton {}
+export class MyButton {
+
+  fluid = input(false)
+}
