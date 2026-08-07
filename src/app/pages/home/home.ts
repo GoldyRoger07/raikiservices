@@ -8,12 +8,9 @@ import { Image } from 'primeng/image';
 import { NgxParticlesComponent } from '@omnedia/ngx-particles';
 import { NgxTypewriterComponent } from '@omnedia/ngx-typewriter';
 import { NgxNumberTickerComponent } from '@omnedia/ngx-number-ticker';
+import { CardData } from '../../models/card-data.model';
 
-interface CardData{
-  title: string
-  desc: string
-  cover?: string
-}
+
 
 @Component({
   selector: 'app-home',

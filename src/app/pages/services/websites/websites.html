@@ -4,4 +4,30 @@
     title="Des sites web qui attirent réellement des clients" 
     desc="Des sites web sur mesure, adaptés aux mobiles et rapides à charger. WordPress ou développement manuel — nous créons ce dont votre entreprise a besoin."/>
 
+
+    <section class="py-20">
+        <my-container>
+            <div class="mb-10 flex flex-col gap-2.5 items-center text-center">
+                <separator-design></separator-design>
+                <span class="font-accent text-primary">Ce que nous contruisons</span>
+                <h2 class="font-heading text-gray-800 text-3xl"> Du simple site vitrine à la plateforme e-commerce complète</h2>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-2 ">
+                @for(card of serviceCards; track $index){
+
+                    <div class="flex flex-col gap-2.5 items-center justify-center border border-gray-200 aspect-square text-center shadow hover:shadow-2xl transition-shadow duration-300 p-5 rounded-2xl">
+                        <div [class]="'rounded-2xl flex items-center justify-center h-15 w-15 aspect-square '+getIconColor($index+1) ">
+                            <i [class]="card.cover+' text-3xl'"></i>
+                        </div>
+
+                        <span class="font-heading font-bold text-gray-800 text-2xl">{{card.title}}</span>
+                        <p class="font-body text-gray-700">{{card.desc}}</p>
+                    </div>
+                }
+            </div>
+        </my-container>
+    </section>
+
+    <my-cta-section></my-cta-section>
 <my-footer/>
