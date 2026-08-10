@@ -1,0 +1,72 @@
+<my-header/>
+<my-hero-section 
+    title="Ne perdez plus de clients à cause d’un site web qui ne vous met pas en valeur." 
+    desc="Pas besoin de dépenser des milliers de dollars pour un site professionnel. Obtenez un site web moderne, conçu sur mesure et entièrement géré, avec un simple forfait mensuel." />
+
+     <section class="pb-20">
+        <my-container>
+            <separator-design></separator-design>
+            <div class="flex flex-col w-4/7 text-center mx-auto gap-1 items-center mb-10">
+
+                    <span class="font-accent text-primary">Votre présence en ligne</span>
+                    <h2 class="font-heading text-gray-800 text-3xl">Investissez dans votre croissance, pas dans la complexité</h2>
+                    <p class="text-gray-700 font-body">Des solutions web pensées pour les entreprises haïtiennes, avec des tarifs simples, un accompagnement continu et tout ce dont vous avez besoin pour développer votre présence en ligne.</p>
+            </div>
+
+            <div class="grid grid-cols-3 gap-5">
+                    @for(pricingCard of pricingCards; track $index){
+                        @if(pricingCard.title.toLocaleLowerCase() === "Professional"){
+                            <div class="flex flex-col items-start p-5 h-fit gap-5 bg-primary border border-gray-300 rounded-3xl">
+                            <span class="text-primary">{{pricingCard.title}}</span>
+                            <span class="text-gray-600">{{pricingCard.desc}}</span>
+
+                            <div class="text-gray-800 font-bold flex items-center">
+                                <span class="text-5xl">{{pricingCard.pricing}}</span>
+                                <span class="text-md">HTG</span> / 
+                                <span class="text-sm text-gray-500">Mois</span>
+                            </div>
+
+                            <ul class="flex flex-col gap-2">
+                                @for(item of pricingCard.list; track $index){
+                                    <li>
+                                        <i class="pi pi-check"></i>
+                                        {{item}}
+                                    </li>
+                                }
+                            </ul>
+
+                            <my-button>Get Started</my-button>
+                            <!-- <a href="#">Get Started</a> -->
+                            </div>
+                        }@else{
+
+                            <div class="flex flex-col items-start p-5 h-fit gap-5 border border-gray-300 rounded-3xl">
+                                <span class="text-primary">{{pricingCard.title}}</span>
+                                <span class="text-gray-600">{{pricingCard.desc}}</span>
+    
+                                <div class="text-gray-800 font-bold flex items-center">
+                                    <span class="text-5xl">{{pricingCard.pricing}}</span>
+                                    <span class="text-md">HTG</span> / 
+                                    <span class="text-sm text-gray-500">Mois</span>
+                                </div>
+    
+                                <ul class="flex flex-col gap-2">
+                                    @for(item of pricingCard.list; track $index){
+                                        <li>
+                                            <i class="pi pi-check"></i>
+                                            {{item}}
+                                        </li>
+                                    }
+                                </ul>
+    
+                                <my-button>Get Started</my-button>
+                                <!-- <a href="#">Get Started</a> -->
+                            </div>
+                        }
+                    }
+            </div>
+        </my-container>
+
+
+    </section>
+<my-footer/>

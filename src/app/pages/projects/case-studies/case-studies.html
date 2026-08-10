@@ -1,0 +1,44 @@
+<my-header/>
+    <my-hero-section 
+    title="Des projets réels. Des résultats concrets." 
+    desc="Découvrez comment nous aidons les entreprises à se développer grâce à des sites web sur mesure et des stratégies SEO efficaces. Chaque projet raconte une histoire." />
+
+    <section class="py-10">
+        <my-container>
+            <separator-design/>
+
+            <div class="mx-auto flex flex-col items-center text-center w-[80%] my-10">
+                <span class="font-accent text-primary">Nos réalisations</span>
+                <h2 class="text-3xl text-gray-800 font-heading">Des solutions digitales conçues pour produire des résultats concrets.</h2>
+                <p class="font-body text-gray-700">Des résultats mesurables dans différents secteurs, où la crédibilité et la performance sont essentielles.</p>
+            </div>
+
+            <div class="flex flex-col gap-5">
+                @for(projet of projets; track $index){
+
+                    <div class="grid grid-cols-2  gap-10 p-10 hover:shadow-2xl transition-shadow duration-200 rounded-3xl">
+                        <img [src]="projet.cover" alt="">
+                        <div class="flex flex-col gap-3 text-gray-700 font-body">
+                            <i [class]="projet.icon" style="font-size: 32px;"></i>
+                            <span class="font-heading text-3xl text-gray-800">{{projet.title}}</span>
+                            <span class="text-gray-600 ">{{projet.subtitle}}</span>
+                            <p>{{projet.desc}}</p>
+                            <div  class="flex flex-wrap gap-2 items-center">
+
+                                @for(item of projet.list; track $index){
+                                    <span class="bg-primary/10 text-primary rounded-full p-2 ">{{item}}</span>
+                                }
+                            </div>
+                            <a href="#" class="flex items-center gap-1 text-gray-700 hover:font-bold transition-all duration-150">
+                                Voir le site web
+                                <i class="pi pi-arrow-right translate-y-[1.4px]"></i>
+                            </a>
+                        </div>
+                    </div>
+                }
+            </div>
+        </my-container>
+    </section>
+    
+    <my-cta-section></my-cta-section>
+<my-footer/>

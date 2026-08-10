@@ -1,6 +1,10 @@
 export interface CardData{
-  title: string
-  desc: string
+  title: string,
+  subtitle?: string,
+  desc: string,
   cover?: string,
-  list?: string[]
+  icon?: string,
+  list?: string[],
+  link?: string,
+  pricing?: number
 }

@@ -15,7 +15,7 @@
         <span class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">Raf</span> -->
       </a>
   
-      <p-popover #op>
+    <p-popover #op>
         <ng-template #content>
             <div class="flex flex-col gap-2 w-110 p-2">
                   <a routerLink="/sites-web" class="grid grid-cols-[50px_1fr] gap-3 h-fit">
@@ -40,6 +40,31 @@
             </div>
         </ng-template>
     </p-popover>
+    <p-popover #op2>
+        <ng-template #content>
+            <div class="flex flex-col gap-2 w-110 p-2">
+                  <a routerLink="/etudes-de-cas" class="grid grid-cols-[50px_1fr] gap-3 h-fit">
+                    <span style="aspect-ratio: 1 / 1;" class="flex shrink-0 items-center justify-center w-full  bg-primary/50 rounded-sm">
+                      <i class="pi pi-file" style="font-size: 24px;"></i>
+                    </span>
+                    <div class="flex flex-col">
+                      <span class="font-heading text-gray-800">Études de cas</span>
+                      <span class="font-body text-gray-500 text-sm">Des résultats détaillés issus de projets réalisés pour de vrais clients</span>
+                    </div>
+                  </a>
+
+                  <a routerLink="/portfolio" class="grid grid-cols-[50px_1fr] gap-3 h-fit">
+                    <span style="aspect-ratio: 1 / 1;" class="flex shrink-0 items-center justify-center w-full  bg-primary/50 rounded-sm">
+                      <i class="pi pi-th-large" style="font-size: 24px;"></i>
+                    </span>
+                    <div class="flex flex-col">
+                      <span class="font-heading text-gray-800">Portfolio</span>
+                      <span class="font-body text-gray-500 text-sm">Découvrez notre galerie de créations de sites web.</span>
+                    </div>
+                  </a>
+            </div>
+        </ng-template>
+    </p-popover>
       <!-- Menu (desktop) -->
       <ul class="hidden items-center gap-8 lg:flex">
         @for (item of navItems; track item.label) {
@@ -49,6 +74,16 @@
               <a
                 /* [routerLink]="item.link" */
                 (mouseover)="op.toggle($event)"
+                class="text-sm font-medium text-foreground transition-colors hover:text-primary cursor-pointer"
+              >
+                {{ item.label }}
+              </a>
+            </li>
+          }@else if(item.label.toLocaleLowerCase() === "projets"){
+            <li>
+              <a
+                /* [routerLink]="item.link" */
+                (mouseover)="op2.toggle($event)"
                 class="text-sm font-medium text-foreground transition-colors hover:text-primary cursor-pointer"
               >
                 {{ item.label }}

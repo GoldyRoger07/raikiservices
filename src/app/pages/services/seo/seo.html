@@ -6,11 +6,12 @@
 
     <section class="pb-20">
         <my-container>
-            <div class="flex flex-col gap-1 items-center mb-10">
-                    <separator-design></separator-design>
+            <separator-design></separator-design>
+            <div class="flex flex-col w-4/7 text-center mx-auto gap-1 items-center mb-10">
+
                     <span class="font-accent text-primary">Nos Services SEO</span>
                     <h2 class="font-heading text-gray-800 text-3xl">Comment nous rendons votre entreprise visible sur Google</h2>
-                    <p class="text-gray-700 font-body">Le SEO n’a rien de magique : c’est un travail technique et régulier, fait dans les règles de l’art. Voici nos axes prioritaires.</p>
+                    <p class="text-gray-700 font-body">Le SEO n’a rien de magique — c’est un travail technique et régulier, fait dans les règles de l’art. Voici nos axes prioritaires.</p>
             </div>
 
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-2 ">
@@ -23,6 +24,16 @@
 
                         <span class="font-heading font-bold text-gray-800 text-2xl">{{card.title}}</span>
                         <p class="font-body text-gray-700">{{card.desc}}</p>
+                    
+                        <ul class="flex flex-col gap-2">
+                            @for(item of card.list; track $index){
+                                <li class="text-gray-700">
+                                    <i class="pi pi-check text-green-500"></i>
+                                    {{item}}
+                                </li>
+                            }
+                        </ul>
+                    
                     </div>
                 }
             </div>

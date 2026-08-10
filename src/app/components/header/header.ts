@@ -36,10 +36,10 @@ export class Header {
   private lastScrollY = 0;
 
   protected readonly navItems: NavItem[] = [
-    { label: 'A propos', link: '#' },
+    { label: 'A propos', link: '/a-propos' },
     { label: 'Services', link: '#' },
     { label: 'Projets', link: '#' },
-    { label: 'Tarifs', link: '#' }, 
+    { label: 'Tarifs', link: '/tarifs' }, 
     { label: 'Contact', link: '/contact' },
   ];
 

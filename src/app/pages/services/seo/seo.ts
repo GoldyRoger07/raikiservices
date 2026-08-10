@@ -17,71 +17,51 @@ export default class Seo {
 
   serviceCards: CardData[] = [
     {
-      title: 'Search Rankings',
-      desc: 'We optimize your site\'s structure, content, speed, and backlinks so Google ranks you higher for the keywords your customers actually search for.',
-      cover: 'pi pi-chart-line text-gray-500',
-      list: [
-        "Keyword research & strategy",
-        "On-page optimization",
-        "Technical SEO audits",
-        "Content recommendations"
-      ]
-    },
+  title: 'Positionnement Google',
+  desc: 'Nous optimisons la structure, le contenu, la vitesse et les backlinks de votre site afin que Google vous place au plus haut sur les mots-clés que vos clients recherchent réellement.',
+  cover: 'pi pi-chart-line text-gray-500',
+  list: [
+    "Recherche et stratégie de mots-clés",
+    "Optimisation on-page",
+    "Audits SEO techniques",
+    "Recommandations de contenu"
+  ]
+},
+   {
+  title: 'SEO Local',
+  desc: 'Propulsez votre entreprise sur Google Maps, dans le pack local de Google et sur les annuaires locaux. Nous créons et gérons votre fiche Google Business Profile pour que vos clients vous trouvent en premier.',
+  cover: 'pi pi-map-marker text-green-500',
+  list: [
+    "Configuration de la fiche Google Business Profile",
+    "Inscription sur les annuaires locaux",
+    "Stratégie de gestion des avis clients",
+    "Optimisation Google Maps"
+  ]
+},
     {
-      title: 'Local SEO',
-      desc: 'Get your business on Google Maps, the local 3-pack, and local directories. We create and manage your Google Business Profile so customers find you first.',
-      cover: 'pi pi-map-marker text-green-500',
-      list: [
-        "Google Business Profile setup",
-        "Local directory submissions",
-        "Review management strategy",
-        "Google Maps optimization"
-      ]
-    },
+  title: 'Analyses & Rapports',
+  desc: 'Des chiffres sans contexte ne servent à rien. Nous mettons en place un suivi précis et vous envoyons des rapports mensuels pour comprendre ce qui fonctionne et définir les prochaines étapes.',
+  cover: 'pi pi-chart-bar text-yellow-500',
+  list: [
+    "Configuration de Google Analytics",
+    "Suivi Google Search Console",
+    "Rapports de performance mensuels",
+    "Veille et suivi de la concurrence"
+  ]
+},
     {
-      title: 'Analytics & Reporting',
-      desc: 'Numbers without context are useless. We set up proper tracking and send you monthly reports that actually tell you what\'s working and what to do next.',
-      cover: 'pi pi-chart-bar text-yellow-500',
-      list: [
-        "Google Analytics setup",
-        "Search Console monitoringn",
-        "Monthly performance reports",
-        "Competitor tracking"
-      ]
-    },
-    {
-      title: 'Content Strategy',
-      desc: 'We research what your customers are searching for and create content that answers their questions — so Google sees you as the authority in your space.',
-      cover: 'pi pi-code text-violet-500',
-      list: [
-        "Blog content planning",
-        "Landing page optimization",
-        "Long-tail keyword targeting",
-        "Existing content refresh"
-      ]
-    },
-    {
-      title: 'Link Building',
-      desc: 'Quality backlinks from relevant, trusted websites tell Google your site is credible. We earn them through real outreach — not spam or black hat tricks.',
-      cover: 'pi pi-link text-pink-500',
-      list: [
-        "White-hat link acquisition",
-        "Directory submissions",
-        "Guest posting outreach",
-        "Toxic link cleanup"
-      ]
-    },
-    {
-      title: 'Technical Performance',
-      desc: 'Site speed, mobile usability, Core Web Vitals, and crawlability. We fix the behind-the-scenes issues that silently kill your rankings.',
-      cover: 'pi pi-desktop text-blue-500',
-      list: [
-        "Page speed optimization",
-        "Core Web Vitals fixes",
-        "Mobile responsiveness",
-        "Crawl error resolution"
-      ]
-    }
+  title: 'Stratégie de Contenu',
+  desc: 'Nous analysons ce que vos clients recherchent et créons des contenus qui répondent à leurs questions — permettant ainsi à Google de vous positionner comme l’autorité de votre secteur.',
+  cover: 'pi pi-code text-violet-500',
+  list: [
+    "Planification de contenus de blog",
+    "Optimisation des pages d'atterrissage",
+    "Ciblage de mots-clés de longue traîne",
+    "Actualisation des contenus existants"
+  ]
+},
+    { title: 'Netlinking', desc: 'Des backlinks de qualité provenant de sites pertinents et fiables indiquent à Google que votre site est crédible. Nous les obtenons grâce à une véritable démarche de prospection — sans spam ni techniques de référencement douteuses.', cover: 'pi pi-link text-pink-500', list: [ "Acquisition de liens selon les bonnes pratiques SEO", "Soumissions dans des annuaires", "Prospection pour la publication d’articles invités", "Nettoyage des liens toxiques" ] },
+    { title: 'Performance technique', desc: 'Vitesse du site, expérience mobile, Core Web Vitals et exploration par les moteurs de recherche. Nous corrigeons les problèmes techniques en arrière-plan qui peuvent discrètement nuire à votre classement dans les résultats de recherche.', cover: 'pi pi-desktop text-blue-500', list: [ "Optimisation de la vitesse des pages", "Optimisation des Core Web Vitals", "Adaptation aux appareils mobiles", "Résolution des erreurs d’exploration" ] }
   ]
 
 getIconColor(id: number){
