@@ -40,3 +40,7 @@
   --shadow-button: var(--shadow-button);
 
 }
+
+.om-timeline-circle{
+  background: red !important;
+}

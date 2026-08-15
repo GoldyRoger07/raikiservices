@@ -1,0 +1,8 @@
+.follower {
+  position: absolute; /* Relativement à la carte */
+ 
+  border-radius: 50%;
+  pointer-events: none; /* Évite les saccades et conflits de survol */
+  transform: translate(-50%, -50%); /* Centre le rond sur la souris */
+}
+

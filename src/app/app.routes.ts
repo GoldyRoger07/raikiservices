@@ -8,5 +8,6 @@ export const routes: Routes = [
     { path: 'tarifs', loadComponent: ()=> import('./pages/pricing/pricing')},
     { path: 'a-propos', loadComponent: ()=> import('./pages/about-us/about-us')},
     { path: 'seo', loadComponent: ()=> import('./pages/services/seo/seo')},
+    { path: 'sandbox', loadComponent: ()=> import('./pages/sandbox/sandbox') },
     { path: 'contact', loadComponent: ()=> import('./pages/contact/contact')}
 ];

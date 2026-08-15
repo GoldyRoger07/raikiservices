@@ -23,6 +23,7 @@
     "@omnedia/ngx-aurora": "^4.0.1",
     "@omnedia/ngx-number-ticker": "^4.0.1",
     "@omnedia/ngx-particles": "^4.0.1",
+    "@omnedia/ngx-timeline": "^4.0.1",
     "@omnedia/ngx-typewriter": "^4.0.1",
     "@primeuix/themes": "^3.0.0",
     "express": "^5.1.0",

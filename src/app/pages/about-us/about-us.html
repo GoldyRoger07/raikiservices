@@ -1,1 +1,137 @@
-<p>about-us works!</p>
+<my-header/>
+    <my-hero-section 
+    title="L'équipe au service de votre prochain site web" 
+    desc="Nous créons des sites web qui attirent des clients grâce à un design épuré au service de votre entreprise." />
+
+    
+
+    <section class="py-10">
+        <my-container>
+            <separator-design></separator-design>
+            <span class="font-accent text-primary text-center w-full block">Notre Approche</span>
+            <div class="flex items-start mt-10">
+                <div class="w-3/5">
+                    <h2 class="text-5xl font-heading font-bold text-gray-800 mb-2">Un site web ne devrait pas simplement être beau.</h2>
+
+                    <p class="text-xl text-gray-700">
+                        Il doit inspirer confiance, présenter clairement votre entreprise et faciliter la décision de vos clients. C'est pourquoi nous combinons design, développement et stratégie pour créer des expériences digitales qui ont un véritable objectif.
+                    </p>
+                </div>
+
+                <div class="flex flex-col gap-2 w-2/5">
+
+                    <div class="bg-linear-70 from-primary via-primary/80 to-primary/50 rounded-sm p-5 grid grid-cols-[50px_1fr] items-center">
+                        <i class="pi pi-palette text-white" style="font-size: 32px;"></i>
+                        <div>
+
+                            <span class="text-white font-bold">
+                                Design
+                            </span>
+                            <p class="text-white ">
+                                Des interfaces modernes et cohérentes.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="bg-linear-70 from-primary via-primary/80 to-primary/50 rounded-sm p-5 grid grid-cols-[50px_1fr] items-center">
+                        <i class="pi pi-bolt text-white" style="font-size: 32px;"></i>
+                        <div>
+
+                            <span class="text-white font-bold">
+                                Performance
+                            </span>
+                            <p class="text-white ">
+                                Des sites rapides et optimisés.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="bg-linear-70 from-primary via-primary/80 to-primary/50 rounded-sm p-5 grid grid-cols-[50px_1fr] items-center">
+                         <i class="pi pi-check text-white" style="font-size: 32px;"></i>
+                        <div>
+
+                            <span class="text-white font-bold">
+                                Résultats
+                            </span>
+                            <p class="text-white ">
+                                Une expérience pensée pour convertir.
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </my-container>
+    </section>
+
+    <section class="py-10">
+        <my-container>
+            <separator-design></separator-design>
+            <span class="font-accent text-primary text-center w-full block">Ce qui nous différencie</span>
+        
+            <div class="grid grid-cols-3 gap-2 py-10">
+                @for(card of differenceCards; track $index){
+
+                    <div class="relative min-h-80 cursor-none overflow-hidden rounded-2xl shadow-xl border border-gray-300"
+                    /* (mousemove)="onMouseMove($event)"
+                    (mouseenter)="isHovered.set(true)"
+                    (mouseleave)="isHovered.set(false)" */
+                    >
+
+                    <!-- @if (isHovered()) {
+                        <div class="follower w-40 h-40  bg-primary"
+                        [style.left.px]="coords().x"
+                        
+                        ></div>
+
+                    } -->
+                        <div class="absolute h-full w-full backdrop-blur-md top-0 left-0 flex flex-col gap-1 justify-center p-5">
+    
+                            <span class="text-5xl font-bold text-primary">{{$index+1}}</span>
+                            <span class="text-2xl text-gray-800 font-semibold">{{card.title}}</span>
+                            <p>{{card.desc}}</p>
+                        </div>
+    
+                    </div>
+                }
+            </div>
+        
+        </my-container>
+    </section>
+
+    <section class="py-10">
+        <my-container>
+            <separator-design></separator-design>
+            <span class="font-accent w-full text-center text-primary">Notre processus</span>
+            
+            <div class="flex flex-col items-center">
+                <om-timeline 
+                [entryGap]="'1rem'"
+                [titleMaxWidth]="'15rem'"
+                [orientation]="'switch'"
+                pathColor="gray"
+                [gradientColors]="['#C89A2D','#C89A2D']"
+                >
+                    @for(process of processCards; track $index){
+
+                        <om-timeline-entry>
+                             <ng-template #timelineTitle>
+                                <p class="timeline-title">{{$index+1}}</p>
+                             </ng-template>
+                            <ng-template #timelineContent>
+                            <div class="timeline-content">
+                                <div>
+                                    <span class="font-bold text-gray-800 font-heading">{{process.title}}</span>
+                                    <p class="text-gray-700">{{process.desc}}</p>
+                                </div>
+                            </div>
+                            </ng-template>
+                        </om-timeline-entry>
+                    }
+                </om-timeline>
+
+            </div>
+        </my-container>
+    </section>
+
+<my-footer/>
