@@ -1,9 +1,10 @@
 import { Component, input } from '@angular/core';
 import { NgxAuroraComponent } from '@omnedia/ngx-aurora';
+import { NgxTypewriterComponent } from "@omnedia/ngx-typewriter";
 
 @Component({
   selector: 'my-hero-section',
-  imports: [NgxAuroraComponent],
+  imports: [NgxAuroraComponent, NgxTypewriterComponent],
   templateUrl: './hero-section.html',
   styleUrl: './hero-section.css',
 })

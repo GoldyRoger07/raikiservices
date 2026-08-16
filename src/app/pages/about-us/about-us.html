@@ -8,17 +8,17 @@
     <section class="py-10">
         <my-container>
             <separator-design></separator-design>
-            <span class="font-accent text-primary text-center w-full block">Notre Approche</span>
-            <div class="flex items-start mt-10">
-                <div class="w-3/5">
-                    <h2 class="text-5xl font-heading font-bold text-gray-800 mb-2">Un site web ne devrait pas simplement être beau.</h2>
+            <span animateOnScroll class="fade-up font-accent text-primary text-center w-full block">Notre Approche</span>
+            <div class="flex flex-col items-center lg:flex-row lg:items-start mt-10">
+                <div class="lg:w-3/5">
+                    <h2 animateOnScroll class="fade-up text-2xl lg:text-5xl font-bold text-gray-800 mb-2">Un site web ne devrait pas simplement être beau.</h2>
 
-                    <p class="text-xl text-gray-700">
+                    <p animateOnScroll class="fade-up text-md lg:text-xl text-gray-700">
                         Il doit inspirer confiance, présenter clairement votre entreprise et faciliter la décision de vos clients. C'est pourquoi nous combinons design, développement et stratégie pour créer des expériences digitales qui ont un véritable objectif.
                     </p>
                 </div>
 
-                <div class="flex flex-col gap-2 w-2/5">
+                <div class="flex flex-col gap-2 w-full lg:w-2/5 mt-5 lg:mt-0">
 
                     <div class="bg-linear-70 from-primary via-primary/80 to-primary/50 rounded-sm p-5 grid grid-cols-[50px_1fr] items-center">
                         <i class="pi pi-palette text-white" style="font-size: 32px;"></i>
@@ -67,9 +67,9 @@
     <section class="py-10">
         <my-container>
             <separator-design></separator-design>
-            <span class="font-accent text-primary text-center w-full block">Ce qui nous différencie</span>
+            <span  animateOnScroll class="fade-up font-accent text-primary text-center w-full block">Ce qui nous différencie</span>
         
-            <div class="grid grid-cols-3 gap-2 py-10">
+            <div class="grid  lg:grid-cols-3 gap-2 py-10">
                 @for(card of differenceCards; track $index){
 
                     <div class="relative min-h-80 cursor-none overflow-hidden rounded-2xl shadow-xl border border-gray-300"
@@ -85,7 +85,7 @@
                         ></div>
 
                     } -->
-                        <div class="absolute h-full w-full backdrop-blur-md top-0 left-0 flex flex-col gap-1 justify-center p-5">
+                        <div animateOnScroll class="fade-up absolute h-full w-full backdrop-blur-md top-0 left-0 flex flex-col gap-1 justify-center p-5">
     
                             <span class="text-5xl font-bold text-primary">{{$index+1}}</span>
                             <span class="text-2xl text-gray-800 font-semibold">{{card.title}}</span>
@@ -102,16 +102,17 @@
     <section class="py-10">
         <my-container>
             <separator-design></separator-design>
-            <span class="font-accent w-full text-center text-primary">Notre processus</span>
+            <span class="font-accent w-full text-center text-primary block">Notre processus</span>
             
             <div class="flex flex-col items-center">
                 <om-timeline 
                 [entryGap]="'1rem'"
                 [titleMaxWidth]="'15rem'"
                 [orientation]="'switch'"
-                pathColor="gray"
+                pathColor="#F1F1F1"
                 [gradientColors]="['#C89A2D','#C89A2D']"
                 >
+                <!-- 32 01 1696 -->
                     @for(process of processCards; track $index){
 
                         <om-timeline-entry>
@@ -121,8 +122,8 @@
                             <ng-template #timelineContent>
                             <div class="timeline-content">
                                 <div>
-                                    <span class="font-bold text-gray-800 font-heading">{{process.title}}</span>
-                                    <p class="text-gray-700">{{process.desc}}</p>
+                                    <span class="font-bold text-gray-800 font-heading text-2xl">{{process.title}}</span>
+                                    <p class="text-gray-700 text-lg">{{process.desc}}</p>
                                 </div>
                             </div>
                             </ng-template>
@@ -130,6 +131,68 @@
                     }
                 </om-timeline>
 
+            </div>
+        </my-container>
+    </section>
+
+    <section class="py-10">
+        <my-container>
+            <separator-design></separator-design>
+        </my-container>
+        
+            <div class="mt-10 mx-5 flex flex-col lg:flex-row gap-20 shadow-xl border border-gray-300 rounded-2xl p-5 justify-center items-center max-w-5xl lg:mx-auto">
+                <div class="w-full lg:w-2/4 ">
+                    <h2 animateOnScroll class="fade-up text-gray-800 font-bold text-3xl">Derrière chaque projet, il y a une personne</h2>
+                    <p class="text-gray-700 text-md">
+                        Raiki Services est né d'une volonté simple : permettre aux entreprises de disposer de sites web professionnels sans la complexité et les coûts souvent associés aux projets digitaux.
+                    </p>
+                </div>
+
+                <div class="w-7/10 lg:w-3/10 flex flex-col items-center">
+                    <img src="img/about-us/profile.png" animateOnScroll class="fade-up object-cover object-center  rounded-2xl" alt="ma photo">
+                    <div class="text-center flex flex-col items-center">
+                        <span class="text-gray-800 text-xl font-bold">Gerson Latouche</span>
+                        <span class="text-gray-500 text-sm">Développeur Web Full-Stack & Co-Fondateur</span>
+                       
+                    </div>
+                </div>
+
+
+            </div>
+        
+    </section>
+
+    <section class="py-10">
+        <my-container>
+            <separator-design></separator-design>
+            <span class="font-accent text-primary text-center w-full block">Notre objectif</span>
+        
+            <div class="flex flex-col lg:flex-row lg:justify-between items-center py-10 gap-10">
+                <div class="w-full lg:w-1/3">
+                    <h2 animateOnScroll class="fade-up text-gray-800 text-2xl font-bold">Notre objectif est simple.</h2>
+                    <p animateOnScroll class="fade-up font-body text-gray-700">Aider les entreprises à construire une présence en ligne crédible, moderne et capable de générer de nouvelles opportunités.</p>
+                </div>
+
+                <h3 animateOnScroll class="fade-up text-primary font-bold text-5xl w-full lg:w-1/2">Votre site web ne doit pas seulement exister. Il doit vous rapporter.</h3>
+            </div>
+        </my-container>
+    </section>
+
+    <section class="py-10">
+        <my-container>
+            <separator-design></separator-design>
+            <span class="font-accent text-primary text-center w-full block">Parlons de votre projet</span>
+
+            <div class="text-white py-10 lg:h-90 w-full my-10 my-luxe-bg rounded-2xl flex  items-center justify-center ">
+                
+                <div class="px-5 w-full lg:w-3/4 flex flex-col items-center justify-center gap-3 ">
+
+                    <h2 class="font-bold text-center text-2xl lg:text-3xl">Vous avez une idée. Construisons quelque chose de remarquable.</h2>
+                    <p class="text-md lg:text-xl text-center">Parlez-nous de votre entreprise et de ce que vous souhaitez accomplir. Nous vous aiderons à transformer votre idée en une présence digitale concrète.</p>
+                    <button class="text-primary bg-white p-5 rounded-sm">
+                        Démarrer un projet →
+                    </button>
+                </div>
             </div>
         </my-container>
     </section>

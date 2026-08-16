@@ -6,10 +6,12 @@ import { SeparatorDesign } from "../../components/separator-design/separator-des
 import { Container } from "../../components/container/container";
 import { CardData } from '../../models/card-data.model';
  import { NgxTimelineComponent, NgxTimelineEntryComponent } from '@omnedia/ngx-timeline';
+import { MyButton } from "../../components/my-button/my-button";
+import { AnimateOnScrollDirective } from "../../directives/animate-on-scroll";
 
 @Component({
   selector: 'app-about-us',
-  imports: [Header, HeroSection, Footer, SeparatorDesign, Container, NgxTimelineComponent, NgxTimelineEntryComponent],
+  imports: [Header, HeroSection, Footer, SeparatorDesign, Container, NgxTimelineComponent, NgxTimelineEntryComponent, MyButton, AnimateOnScrollDirective],
   templateUrl: './about-us.html',
   styleUrl: './about-us.css',
 })

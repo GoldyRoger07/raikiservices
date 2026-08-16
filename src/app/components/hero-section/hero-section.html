@@ -3,9 +3,26 @@
     <om-aurora> 
         <div class="w-full h-full flex items-center justify-center p-5 md:p-0 ">
             <div class="text-center w-full md:w-6/10">
-                <h1 class="font-accent text-gray-800 text-5xl mb-5">{{title()}}</h1>
-                <p class="text-gray-700 text-lg md:text-xl">{{desc()}}</p>
+                <!-- <h1 class="font-accent text-gray-800 text-5xl mb-5">{{title()}}</h1> -->
+                <om-typewriter
+        [words]="[title()]"
+        [disableLoop]="true"
+        textCursorColor="transparent"
+        styleClass="font-accent text-gray-800 text-5xl mb-5"
+    ></om-typewriter>
+
+    <om-typewriter
+        [words]="[desc()]"
+        [disableLoop]="true"
+        textCursorColor="transparent"
+        styleClass="text-gray-700 text-lg md:text-xl"
+    ></om-typewriter>
+
+
+                <!-- <p class="text-gray-700 text-lg md:text-xl">{{desc()}}</p> -->
             </div>
         </div>    
+
+         
     </om-aurora>
 </section>

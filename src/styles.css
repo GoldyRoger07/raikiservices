@@ -42,5 +42,78 @@
 }
 
 .om-timeline-circle{
-  background: red !important;
+  background: var(--brand-primary) !important;
+}
+
+.apparition{
+  opacity: 0;
+  transition: opacity 500ms ease-in;
+  transition-delay: 500ms;
+}
+
+.apparition.active{
+  opacity: 1;
+}
+
+.rotate-right{
+  transform: rotate(18deg) translate(15%,-50%);
+  opacity: 0.4;
+  transition: all 1000ms ease-in-out;
+}
+
+
+.rotate-right.active{
+  transform: rotate(0deg) translate(0%,0%);
+  opacity: 1;
+}
+
+/* 58 17 8913 */
+
+
+.fade-up{
+    transform: translateY(25%);
+    opacity: 0;
+    transition: all 600ms ease-in-out ;
+    
+}
+
+.blur-up{
+    transform: scale(0.9);
+    opacity: 0;
+    filter: blur(3px);
+    transition: all 300ms ease-in-out ;
+}
+
+.blur-up.active{
+    transform: scale(1);
+    filter: blur(0px);
+    opacity: 1;
+}
+
+.fade-up.active{
+    transform: translateY(0%);
+    opacity: 1;
+}
+
+.fade-right{
+    transform: translateX(-25%);
+    opacity: 0;
+    transition: all 700ms ease-in-out ;
+    /* transition-delay: 500ms; */
+}
+
+.fade-left{
+    transform: translateX(25%);
+    opacity: 0;
+    transition: all 700ms ease-in-out ;
+    /* transition-delay: 500ms; */
+}
+
+.fade-right.active, .fade-left.active{
+    transform: translateX(0%);
+    opacity: 1;
+}
+
+.fade-up,.blur-up,.fade-right,.fade-left{
+  transition-delay: calc((sibling-index() - 1) * 200ms);
 }
