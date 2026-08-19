@@ -35,6 +35,14 @@ app.use(
   }),
 );
 
+
+
+app.get('/api/ping', (req, res) => { 
+  res.json({ message: 'pong' })
+});
+
+
+
 /**
  * Handle all other requests by rendering the Angular application.
  */
