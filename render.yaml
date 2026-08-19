@@ -6,7 +6,7 @@ services:
     region: ohio
     branch: main
     autoDeploy: true
-    buildCommand: npm ci --include=dev && npm run build
+    buildCommand: npm ci --include=dev && npm run build --force
     startCommand: node dist/raikiservices-ssr/server/server.mjs
     healthCheckPath: /api/ping
     envVars:
