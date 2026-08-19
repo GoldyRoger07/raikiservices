@@ -72,7 +72,7 @@
           @if(item.label.toLocaleLowerCase() === "services"){
             <li>
               <a
-                /* [routerLink]="item.link" */
+                
                 (mouseover)="op.toggle($event)"
                 class="text-sm font-medium text-foreground transition-colors hover:text-primary cursor-pointer"
               >
@@ -82,7 +82,7 @@
           }@else if(item.label.toLocaleLowerCase() === "projets"){
             <li>
               <a
-                /* [routerLink]="item.link" */
+                
                 (mouseover)="op2.toggle($event)"
                 class="text-sm font-medium text-foreground transition-colors hover:text-primary cursor-pointer"
               >
@@ -93,7 +93,6 @@
             <li>
               <a
                 [routerLink]="item.link"
-                /* (click)="op.toggle($event)" */
                 class="text-sm font-medium text-foreground transition-colors hover:text-primary"
               >
                 {{ item.label }}
