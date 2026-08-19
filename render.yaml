@@ -4,7 +4,7 @@ services:
     runtime: node
     plan: starter
     region: ohio
-    branch: render
+    branch: main
     autoDeploy: true
     buildCommand: npm ci --include=dev && npm run build
     startCommand: node dist/raikiservices-ssr/server/server.mjs
