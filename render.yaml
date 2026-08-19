@@ -1,0 +1,25 @@
+services:
+  - type: web
+    name: raiki-services
+    runtime: node
+    plan: starter
+    region: ohio
+    branch: render
+    autoDeploy: true
+    buildCommand: npm ci --include=dev && npm run build
+    startCommand: node dist/raikiservices-ssr/server/server.mjs
+    healthCheckPath: /api/ping
+    envVars:
+      - key: NODE_VERSION
+        value: 22.12.0
+      - key: NODE_ENV
+        value: production
+      # SSRF protection Angular 21 : hôtes autorisés pour le rendu serveur.
+      # Sans ça, Angular retombe en rendu client (CSR) → SEO cassé.
+      # hostname uniquement (pas de port/scheme) ; wildcard *.domaine supporté.
+      - key: NG_ALLOWED_HOSTS
+        value: raikiservices.com,www.raikiservices.com,*.onrender.com
+      # Render sert l'app derrière un proxy (x-forwarded-*). Ces en-têtes doivent
+      # être approuvés sinon chaque requête proxifiée retombe en CSR.
+      - key: NG_TRUST_PROXY_HEADERS
+        value: x-forwarded-for,x-forwarded-host,x-forwarded-proto,x-forwarded-port,x-forwarded-prefix
