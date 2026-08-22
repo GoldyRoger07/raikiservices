@@ -32,4 +32,20 @@
           rgba(255, 255, 255, 0.1) 95%
         );
       }
+
+
+.intro-gradient{
+  background-image: linear-gradient(45deg, #C89A2D, #CDA441 10%, #D1AA4F 17%, #DABC73 38%, #DEC382 47%, #E3CC94 57%, #E7D3A4 89%, #D3AF58);
+
+}
+
+.linear-img{
+  /* Version standard pour le futur */
+  mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
+  mask-repeat: no-repeat;
+
+  /* Version Webkit requise pour Chrome, Safari et Edge actuellement */
+  -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent 95%);
+  -webkit-mask-repeat: no-repeat;
+}
   

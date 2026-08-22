@@ -9,19 +9,20 @@ import { NgxParticlesComponent } from '@omnedia/ngx-particles';
 import { NgxTypewriterComponent } from '@omnedia/ngx-typewriter';
 import { NgxNumberTickerComponent } from '@omnedia/ngx-number-ticker';
 import { CardData } from '../../models/card-data.model';
+import { AccentTitle } from '../../components/accent-title/accent-title';
 
 
 
 @Component({
   selector: 'app-home',
-  imports: [Header, Footer, Container, MyButton, SeparatorDesign, Image, NgxParticlesComponent, NgxTypewriterComponent, NgxNumberTickerComponent],
+  imports: [Header, Footer, Container, AccentTitle, MyButton, SeparatorDesign, Image, NgxParticlesComponent, NgxTypewriterComponent, NgxNumberTickerComponent],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
 export default class Home implements OnInit{
   
 
-  title1 = "Nous créons des sites web modernes qui attirent"
+  title1 = "Nous créons des sites web modernes qui rendent votre entreprise plus visible et attirent plus de clients."
   title2 = " plus de visibilité pour votre entreprise."
   cursorColor1 = signal('#1e2939')
   cursorColor2 = signal('transparent')
@@ -29,24 +30,33 @@ export default class Home implements OnInit{
 
   ourWorkCards: CardData[] = [
     {
-      title: 'Creation de site web',
-      desc: 'Des sites web sur mesure, adaptés aux appareils mobiles et conçus pour transformer vos visiteurs en clients.',
+      subtitle: 'Création de sites web',
+      title: 'Un site conçu autour de votre entreprise.',
+      desc: 'Des sites modernes, rapides et adaptés à tous les écrans.',
       cover: "img/home/our-work/07.png"
     },
     {
-      title: 'SEO',
-      desc: 'Gagnez en visibilité sur Google grâce à un site optimisé pour apparaître devant vos concurrents.',
+      subtitle: 'SEO',
+      title: 'Soyez trouvé par vos futurs clients.',
+      desc: 'Optimisez votre visibilité sur Google et attirez un trafic plus qualifié.',
       cover: "img/home/our-work/12.png"
     },
     {
-      title: 'E-mail professionnel',
-      desc: 'Une adresse e-mail professionnelle qui renforce votre crédibilité et inspire confiance à vos clients.',
+      subtitle: 'E-mail professionnel',
+      title: 'Une adresse qui inspire confiance.',
+      desc: 'Renforcez votre crédibilité avec une adresse e-mail professionnelle liée à votre entreprise.',
       cover: "img/home/our-work/13.png"
     },
     {
-      title: 'Boutique en ligne',
-      desc: 'Une boutique en ligne performante qui vend vos produits 24 h/24 et 7 j/7 grâce à un processus de paiement sécurisé.',
+      subtitle: 'E-commerce',
+      title: 'Vendez en ligne, même quand vous dormez.',
+      desc: 'Une boutique pensée pour présenter vos produits et faciliter les achats.',
       cover: "img/home/our-work/04.svg"
+    },
+    {
+      subtitle: 'Maintenance & Hébergement',
+      title: 'Votre site reste rapide, sécurisé et disponible.',
+      desc: 'Nous pouvons prendre en charge l’hébergement, les mises à jour et la maintenance de votre site.'
     }
   ]
 
@@ -71,6 +81,25 @@ export default class Home implements OnInit{
       desc: '',
       cover: '/img/home/projets/mockup-raf.png'
     },
+  ]
+
+  avantageCards: CardData[] = [
+    {
+      title: 'Pensé pour vos objectifs',
+      desc: 'Votre site est conçu selon vos besoins et non à partir d\'un modèle générique.'
+    },
+    {
+      title: 'Design qui inspire confiance',
+      desc: 'Une présence professionnelle qui donne à vos visiteurs une bonne raison de vous choisir.'
+    },
+    {
+      title: 'Optimisé pour les résultats',
+      desc: 'Performance, mobile, SEO et conversion sont intégrés dès la conception.'
+    },
+    {
+      title: 'Un accompagnement à long terme',
+      desc: 'Nous pouvons continuer à gérer, maintenir et faire évoluer votre site après son lancement.'
+    }
   ]
   
 

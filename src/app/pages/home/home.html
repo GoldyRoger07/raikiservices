@@ -11,10 +11,10 @@
         [disableLoop]="true"
         [writeDelay]="100"
         [writeSpeed]="120"
-        [textCursorColor]="cursorColor1()"
+        textCursorColor="transparent"
         styleClass="font-accent text-gray-800 text-4xl"
     ></om-typewriter>
-    <om-typewriter
+    <!-- <om-typewriter
         [words]="[title2]"
         [disableLoop]="true"
         [startDelay]="title1.length*120"
@@ -22,7 +22,7 @@
         [writeSpeed]="120"
         [textCursorColor]="cursorColor2()"
         styleClass="font-accent text-gray-800 text-4xl"
-    ></om-typewriter>
+    ></om-typewriter> -->
                     <!-- Des sites web qui font grandir votre entreprise</h1> -->
                 <p class="font-body text-gray-700">Développement de sites vitrines, boutiques e-commerce et applications web rapides, sécurisées et optimisées pour le référencement.</p>
                 <!-- <p>Nous concevons des sites web modernes, rapides et optimisés pour tous les appareils, pensés pour renforcer votre présence en ligne et attirer plus de clients. De la stratégie à la mise en ligne, nous vous accompagnons à chaque étape de votre projet.</p> -->
@@ -57,18 +57,72 @@
     <!-- <img src="img/hero-raiki.svg" class="absolute bottom-0 right-0 w-150" alt=""> -->
 </section>
 
+<section class="relative py-10 intro-gradient overflow-hidden h-150">
+    <div class="absolute left-0 top-0 w-full h-full">
+        <my-container>
+            <div class="flex flex-col h-full py-5 text-white">
+                <my-accent-title textColor="text-white">Un site web qui a un objectif</my-accent-title>
+                <h2 class="font-bold text-3xl mt-10">Votre site ne doit pas seulement être beau. Il doit vous rapporter.</h2>
+                <div class="w-3/4">
+                    <p class="text-xl">
+                        Un bon site attire l’attention. Un excellent site transforme cette attention en opportunités.
+                    </p>
+
+                    <p class="text-xl">
+                        Nous concevons chaque projet autour de vos objectifs : visibilité, crédibilité, génération de prospects ou ventes.
+                    </p>
+                </div>
+
+
+
+                <div class="flex flex-col mt-10">
+                    <h3 class="text-2xl font-bold">Points clés de nos sites web:</h3>
+                        <ul class="flex flex-col ml-5 mt-5 gap-2 text-xl">
+                            <li class="flex gap-2 items-center">
+                                <i class="pi pi-check"></i>
+                                <span>Design professionnel</span>
+                            </li>
+                            <li class="flex gap-2 items-center">
+                                <i class="pi pi-check"></i>
+                                <span>Expérience mobile optimisée</span>
+                            </li>
+                            <li class="flex gap-2 items-center">
+                                <i class="pi pi-check"></i>
+                                <span>SEO intégré</span>
+                            </li>
+                            <li class="flex gap-2 items-center">
+                                <i class="pi pi-check"></i>
+                                <span>Performance rapide</span>
+                            </li>
+                            <li class="flex gap-2 items-center">
+                                <i class="pi pi-check"></i>
+                                <span>Pensé pour convertir</span>
+                            </li>
+                        </ul>
+<!--                         
+                        <div class="border-2 border-white rounded p-5"></div>
+                        <div class="border-2 border-white rounded p-5"></div>
+                        <div class="border-2 border-white rounded p-5"></div> -->
+                </div>
+            </div>
+        </my-container>
+    </div>
+
+    <img src="img/home/dev.png" class="absolute right-0 bottom-5 h-full" alt="dev">
+</section>
+
 <section class="py-20 ">
     <my-container>
         <div class="flex flex-col items-center w-full">
 
             <separator-design></separator-design>
-            <div class="text-center mb-15">
-                <span class="font-accent text-primary text-xl">Ce que nous faisons</span>
-                <h2 class="font-heading font-semibold text-gray-800 text-4xl">Creation de site web</h2>
-                <p class="font-body text-gray-800">Tout ce dont vous avez besoin pour bâtir une présence en ligne solide et attirer davantage de clients.</p>
+            <div class="text-center mb-15 flex flex-col items-center">
+                <span class="font-accent text-primary text-xl">Nos solutions</span>
+                <h2 class=" font-bold text-gray-800 text-4xl w-4/5">Tout ce qu’il faut pour développer votre présence en ligne.</h2>
+                <p class="font-body text-gray-800 w-3/5">Des solutions digitales pensées pour donner à votre entreprise une image professionnelle et vous aider à atteindre vos objectifs.</p>
             </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-2">
                 @for(card of ourWorkCards; track $index){
 
                     <!-- <div class="border-2 border-amber-300 bg-amber-100  p-5 rounded-2xl  flex flex-col">
@@ -79,10 +133,11 @@
                         <img [src]="card.cover" class="h-50 object-contain" alt="">
                     </div> -->
 
-                    <div class="card-landscape border border-gray-200 bg-white px-5 py-2 hover:shadow-xl transition-shadow duration-300 rounded-2xl  flex flex-col items-center">
-                        <img [src]="card.cover" class="h-50 m-10 object-contain" alt="">
-                        <div>
-                            <span class="font-heading text-gray-800 text-xl">{{card.title}}</span>
+                    <div class="card-landscape border border-gray-200 intro-gradient px-5 py-2 hover:shadow-xl transition-shadow duration-300 rounded-2xl  flex flex-col items-center justify-center">
+                        <!-- <img [src]="card.cover" class="h-50 m-10 object-contain" alt=""> -->
+                        <div class="flex flex-col">
+                            <span class="text-gray-800">{{card.subtitle}}</span>
+                            <span class=" text-gray-800 text-xl font-bold">{{card.title}}</span>
                             <p class="font-body text-gray-700">{{card.desc}}</p>
                         </div>
                     </div>
@@ -109,6 +164,40 @@
         </div>
     </my-container>
 
+</section>
+
+<section class="p-5">
+    <div class="grid grid-cols-3">
+
+        <div class="flex flex-col gap-2 items-start">
+            <my-accent-title>Pourquoi nous ?</my-accent-title>
+            <h2 class="font-bold text-3xl text-gray-800">Nous ne créons pas des sites. Nous créons des outils pour votre entreprise.</h2>
+            <p class="text-gray-700 text-xl">
+                Chaque décision de design, de contenu et de technologie est prise avec un objectif : faire de votre site un véritable investissement pour votre entreprise.
+            </p>
+        </div>
+
+        <img src="img/home/whyUs.png" class="linear-img" alt="dev">
+
+        <div class="mt-auto">
+            <h3 class="font-bold text-3xl text-gray-800 mb-5">
+                Nos avantages
+            </h3>
+
+            <div class="flex flex-col gap-5">
+                @for(avantage of avantageCards; track $index){
+
+                    <div>
+                        <span class="text-primary text-2xl font-bold">0{{$index+1}}</span>
+                        <h4 class="font-bold text-xl text-gray-800">{{avantage.title}}</h4>
+                        <p class="text-gray-700">{{avantage.desc}}</p>
+                    </div>
+                }
+            </div>
+                
+        </div>
+
+    </div>
 </section>
 
 <section class="">
