@@ -200,6 +200,44 @@
     </div>
 </section>
 
+<section class="overflow-hidden min-h-120 h-150 ">
+    <my-container class="h-full">
+
+        <separator-design></separator-design>
+        <div class="flex flex-col items-center h-full">
+
+            <div class="py-5 text-center w-[60%] mb-10">
+                <span class="font-accent text-primary">Notre Methode</span>
+                <h2 class="font-heading text-3xl text-gray-800">De l’idée au lancement, simplement.</h2>
+                <!-- <h2 class="font-bold">Bien plus qu'un site web : un véritable levier de croissance pour votre entreprise.</h2> -->
+                <!-- <p class="font-body text-gray-800">
+                    Nous concevons des sites web modernes, performants et pensés pour attirer des clients, renforcer votre crédibilité et accompagner le développement de votre activité.
+                </p> -->
+            </div>
+        </div>
+    </my-container>
+    <swiper-container
+          class="mySwiper"
+          pagination="true"
+          pagination-clickable="true"
+          space-between="10"
+          slides-per-view="4"
+          autoplay="true"
+        >
+        @for(processCard of processCards; track $index){
+
+            <swiper-slide>
+                <div class="shadow border border-gray-200 rounded-2xl flex flex-col gap-2 items-center justify-center text-center text-gray-700 aspect-square w-full px-5">
+                    <span>{{processCard.subtitle}}</span>
+                    <h3 class="font-bold text-xl text-gray-800">{{processCard.title}}</h3>
+                    <p class="text-md">{{processCard.desc}}</p>
+                </div>
+            </swiper-slide>
+        }
+          
+    </swiper-container>
+</section>
+
 <section class="">
     <my-container>
         <div class="flex flex-col items-center w-full py-10 rounded-t-4xl">

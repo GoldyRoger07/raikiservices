@@ -1,4 +1,4 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit, signal } from '@angular/core';
 import { Header } from "../../components/header/header";
 import { Footer } from "../../components/footer/footer";
 import { Container } from "../../components/container/container";
@@ -18,6 +18,7 @@ import { AccentTitle } from '../../components/accent-title/accent-title';
   imports: [Header, Footer, Container, AccentTitle, MyButton, SeparatorDesign, Image, NgxParticlesComponent, NgxTypewriterComponent, NgxNumberTickerComponent],
   templateUrl: './home.html',
   styleUrl: './home.css',
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export default class Home implements OnInit{
   
@@ -101,6 +102,50 @@ export default class Home implements OnInit{
       desc: 'Nous pouvons continuer à gérer, maintenir et faire évoluer votre site après son lancement.'
     }
   ]
+
+  processCards: CardData[] = [
+    {
+      subtitle: 'Échange',
+      title: 'On comprend votre entreprise.',
+      desc: 'Nous discutons de vos objectifs, de votre activité et de ce que votre site doit accomplir.'
+    },
+    {
+      subtitle: 'Conception',
+      title: 'Nous construisons votre solution.',
+      desc: 'Design, contenu et fonctionnalités sont pensés autour de votre audience.'
+    },
+    {
+      subtitle: 'Développement',
+      title: 'Votre site prend vie.',
+      desc: 'Nous transformons la conception en un site rapide, responsive et optimisé.'
+    },
+    {
+      subtitle: 'Lancement',
+      title: 'Votre entreprise est prête à avancer.',
+      desc: 'Nous mettons votre site en ligne et vous accompagnons pour la suite.'
+    },
+
+    {
+      subtitle: 'Échange',
+      title: 'On comprend votre entreprise.',
+      desc: 'Nous discutons de vos objectifs, de votre activité et de ce que votre site doit accomplir.'
+    },
+    {
+      subtitle: 'Conception',
+      title: 'Nous construisons votre solution.',
+      desc: 'Design, contenu et fonctionnalités sont pensés autour de votre audience.'
+    },
+    {
+      subtitle: 'Développement',
+      title: 'Votre site prend vie.',
+      desc: 'Nous transformons la conception en un site rapide, responsive et optimisé.'
+    },
+    {
+      subtitle: 'Lancement',
+      title: 'Votre entreprise est prête à avancer.',
+      desc: 'Nous mettons votre site en ligne et vous accompagnons pour la suite.'
+    }
+  ] 
   
 
   ngOnInit(): void {

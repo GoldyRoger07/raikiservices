@@ -49,3 +49,27 @@
   -webkit-mask-repeat: no-repeat;
 }
   
+
+
+/* Swiper Js */
+
+swiper-container {
+        width: 100%;
+        height: fit-content;
+        padding: 20px;
+       
+      }
+
+       swiper-slide {
+        height: 100%;
+        margin-bottom: 50px;
+      }
+
+      /*
+
+      swiper-slide img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      } */
