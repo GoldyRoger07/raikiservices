@@ -10,12 +10,14 @@ import { NgxTypewriterComponent } from '@omnedia/ngx-typewriter';
 import { NgxNumberTickerComponent } from '@omnedia/ngx-number-ticker';
 import { CardData } from '../../models/card-data.model';
 import { AccentTitle } from '../../components/accent-title/accent-title';
+import { MySlider } from '../../components/my-slider/my-slider';
+import { CommonModule } from '@angular/common';
 
 
 
 @Component({
   selector: 'app-home',
-  imports: [Header, Footer, Container, AccentTitle, MyButton, SeparatorDesign, Image, NgxParticlesComponent, NgxTypewriterComponent, NgxNumberTickerComponent],
+  imports: [Header, Footer, Container, AccentTitle, MyButton, SeparatorDesign, Image, NgxParticlesComponent, NgxTypewriterComponent, NgxNumberTickerComponent, MySlider, CommonModule],
   templateUrl: './home.html',
   styleUrl: './home.css',
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
@@ -125,26 +127,7 @@ export default class Home implements OnInit{
       desc: 'Nous mettons votre site en ligne et vous accompagnons pour la suite.'
     },
 
-    {
-      subtitle: 'Échange',
-      title: 'On comprend votre entreprise.',
-      desc: 'Nous discutons de vos objectifs, de votre activité et de ce que votre site doit accomplir.'
-    },
-    {
-      subtitle: 'Conception',
-      title: 'Nous construisons votre solution.',
-      desc: 'Design, contenu et fonctionnalités sont pensés autour de votre audience.'
-    },
-    {
-      subtitle: 'Développement',
-      title: 'Votre site prend vie.',
-      desc: 'Nous transformons la conception en un site rapide, responsive et optimisé.'
-    },
-    {
-      subtitle: 'Lancement',
-      title: 'Votre entreprise est prête à avancer.',
-      desc: 'Nous mettons votre site en ligne et vous accompagnons pour la suite.'
-    }
+    
   ] 
   
 

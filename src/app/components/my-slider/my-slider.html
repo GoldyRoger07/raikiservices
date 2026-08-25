@@ -1,0 +1,28 @@
+<div class="carousel">
+    <!-- <div class="group">
+        <div class="card">1</div>
+        <div class="card">2</div>
+        <div class="card">3</div>
+        <div class="card">4</div>
+        <div class="card">5</div>
+        <div class="card">6</div>
+    </div>
+
+    <div aria-hidden class="group">
+        <div class="card">1</div>
+        <div class="card">2</div>
+        <div class="card">3</div>
+        <div class="card">4</div>
+        <div class="card">5</div>
+        <div class="card">6</div>
+    </div> -->
+     <!-- Premier groupe -->
+    <div class="group">
+        <ng-container *ngTemplateOutlet="templateContenu"></ng-container>
+    </div>
+
+    <!-- Deuxième groupe pour l'effet infini -->
+    <div aria-hidden="true" class="group">
+        <ng-container *ngTemplateOutlet="templateContenu"></ng-container>
+    </div>
+</div>

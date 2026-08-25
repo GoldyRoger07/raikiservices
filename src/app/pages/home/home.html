@@ -63,7 +63,7 @@
             <div class="flex flex-col h-full py-5 text-white">
                 <my-accent-title textColor="text-white">Un site web qui a un objectif</my-accent-title>
                 <h2 class="font-bold text-3xl mt-10">Votre site ne doit pas seulement être beau. Il doit vous rapporter.</h2>
-                <div class="w-3/4">
+                <div class="md:w-3/4">
                     <p class="text-xl">
                         Un bon site attire l’attention. Un excellent site transforme cette attention en opportunités.
                     </p>
@@ -108,7 +108,7 @@
         </my-container>
     </div>
 
-    <img src="img/home/dev.png" class="absolute right-0 bottom-5 h-full" alt="dev">
+    <img src="img/home/dev.png" class="absolute hidden md:block right-0 bottom-5 h-full" alt="dev">
 </section>
 
 <section class="py-20 ">
@@ -118,11 +118,11 @@
             <separator-design></separator-design>
             <div class="text-center mb-15 flex flex-col items-center">
                 <span class="font-accent text-primary text-xl">Nos solutions</span>
-                <h2 class=" font-bold text-gray-800 text-4xl w-4/5">Tout ce qu’il faut pour développer votre présence en ligne.</h2>
-                <p class="font-body text-gray-800 w-3/5">Des solutions digitales pensées pour donner à votre entreprise une image professionnelle et vous aider à atteindre vos objectifs.</p>
+                <h2 class=" font-bold text-gray-800 text-2xl md:text-4xl lg:w-4/5">Tout ce qu’il faut pour développer votre présence en ligne.</h2>
+                <p class="font-body text-gray-800 lg:w-3/5">Des solutions digitales pensées pour donner à votre entreprise une image professionnelle et vous aider à atteindre vos objectifs.</p>
             </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-2">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
                 @for(card of ourWorkCards; track $index){
 
                     <!-- <div class="border-2 border-amber-300 bg-amber-100  p-5 rounded-2xl  flex flex-col">
@@ -137,8 +137,8 @@
                         <!-- <img [src]="card.cover" class="h-50 m-10 object-contain" alt=""> -->
                         <div class="flex flex-col">
                             <span class="text-gray-800">{{card.subtitle}}</span>
-                            <span class=" text-gray-800 text-xl font-bold">{{card.title}}</span>
-                            <p class="font-body text-gray-700">{{card.desc}}</p>
+                            <span class=" text-gray-800 text-xl sm:text-md lg:text-xl font-bold">{{card.title}}</span>
+                            <p class="font-body text-gray-700 text-md sm:text-sm">{{card.desc}}</p>
                         </div>
                     </div>
                 }
@@ -167,7 +167,7 @@
 </section>
 
 <section class="p-5">
-    <div class="grid grid-cols-3">
+    <div class="grid md:grid-cols-3">
 
         <div class="flex flex-col gap-2 items-start">
             <my-accent-title>Pourquoi nous ?</my-accent-title>
@@ -177,34 +177,40 @@
             </p>
         </div>
 
-        <img src="img/home/whyUs.png" class="linear-img" alt="dev">
+        <img src="img/home/whyUs.png" class="hidden md:block linear-img  md:w-full" alt="dev">
 
-        <div class="mt-auto">
-            <h3 class="font-bold text-3xl text-gray-800 mb-5">
-                Nos avantages
-            </h3>
+        <div class="grid grid-cols-2">
 
-            <div class="flex flex-col gap-5">
-                @for(avantage of avantageCards; track $index){
-
-                    <div>
-                        <span class="text-primary text-2xl font-bold">0{{$index+1}}</span>
-                        <h4 class="font-bold text-xl text-gray-800">{{avantage.title}}</h4>
-                        <p class="text-gray-700">{{avantage.desc}}</p>
-                    </div>
-                }
+            <img src="img/home/whyUs.png" class="linear-img md:hidden " alt="dev">
+    
+            <div class="mt-auto">
+                <h3 class="font-bold text-3xl text-gray-800 mb-5">
+                    Nos avantages
+                </h3>
+    
+                <div class="flex flex-col gap-5">
+                    @for(avantage of avantageCards; track $index){
+    
+                        <div>
+                            <span class="text-primary text-2xl font-bold">0{{$index+1}}</span>
+                            <h4 class="font-bold text-xl text-gray-800">{{avantage.title}}</h4>
+                            <p class="text-gray-700">{{avantage.desc}}</p>
+                        </div>
+                    }
+                </div>
+                    
             </div>
-                
         </div>
+
 
     </div>
 </section>
 
-<section class="overflow-hidden min-h-120 h-150 ">
+<section class="overflow-hidden min-h-120 bg-gray-50 py-10">
     <my-container class="h-full">
 
         <separator-design></separator-design>
-        <div class="flex flex-col items-center h-full">
+        <div class="flex flex-col items-center ">
 
             <div class="py-5 text-center w-[60%] mb-10">
                 <span class="font-accent text-primary">Notre Methode</span>
@@ -215,27 +221,58 @@
                 </p> -->
             </div>
         </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">    
+            @for(processCard of processCards; track $index){
+                <!-- La carte : snap-center et shrink-0 pour le mobile, w-full réinitialisé sur ordinateur -->
+                <div class="relative overflow-hidden shadow hover:shadow-2xl transition-shadow duration-300 border border-gray-200 bg-white rounded-2xl flex flex-col gap-1 min-[768px]:gap-2 items-center justify-center text-center text-gray-700  min-h-30 aspect-square  sm:min-w-[60%] md:min-w-0 md:w-full px-1 min-[768px]:px-5 snap-center shrink-0">
+                    <span class="text-primary font-bold">{{processCard.subtitle}}</span>
+                    <h3 class="font-bold text-lg min-[768px]:text-xl text-gray-800">{{processCard.title}}</h3>
+                    <p class="text-sm min-[768px]:text-md  z-2">{{processCard.desc}}</p>
+                    <img src="img/home/balls-design.svg" class="z-1 w-35 absolute -bottom-10 -left-5 " alt="design asset">
+                </div>
+            }
+            
+        </div>
     </my-container>
-    <swiper-container
+    <!-- Le parent : Grille sur grand écran, Carrousel Scroll+Snap sur mobile -->
+
+
+    <!-- <swiper-container
           class="mySwiper"
           pagination="true"
           pagination-clickable="true"
           space-between="10"
-          slides-per-view="4"
+          slides-per-view="1"
+          [breakpoints]="{
+                '640': {
+                slidesPerView: 2,
+                spaceBetween: 10
+                },
+                '768': {
+                slidesPerView: 3,
+                spaceBetween: 15
+                },
+                '1024': {
+                slidesPerView: 4,
+                spaceBetween: 20
+                }
+            }"
           autoplay="true"
         >
         @for(processCard of processCards; track $index){
 
+        <div class="shadow hover:shadow-2xl transition-shadow duration-300 border border-gray-200 bg-white rounded-2xl flex flex-col gap-2 items-center justify-center text-center text-gray-700 aspect-square w-full px-5">
+            <span class="text-primary">{{processCard.subtitle}}</span>
+            <h3 class="font-bold text-xl text-gray-800">{{processCard.title}}</h3>
+            <p class="text-md">{{processCard.desc}}</p>
+        </div>
             <swiper-slide>
-                <div class="shadow border border-gray-200 rounded-2xl flex flex-col gap-2 items-center justify-center text-center text-gray-700 aspect-square w-full px-5">
-                    <span>{{processCard.subtitle}}</span>
-                    <h3 class="font-bold text-xl text-gray-800">{{processCard.title}}</h3>
-                    <p class="text-md">{{processCard.desc}}</p>
-                </div>
             </swiper-slide>
         }
           
-    </swiper-container>
+    </swiper-container> -->
+
+    
 </section>
 
 <section class="">
@@ -248,7 +285,7 @@
                 <h2 class="font-heading text-3xl text-gray-800">Nos Projets</h2>
                 <p class="font-body text-gray-700">Explorez quelques-uns des projets que nous avons réalisés pour aider des entreprises de divers secteurs à développer leur présence en ligne.</p>
             </div>
-            <div class="grid grid-cols-4 gap-3 py-10">
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-3 py-10">
                 @for(project of projectCards; track $index){
 
                     <div class="w-full flex flex-col gap-2 shadow-sm hover:shadow-xl  transition-all duration-300 border border-gray-200 bg-white rounded-sm">
@@ -294,65 +331,7 @@
     </my-container>
 </section>
 
-<section class="my-20">
-    <my-container>
-        <div class="flex flex-col items-center w-full">
-            <separator-design></separator-design>
-            <div class="py-5 text-center w-[60%] mb-10">
-                <span class="font-accent text-primary">Pourquoi nous choisir</span>
-                <h2 class="font-heading text-3xl text-gray-800">Bien plus qu'un site web : un véritable levier de croissance pour votre entreprise.</h2>
-                <!-- <h2 class="font-bold">Bien plus qu'un site web : un véritable levier de croissance pour votre entreprise.</h2> -->
-                <p class="font-body text-gray-800">
-                    Nous concevons des sites web modernes, performants et pensés pour attirer des clients, renforcer votre crédibilité et accompagner le développement de votre activité.
-                </p>
-            </div>
 
-            <div class="flex flex-col">
-                <div class="relative flex gap-20 items-center">
-                    <p class="absolute font-body w-[50%] text-xl text-gray-700 top-50 left-20">Chaque projet est conçu sur mesure pour répondre aux objectifs de votre entreprise. De la stratégie à la mise en ligne, nous combinons design, performance, référencement et expérience utilisateur afin de créer un site web qui génère de réels résultats.</p>
-                    <img src="img/home/why-choose-us/01.jpeg" class="w-full" alt="">
-                </div>
-                <!-- <div>
-                    <div>
-                        <span>Performance</span>
-                        <h3>Des sites rapides et performants</h3>
-                        <p>Nous optimisons chaque page pour offrir des temps de chargement rapides et une expérience fluide sur tous les appareils.</p>
-                    </div>
-
-                    <div>
-                        <span>Responsive Design</span>
-                        <h3>Une expérience parfaite sur tous les écrans</h3>
-                        <p>Votre site s'adapte automatiquement aux smartphones, tablettes et ordinateurs pour offrir une navigation optimale.</p>
-                    </div>
-
-                    <div>
-                        <span>SEO</span>
-                        <h3>Pensé pour être trouvé sur Google</h3>
-                        <p>Nous intégrons les meilleures pratiques du référencement naturel afin d'améliorer votre visibilité et d'attirer davantage de visiteurs qualifiés.</p>
-                    </div>
-
-                    <div>
-                        <span>Design</span>
-                        <h3>Une identité visuelle qui inspire confiance</h3>
-                        <p>Nous créons un design moderne et personnalisé qui valorise votre marque et renforce votre crédibilité.</p>
-                    </div>
-
-                    <div>
-                        <span>Sécurité</span>
-                        <h3>Un site fiable et sécurisé</h3>
-                        <p>Nous mettons en place les bonnes pratiques de sécurité pour protéger votre site et les données de vos visiteurs.</p>
-                    </div>
-
-                    <div>
-                        <span>Accompagnement</span>
-                        <h3>Un partenaire à vos côtés</h3>
-                        <p>Nous vous accompagnons avant, pendant et après la mise en ligne pour assurer le succès de votre présence en ligne.</p>
-                    </div>
-                </div> -->
-            </div>
-        </div>
-    </my-container>
-</section>
 
 <section class="relative " style="background-position: 0 20px;">
     <!-- <div class="bg-black/30 w-full h-full absolute top-0 z-2"></div> -->
@@ -373,7 +352,7 @@
       [ease]="60"
     >
 
-        <div class="w-full h-80 flex items-center justify-center bg-gray-100">
+        <div class="w-full py-10 flex items-center justify-center bg-gray-100">
             <div class="w-[40%] z-3 flex flex-col items-center text-center gap-2.5">
                 <h2 class="text-3xl font-heading text-gray-800">Prêt à donner vie à votre projet web ?</h2>
                 <p class="text-gray-700">Offrez à votre entreprise un site web moderne, performant et conçu pour atteindre vos objectifs. Contactez-nous dès aujourd'hui : nous vous répondons rapidement et vous accompagnons à chaque étape de votre projet.</p>
