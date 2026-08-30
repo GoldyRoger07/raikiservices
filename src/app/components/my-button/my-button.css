@@ -1,3 +1,21 @@
 :host{
     color: #714f31;
 }
+
+.btn-content{
+    transform: translateX(16px);
+    transition: transform 300ms ease-in-out;
+}
+
+.btn-content i{
+    opacity: 0;
+    transition: opacity 300ms ease-in-out;
+}
+
+button:hover .btn-content i{
+    opacity: 1;
+}
+
+button:hover .btn-content{
+    transform: translateX(0px);
+}

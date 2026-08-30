@@ -69,26 +69,10 @@
       <ul class="hidden items-center gap-8 lg:flex">
         @for (item of navItems; track item.label) {
 
-          @if(item.label.toLocaleLowerCase() === "services"){
-            <li>
-              <a
-                
-                (mouseover)="op.toggle($event)"
-                class="text-sm font-medium text-foreground transition-colors hover:text-primary cursor-pointer"
-              >
-                {{ item.label }}
-              </a>
-            </li>
-          }@else if(item.label.toLocaleLowerCase() === "projets"){
-            <li>
-              <a
-                
-                (mouseover)="op2.toggle($event)"
-                class="text-sm font-medium text-foreground transition-colors hover:text-primary cursor-pointer"
-              >
-                {{ item.label }}
-              </a>
-            </li>
+          @if(item.children && item.children.length > 0){
+              <li>
+                <my-dropdown [items]="item.children" [label]="item.label"></my-dropdown>
+              </li>
           }@else {
             <li>
               <a
@@ -165,7 +149,7 @@
         <!-- Bouton menu -->
         <button
           type="button"
-          class="inline-flex h-10 w-10 items-center justify-center rounded-lg text-gray-700 transition-colors hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-800"
+          class="inline-flex h-10 w-10 items-center justify-center rounded text-gray-700 bg-primary transition-colors hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-800"
           [attr.aria-expanded]="menuOpen()"
           aria-controls="mobile-menu"
           aria-label="Ouvrir le menu"

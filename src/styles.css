@@ -117,3 +117,13 @@
 .fade-up,.blur-up,.fade-right,.fade-left{
   transition-delay: calc((sibling-index() - 1) * 200ms);
 }
+
+.linear-img{
+  /* Version standard pour le futur */
+  mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
+  mask-repeat: no-repeat;
+
+  /* Version Webkit requise pour Chrome, Safari et Edge actuellement */
+  -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent 95%);
+  -webkit-mask-repeat: no-repeat;
+}

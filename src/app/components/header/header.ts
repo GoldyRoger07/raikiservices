@@ -7,16 +7,18 @@ import { MyButton } from "../my-button/my-button";
 // import { My3dButton } from "../buttons/my3d-button/my3d-button";
 import { PopoverModule } from 'primeng/popover';
 import { RouterLink } from '@angular/router';
+import { NavItem } from '../../models/nav-item.model';
+import { Dropdown } from "../dropdown/dropdown";
 
 
-interface NavItem {
-  label: string;
-  link: string;
-}
+// interface NavItem {
+//   label: string;
+//   link: string;
+// }
 
 @Component({
   selector: 'my-header',
-  imports: [Container, MyButton, PopoverModule, RouterLink],
+  imports: [Container, MyButton, PopoverModule, RouterLink, Dropdown],
   templateUrl: './header.html',
   styleUrl: './header.css',
 })
@@ -37,8 +39,34 @@ export class Header {
 
   protected readonly navItems: NavItem[] = [
     { label: 'A propos', link: '/a-propos' },
-    { label: 'Services', link: '#' },
-    { label: 'Projets', link: '#' },
+    { label: 'Services', children: [
+      {
+        label: 'Web Design',
+        subtitle: 'Des sites web personnaliser qui transforme vos visiteurs en clients',
+        url: '/sites-web',
+        icon: 'pi pi-desktop'
+      },
+      {
+        label: 'SEO',
+        subtitle: 'Améliorez votre classement sur Google et générez du trafic organique.',
+        url: '/seo',
+        icon: 'pi pi-search-plus'
+      }
+    ] },
+    { label: 'Projets', children:[
+      {
+        label: 'Études de cas',
+        subtitle: 'Des résultats détaillés issus de projets réalisés pour de vrais clients.',
+        url: '/etudes-de-cas',
+        icon: 'pi pi-file'
+      },
+      {
+        label: 'Portfolio',
+        subtitle: 'Découvrez notre galerie de créations de sites web.',
+        url: '/portfolio',
+        icon: 'pi pi-th-large'
+      }
+    ] },
     { label: 'Tarifs', link: '/tarifs' }, 
     { label: 'Contact', link: '/contact' },
   ];

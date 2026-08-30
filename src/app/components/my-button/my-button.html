@@ -1,3 +1,6 @@
-<button class="rounded-full bg-primary/15 p-3 border border-primary flex items-center gap-3  mx-auto md:mx-0" [class.w-full]="fluid()">
-           <ng-content></ng-content>
+<button [class]="myClasses" [class.w-full]="fluid()">
+        <div class="btn-content flex items-center gap-1 w-fit">
+            <ng-content></ng-content>
+            <i class="pi pi-arrow-right translate-y-0.5" style="font-size: 18px;"></i>
+        </div>   
 </button>

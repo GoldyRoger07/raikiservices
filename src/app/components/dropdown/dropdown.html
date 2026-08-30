@@ -1,0 +1,27 @@
+<div class="dropdown">
+    <button class="dropdown-trigger text-gray-800 flex items-center" (click)="toggleDropdown(label(), $event)">
+        <span>
+
+            {{label()}}
+        </span>
+        <i class="pi pi-angle-down translate-y-0.5" ></i>
+    </button>
+  
+  <ul class="dropdown-menu">
+    <!-- Syntaxe Angular moderne (@for) -->
+    @for (item of items(); track item) {
+      <li>
+        <a [routerLink]="item.url" class="grid grid-cols-[50px_1fr] gap-3 h-fit">
+                    <span style="aspect-ratio: 1 / 1;" class="flex shrink-0 items-center justify-center w-full  bg-primary/50 rounded-sm">
+                      <i [class]="item.icon" style="font-size: 24px;"></i>
+                    </span>
+                    <div class="flex flex-col">
+                      <span class="font-heading text-gray-800">{{item.label}}</span>
+                      <span class="font-body text-gray-500 text-sm">{{item.subtitle}}</span>
+                    </div>
+        </a>
+      </li>
+        <!-- <a [href]="item.url">{{ item.label }}</a></li> -->
+    }
+  </ul>
+</div>

@@ -1,0 +1,94 @@
+/* Conteneur principal */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Style du bouton déclencheur */
+.dropdown-trigger {
+  /* background-color: #3498db; */
+  /* color: white; */
+  padding: 10px 15px;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+
+}
+
+/* 1. Contenu invisible et décalé par défaut */
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: white;
+  min-width: 300px !important;
+  box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+  padding: 12px 0;
+  margin: 0;
+  list-style: none;
+  z-index: 1;
+  border-radius: 4px;
+
+  /* --- ZONE D'ANIMATION --- */
+  opacity: 0;                /* Rend le menu invisible */
+  visibility: hidden;         /* Empêche de cliquer dessus quand il est caché */
+  transform: translateY(-10px); /* Décale le menu de 10px vers le haut */
+  transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s; /* Durée de l'animation (0.3 seconde) */
+}
+
+/* Style des liens du menu */
+.dropdown-menu li a {
+  color: #333;
+  padding: 8px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-menu li a:hover {
+  background-color: #f1f1f1;
+}
+
+/* 2. L'ACTION AU SURVOL : Rendre visible et repositionner */
+.dropdown:hover .dropdown-menu {
+  opacity: 1;               /* Devient opaque (fondu) */
+  visibility: visible;      /* Devient cliquable */
+  transform: translateY(0);  /* Reprend sa place normale (glissement vers le bas) */
+}
+
+.dropdown:hover .dropdown-trigger i{
+    transform: rotate(180deg);
+}
+
+ .dropdown-trigger i{
+    transition: transform 300ms ease-in-out;
+    font-size: 24px;
+}
+
+@media (max-width: 768px) {
+ /* Style du menu déroulant interne sur Mobile */
+  .dropdown-menu {
+    display: none; /* On repasse sur un système classique d'affichage block pour le mobile */
+    background-color: #34495e;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .dropdown-menu li a {
+    color: #ecf0f1;
+    padding: 12px 30px; /* Décalage à droite pour donner un effet imbriqué */
+    display: block;
+    text-decoration: none;
+  }
+
+  /* Quand le dropdown est cliqué sur mobile : on l'affiche */
+  .dropdown.mobile-active .dropdown-menu {
+    display: block;
+  }
+
+  /* Rotation de la flèche sur mobile */
+  .dropdown.mobile-active .arrow {
+    transform: rotate(180deg);
+  }
+
+}

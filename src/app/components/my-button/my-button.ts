@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, Input, input } from '@angular/core';
 
 @Component({
   selector: 'my-button',
@@ -9,4 +9,11 @@ import { Component, input } from '@angular/core';
 export class MyButton {
 
   fluid = input(false)
+
+  @Input() bgColor: string = 'bg-primary';
+  @Input() textColor: string = 'text-white';
+
+  get myClasses(): string{
+    return `rounded-full p-3 flex items-center gap-3  mx-auto md:mx-0 ${this.bgColor} ${this.textColor}`;
+  }
 }

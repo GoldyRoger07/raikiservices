@@ -1,19 +1,18 @@
 <my-header/>
 
-<section class="bg-[url('/img/hero-raiki.png')]  bg-cover bg-no-repeat" style="background-position: 0 80%;">
+<section class="lg:bg-[url('/img/hero-raiki.png')]  bg-cover bg-no-repeat" style="background-position: 0 80%;">
     <my-container>
         <div class="h-screen flex flex-col gap-2 justify-center items-center md:items-start">
             <div class=" w-full md:w-[50%] flex flex-col gap-2 text-center md:text-start">
 
                 <!-- <h1 class="font-accent text-gray-800 text-4xl"> -->
                     <om-typewriter
-        [words]="[title1]"
-        [disableLoop]="true"
-        [writeDelay]="100"
-        [writeSpeed]="120"
-        textCursorColor="transparent"
-        styleClass="font-accent text-gray-800 text-4xl"
-    ></om-typewriter>
+                            [words]="[title1]"
+                            [disableLoop]="true"
+                            [writeDelay]="100"
+                            [writeSpeed]="120"
+                            textCursorColor="transparent"
+                            styleClass="font-accent text-gray-800 text-2xl lg:text-4xl"></om-typewriter>
     <!-- <om-typewriter
         [words]="[title2]"
         [disableLoop]="true"
@@ -57,58 +56,64 @@
     <!-- <img src="img/hero-raiki.svg" class="absolute bottom-0 right-0 w-150" alt=""> -->
 </section>
 
-<section class="relative py-10 intro-gradient overflow-hidden h-150">
-    <div class="absolute left-0 top-0 w-full h-full">
-        <my-container>
-            <div class="flex flex-col h-full py-5 text-white">
-                <my-accent-title textColor="text-white">Un site web qui a un objectif</my-accent-title>
-                <h2 class="font-bold text-3xl mt-10">Votre site ne doit pas seulement être beau. Il doit vous rapporter.</h2>
-                <div class="md:w-3/4">
-                    <p class="text-xl">
-                        Un bon site attire l’attention. Un excellent site transforme cette attention en opportunités.
-                    </p>
+<section class=" py-10 intro-gradient overflow-hidden ">
+    <my-container>
+        <my-accent-title textColor="text-white">Un site web qui a un objectif</my-accent-title>
+    </my-container>
+    <div class="flex justify-between h-full pl-5">
 
-                    <p class="text-xl">
-                        Nous concevons chaque projet autour de vos objectifs : visibilité, crédibilité, génération de prospects ou ventes.
-                    </p>
+        <div class=" w-full h-full">
+            <my-container>
+                <div class="flex flex-col h-full py-5 text-white">
+                    
+                    <h2 class="font-bold text-3xl mt-10">Votre site ne doit pas seulement être beau. Il doit vous rapporter.</h2>
+                    <div class="md:w-3/4">
+                        <p class="text-xl">
+                            Un bon site attire l’attention. Un excellent site transforme cette attention en opportunités.
+                        </p>
+    
+                        <p class="text-xl">
+                            Nous concevons chaque projet autour de vos objectifs : visibilité, crédibilité, génération de prospects ou ventes.
+                        </p>
+                    </div>
+    
+    
+    
+                    <div class="flex flex-col mt-10">
+                        <h3 class="text-2xl font-bold">Points clés de nos sites web:</h3>
+                            <ul class="flex flex-col ml-5 mt-5 gap-2 text-xl">
+                                <li class="flex gap-2 items-center">
+                                    <i class="pi pi-check"></i>
+                                    <span>Design professionnel</span>
+                                </li>
+                                <li class="flex gap-2 items-center">
+                                    <i class="pi pi-check"></i>
+                                    <span>Expérience mobile optimisée</span>
+                                </li>
+                                <li class="flex gap-2 items-center">
+                                    <i class="pi pi-check"></i>
+                                    <span>SEO intégré</span>
+                                </li>
+                                <li class="flex gap-2 items-center">
+                                    <i class="pi pi-check"></i>
+                                    <span>Performance rapide</span>
+                                </li>
+                                <li class="flex gap-2 items-center">
+                                    <i class="pi pi-check"></i>
+                                    <span>Pensé pour convertir</span>
+                                </li>
+                            </ul>
+    <!--                         
+                            <div class="border-2 border-white rounded p-5"></div>
+                            <div class="border-2 border-white rounded p-5"></div>
+                            <div class="border-2 border-white rounded p-5"></div> -->
+                    </div>
                 </div>
-
-
-
-                <div class="flex flex-col mt-10">
-                    <h3 class="text-2xl font-bold">Points clés de nos sites web:</h3>
-                        <ul class="flex flex-col ml-5 mt-5 gap-2 text-xl">
-                            <li class="flex gap-2 items-center">
-                                <i class="pi pi-check"></i>
-                                <span>Design professionnel</span>
-                            </li>
-                            <li class="flex gap-2 items-center">
-                                <i class="pi pi-check"></i>
-                                <span>Expérience mobile optimisée</span>
-                            </li>
-                            <li class="flex gap-2 items-center">
-                                <i class="pi pi-check"></i>
-                                <span>SEO intégré</span>
-                            </li>
-                            <li class="flex gap-2 items-center">
-                                <i class="pi pi-check"></i>
-                                <span>Performance rapide</span>
-                            </li>
-                            <li class="flex gap-2 items-center">
-                                <i class="pi pi-check"></i>
-                                <span>Pensé pour convertir</span>
-                            </li>
-                        </ul>
-<!--                         
-                        <div class="border-2 border-white rounded p-5"></div>
-                        <div class="border-2 border-white rounded p-5"></div>
-                        <div class="border-2 border-white rounded p-5"></div> -->
-                </div>
-            </div>
-        </my-container>
+            </my-container>
+        </div>
+    
+        <img src="img/home/dev.png" class=" hidden md:block  h-full max-h-150" alt="dev">
     </div>
-
-    <img src="img/home/dev.png" class="absolute hidden md:block right-0 bottom-5 h-full" alt="dev">
 </section>
 
 <section class="py-20 ">
@@ -171,20 +176,20 @@
 
         <div class="flex flex-col gap-2 items-start">
             <my-accent-title>Pourquoi nous ?</my-accent-title>
-            <h2 class="font-bold text-3xl text-gray-800">Nous ne créons pas des sites. Nous créons des outils pour votre entreprise.</h2>
-            <p class="text-gray-700 text-xl">
+            <h2 class="font-bold text-xl lg:text-3xl text-gray-800">Nous ne créons pas des sites. Nous créons des outils pour votre entreprise.</h2>
+            <p class="text-gray-700 text-lg lg:text-xl">
                 Chaque décision de design, de contenu et de technologie est prise avec un objectif : faire de votre site un véritable investissement pour votre entreprise.
             </p>
         </div>
 
         <img src="img/home/whyUs.png" class="hidden md:block linear-img  md:w-full" alt="dev">
 
-        <div class="grid grid-cols-2">
-
-            <img src="img/home/whyUs.png" class="linear-img md:hidden " alt="dev">
+        <div class="grid grid-cols-2 relative">
+            
+            <img src="img/home/whyUs.png" class="sticky top-0 linear-img max-[450px]:hidden  md:hidden " alt="dev">
     
-            <div class="mt-auto">
-                <h3 class="font-bold text-3xl text-gray-800 mb-5">
+            <div class="mt-auto max-[450px]:col-span-2 md:col-span-2">
+                <h3 class="font-bold text-xl lg:text-3xl text-gray-800 my-5">
                     Nos avantages
                 </h3>
     
@@ -192,9 +197,9 @@
                     @for(avantage of avantageCards; track $index){
     
                         <div>
-                            <span class="text-primary text-2xl font-bold">0{{$index+1}}</span>
-                            <h4 class="font-bold text-xl text-gray-800">{{avantage.title}}</h4>
-                            <p class="text-gray-700">{{avantage.desc}}</p>
+                            <span class="text-primary text-lg lg:text-2xl font-bold">0{{$index+1}}</span>
+                            <h4 class="font-bold text-md lg:text-xl text-gray-800">{{avantage.title}}</h4>
+                            <p class="text-gray-700 text-sm">{{avantage.desc}}</p>
                         </div>
                     }
                 </div>
@@ -210,11 +215,11 @@
     <my-container class="h-full">
 
         <separator-design></separator-design>
-        <div class="flex flex-col items-center ">
+        <div class="flex flex-col items-center mx-2">
 
-            <div class="py-5 text-center w-[60%] mb-10">
+            <div class="py-5 text-center w-full lg:w-[60%] mb-10">
                 <span class="font-accent text-primary">Notre Methode</span>
-                <h2 class="font-heading text-3xl text-gray-800">De l’idée au lancement, simplement.</h2>
+                <h2 class="font-bold text-xl lg:text-3xl text-gray-800">De l’idée au lancement, simplement.</h2>
                 <!-- <h2 class="font-bold">Bien plus qu'un site web : un véritable levier de croissance pour votre entreprise.</h2> -->
                 <!-- <p class="font-body text-gray-800">
                     Nous concevons des sites web modernes, performants et pensés pour attirer des clients, renforcer votre crédibilité et accompagner le développement de votre activité.
@@ -282,7 +287,7 @@
             <div class="text-center w-[70%] py-5">
 
                 <!-- <span>Ce que nous faisons</span> -->
-                <h2 class="font-heading text-3xl text-gray-800">Nos Projets</h2>
+                <h2 class="font-bold text-3xl text-gray-800">Nos Projets</h2>
                 <p class="font-body text-gray-700">Explorez quelques-uns des projets que nous avons réalisés pour aider des entreprises de divers secteurs à développer leur présence en ligne.</p>
             </div>
             <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-3 py-10">
@@ -352,10 +357,10 @@
       [ease]="60"
     >
 
-        <div class="w-full py-10 flex items-center justify-center bg-gray-100">
-            <div class="w-[40%] z-3 flex flex-col items-center text-center gap-2.5">
-                <h2 class="text-3xl font-heading text-gray-800">Prêt à donner vie à votre projet web ?</h2>
-                <p class="text-gray-700">Offrez à votre entreprise un site web moderne, performant et conçu pour atteindre vos objectifs. Contactez-nous dès aujourd'hui : nous vous répondons rapidement et vous accompagnons à chaque étape de votre projet.</p>
+        <div class="w-full mx:5 lg:mx-0 py-10 flex items-center justify-center bg-gray-100">
+            <div class="lg:w-[40%] z-3 flex flex-col items-center text-center gap-2.5">
+                <h2 class="text-xl lg:text-3xl font-bold text-gray-800">Prêt à donner vie à votre projet web ?</h2>
+                <p class="text-sm text-gray-700">Offrez à votre entreprise un site web moderne, performant et conçu pour atteindre vos objectifs. Contactez-nous dès aujourd'hui : nous vous répondons rapidement et vous accompagnons à chaque étape de votre projet.</p>
                 <div>
                     <my-button>Contactez-nous</my-button>
                     
