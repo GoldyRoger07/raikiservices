@@ -7,15 +7,15 @@
         <i class="pi pi-angle-down translate-y-0.5" ></i>
     </button>
   
-  <ul class="dropdown-menu">
+  <ul class="dropdown-menu rounded-[12px]">
     <!-- Syntaxe Angular moderne (@for) -->
     @for (item of items(); track item) {
       <li>
-        <a [routerLink]="item.url" class="grid grid-cols-[50px_1fr] gap-3 h-fit">
-                    <span style="aspect-ratio: 1 / 1;" class="flex shrink-0 items-center justify-center w-full  bg-primary/50 rounded-sm">
-                      <i [class]="item.icon" style="font-size: 24px;"></i>
+        <a [routerLink]="item.url" class="grid grid-cols-[42px_1fr] gap-3.5 h-fit py-3.5 px-4 rounded-[12px]">
+                    <span style="aspect-ratio: 1 / 1;" class="flex shrink-0 items-center justify-center w-full  bg-primary/50 rounded-[10px] ">
+                      <i [class]="item.icon" style="font-size: 20px;"></i>
                     </span>
-                    <div class="flex flex-col">
+                    <div class="flex flex-col text-nowrap">
                       <span class="font-heading text-gray-800">{{item.label}}</span>
                       <span class="font-body text-gray-500 text-sm">{{item.subtitle}}</span>
                     </div>
