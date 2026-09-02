@@ -1,4 +1,7 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit, signal } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit, PLATFORM_ID, inject, signal } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { SeoService } from '../../services/seo.service';
+import { pageSeo } from '../../config/content/seo-pages';
 import { Header } from "../../components/header/header";
 import { Footer } from "../../components/footer/footer";
 import { Container } from "../../components/container/container";
@@ -23,7 +26,10 @@ import { CommonModule } from '@angular/common';
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export default class Home implements OnInit{
-  
+
+  // Particules rendues au navigateur uniquement (canvas incompatible prerender).
+  protected readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
+  private readonly seo = inject(SeoService);
 
   title1 = "Nous créons des sites web modernes qui rendent votre entreprise plus visible et attirent plus de clients."
   title2 = " plus de visibilité pour votre entreprise."
@@ -132,6 +138,8 @@ export default class Home implements OnInit{
   
 
   ngOnInit(): void {
+    this.seo.update(pageSeo.home);
+
     setTimeout(()=>{
       this.cursorColor1.set("transparent")
       this.cursorColor2.set("#1e2939")

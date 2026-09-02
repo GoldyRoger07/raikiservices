@@ -23,7 +23,7 @@
         styleClass="font-accent text-gray-800 text-4xl"
     ></om-typewriter> -->
                     <!-- Des sites web qui font grandir votre entreprise</h1> -->
-                <p class="font-body text-gray-700">Développement de sites vitrines, boutiques e-commerce et applications web rapides, sécurisées et optimisées pour le référencement.</p>
+                <p class="font-body text-gray-700">Développement de sites vitrines, boutiques e-commerce ,applications web rapides, sécurisées et optimisées pour le référencement.</p>
                 <!-- <p>Nous concevons des sites web modernes, rapides et optimisés pour tous les appareils, pensés pour renforcer votre présence en ligne et attirer plus de clients. De la stratégie à la mise en ligne, nous vous accompagnons à chaque étape de votre projet.</p> -->
                 <my-button>
                     <span class="w-full text-center">
@@ -349,30 +349,33 @@
         </div>
     </div> -->
 
-    <om-particles
-      [quantity]="150"
-      [size]="3"
-      [circleColor]="'#C89A2D'"
-      [staticity]="70"
-      [ease]="60"
-    >
+    <!-- Particules décoratives au navigateur uniquement ; le contenu reste
+         prérendu pour le SEO via le template partagé. -->
+    @if (isBrowser) {
+      <om-particles
+        [quantity]="150"
+        [size]="3"
+        [circleColor]="'#C89A2D'"
+        [staticity]="70"
+        [ease]="60"
+      >
+        <ng-container [ngTemplateOutlet]="homeCta" />
+      </om-particles>
+    } @else {
+      <ng-container [ngTemplateOutlet]="homeCta" />
+    }
+</section>
 
-        <div class="w-full mx:5 lg:mx-0 py-10 flex items-center justify-center bg-gray-100">
-            <div class="lg:w-[40%] z-3 flex flex-col items-center text-center gap-2.5">
-                <h2 class="text-xl lg:text-3xl font-bold text-gray-800">Prêt à donner vie à votre projet web ?</h2>
-                <p class="text-sm text-gray-700">Offrez à votre entreprise un site web moderne, performant et conçu pour atteindre vos objectifs. Contactez-nous dès aujourd'hui : nous vous répondons rapidement et vous accompagnons à chaque étape de votre projet.</p>
-                <div>
-                    <my-button>Contactez-nous</my-button>
-                    
-                </div>
+<ng-template #homeCta>
+    <div class="w-full mx:5 lg:mx-0 py-10 flex items-center justify-center bg-gray-100">
+        <div class="lg:w-[40%] z-3 flex flex-col items-center text-center gap-2.5">
+            <h2 class="text-xl lg:text-3xl font-bold text-gray-800">Prêt à donner vie à votre projet web ?</h2>
+            <p class="text-sm text-gray-700">Offrez à votre entreprise un site web moderne, performant et conçu pour atteindre vos objectifs. Contactez-nous dès aujourd'hui : nous vous répondons rapidement et vous accompagnons à chaque étape de votre projet.</p>
+            <div>
+                <my-button>Contactez-nous</my-button>
             </div>
         </div>
-      <!-- <div class="container-wrapper">
-          <h1 class="particles-title">
-              Meteors
-          </h1>
-      </div> -->
-    </om-particles>
-</section>
+    </div>
+</ng-template>
 
 <my-footer/>

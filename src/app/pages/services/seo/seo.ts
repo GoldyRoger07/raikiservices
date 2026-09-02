@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
+import { SeoService } from '../../../services/seo.service';
+import { pageSeo } from '../../../config/content/seo-pages';
 import { Header } from "../../../components/header/header";
 import { HeroSection } from "../../../components/hero-section/hero-section";
 import { Footer } from "../../../components/footer/footer";
@@ -13,7 +15,13 @@ import { SeparatorDesign } from "../../../components/separator-design/separator-
   templateUrl: './seo.html',
   styleUrl: './seo.css',
 })
-export default class Seo {
+export default class Seo implements OnInit {
+  private readonly seo = inject(SeoService);
+
+  ngOnInit(): void {
+    this.seo.update(pageSeo.seo);
+  }
+
 
   serviceCards: CardData[] = [
     {

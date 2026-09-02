@@ -1,4 +1,7 @@
-import { Component, HostListener, signal } from '@angular/core';
+import { Component, HostListener, OnInit, PLATFORM_ID, inject, signal } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { SeoService } from '../../services/seo.service';
+import { pageSeo } from '../../config/content/seo-pages';
 import { Header } from "../../components/header/header";
 import { HeroSection } from "../../components/hero-section/hero-section";
 import { Footer } from "../../components/footer/footer";
@@ -15,7 +18,16 @@ import { AnimateOnScrollDirective } from "../../directives/animate-on-scroll";
   templateUrl: './about-us.html',
   styleUrl: './about-us.css',
 })
-export default class AboutUs {
+export default class AboutUs implements OnInit {
+
+  // La timeline (@omnedia/ngx-timeline) accède à `window` à l'init : rendue au
+  // navigateur uniquement, avec repli prérendu pour garder le contenu indexable.
+  protected readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
+  private readonly seo = inject(SeoService);
+
+  ngOnInit(): void {
+    this.seo.update(pageSeo.about);
+  }
 
   // Stocke la position de la souris
   coords = signal({ x: 0, y: 0 });

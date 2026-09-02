@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
+import { SeoService } from '../../services/seo.service';
+import { pageSeo } from '../../config/content/seo-pages';
 import { HeroSection } from "../../components/hero-section/hero-section";
 import { Header } from "../../components/header/header";
 import { Footer } from "../../components/footer/footer";
@@ -13,7 +15,13 @@ import { MyButton } from "../../components/my-button/my-button";
   templateUrl: './pricing.html',
   styleUrl: './pricing.css',
 })
-export default class Pricing {
+export default class Pricing implements OnInit {
+  private readonly seo = inject(SeoService);
+
+  ngOnInit(): void {
+    this.seo.update(pageSeo.pricing);
+  }
+
 
   pricingCards: CardData[] = [
     {

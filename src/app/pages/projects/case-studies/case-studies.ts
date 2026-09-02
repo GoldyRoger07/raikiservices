@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
+import { SeoService } from '../../../services/seo.service';
+import { pageSeo } from '../../../config/content/seo-pages';
 import { Header } from "../../../components/header/header";
 import { Footer } from "../../../components/footer/footer";
 import { HeroSection } from "../../../components/hero-section/hero-section";
@@ -13,7 +15,13 @@ import { CardData } from '../../../models/card-data.model';
   templateUrl: './case-studies.html',
   styleUrl: './case-studies.css',
 })
-export default class CaseStudies {
+export default class CaseStudies implements OnInit {
+  private readonly seo = inject(SeoService);
+
+  ngOnInit(): void {
+    this.seo.update(pageSeo.caseStudies);
+  }
+
 
   projets: CardData[] = [
     {

@@ -1,14 +1,50 @@
 <!doctype html>
-<html lang="en">
+<html lang="fr">
 <head>
   <meta charset="utf-8">
-  <title>RaikiservicesSsr</title>
+  <title>Création de site web & SEO | RaikiServices</title>
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#C89A2D">
+
+  <!--
+    Métadonnées par défaut, niveau site. Elles servent de repli : le SeoService
+    (Phase 2) les remplace par page (title, description, canonical, og:url).
+  -->
+  <meta name="description" content="Agence web : sites modernes, rapides et optimisés SEO pour rendre votre entreprise visible et attirer plus de clients. Demandez un devis.">
+
+  <!-- Open Graph -->
+  <meta property="og:site_name" content="RaikiServices">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="fr_FR">
+  <meta property="og:title" content="Création de site web & SEO | RaikiServices">
+  <meta property="og:description" content="Agence web : sites modernes, rapides et optimisés SEO pour rendre votre entreprise visible et attirer plus de clients.">
+  <!-- TODO Phase 3 : remplacer par une image de partage dédiée 1200×630. -->
+  <meta property="og:image" content="/img/logo.png">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Création de site web & SEO | RaikiServices">
+  <meta name="twitter:description" content="Agence web : sites modernes, rapides et optimisés SEO pour rendre votre entreprise visible et attirer plus de clients.">
+  <meta name="twitter:image" content="/img/logo.png">
+
   <link rel="icon" type="image/png" href="favicon-rs-32.png">
+
+  <!-- Données structurées : identité du site (niveau global).
+       Le schéma Organization/LocalBusiness (Phase 3, données entreprise) viendra
+       s'ajouter séparément. -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "RaikiServices",
+    "url": "https://www.raikiservices.com"
+  }
+  </script>
 </head>
 <body>
   <app-root></app-root>
-  <script src="https://cdn.jsdelivr.net/npm/swiper@14.0.1/swiper-element-bundle.min.js"></script>
+  <!-- Chargé en defer pour ne pas bloquer le rendu (LCP / Core Web Vitals). -->
+  <script defer src="https://cdn.jsdelivr.net/npm/swiper@14.0.1/swiper-element-bundle.min.js"></script>
 </body>
 </html>

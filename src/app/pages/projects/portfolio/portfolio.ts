@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
+import { SeoService } from '../../../services/seo.service';
+import { pageSeo } from '../../../config/content/seo-pages';
 import { CtaSection } from "../../../components/cta-section/cta-section";
 import { Container } from "../../../components/container/container";
 import { SeparatorDesign } from "../../../components/separator-design/separator-design";
@@ -15,7 +17,13 @@ import { Image } from "primeng/image";
   templateUrl: './portfolio.html',
   styleUrl: './portfolio.css',
 })
-export default class Portfolio {
+export default class Portfolio implements OnInit {
+  private readonly seo = inject(SeoService);
+
+  ngOnInit(): void {
+    this.seo.update(pageSeo.portfolio);
+  }
+
 
 
     projectCards: CardData[] = [
