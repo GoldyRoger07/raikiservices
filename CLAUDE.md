@@ -120,7 +120,12 @@ Formatting is Prettier (`.prettierrc`): 100 col, single quotes, `angular` parser
   editor (`pages/admin/blog-editor`, routed as `blog/nouveau` **before** `blog/:id`) — a
   dialog like the other resources would be too cramped for an article body. Slug and
   `publishedAt` are the backend's to set; publishing notifies once, on the draft→published
-  transition only. No public `/blog` page exists on the marketing site yet.
+  transition only. The public face is `src/app/pages/blog/` — `/blog` (list, paginated and
+  searchable through `?page=&q=`) and `/blog/:slug` (article). Both are `RenderMode.Server`,
+  not prerendered: the content changes between deploys, and the build must not depend on the
+  backend being up. The article body is stored raw by the editor, so the page renders it as
+  sanitised HTML or as plain-text paragraphs depending on what it looks like
+  (`pages/blog/blog-content.ts`).
 - Lists are server-driven: `p-table` in `[lazy]` mode maps `first`/`rows`/`sortField`/
   `sortOrder` onto the backend's `PageQuery`. Only the fields each backend service whitelists
   are sortable — the service files document them.

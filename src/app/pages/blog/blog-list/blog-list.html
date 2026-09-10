@@ -1,0 +1,301 @@
+<my-header />
+
+<my-hero-section
+  title="Le blog Raiki Services"
+  desc="Nos conseils sur la création de sites web, le référencement et la présence en ligne : des articles concrets, écrits pour les entreprises qui veulent attirer plus de clients."
+/>
+
+<main class="py-10">
+  <my-container>
+    <separator-design />
+
+    <div class="mx-auto my-10 flex w-full flex-col items-center text-center lg:w-[80%]">
+      <span class="font-accent text-primary">Nos articles</span>
+      <h2 class="font-heading text-2xl text-gray-800 lg:text-3xl">
+        Ce que nous apprenons, nous le partageons.
+      </h2>
+      <p class="font-body text-gray-700">
+        Web design, SEO, performance et visibilité locale — de quoi comprendre ce qui fait la
+        différence sur un site web.
+      </p>
+    </div>
+
+    <!-- ──────────────── Recherche ──────────────── -->
+    <!-- L'ancre cadre la page sur la liste après une recherche ou un changement de page. -->
+    <form
+      [id]="articlesAnchor"
+      class="mx-auto mb-10 flex w-full max-w-xl scroll-mt-28 items-center gap-2"
+      (ngSubmit)="submitSearch()"
+    >
+      <label for="blog-search" class="sr-only">Rechercher un article</label>
+      <div class="relative flex-1">
+        <i
+          class="pi pi-search pointer-events-none absolute top-1/2 left-4 -translate-y-1/2 text-gray-400"
+        ></i>
+        <input
+          id="blog-search"
+          type="search"
+          name="q"
+          [(ngModel)]="searchInput"
+          placeholder="Rechercher un article…"
+          class="font-body focus:border-primary w-full rounded-full border border-gray-300 py-3 pr-4 pl-11 text-gray-700 transition-colors outline-none"
+        />
+      </div>
+      <button
+        type="submit"
+        class="bg-primary hover:bg-primary-dark font-body rounded-full px-6 py-3 text-white transition-colors"
+      >
+        Rechercher
+      </button>
+    </form>
+
+    @if (query()) {
+      <p class="font-body mb-8 text-center text-gray-600">
+        {{ totalElements() }}
+        {{ totalElements() > 1 ? 'articles trouvés' : 'article trouvé' }} pour «&nbsp;{{
+          query()
+        }}&nbsp;».
+        <button
+          type="button"
+          class="text-primary underline underline-offset-4"
+          (click)="clearSearch()"
+        >
+          Effacer la recherche
+        </button>
+      </p>
+    }
+
+    <!-- ──────────────── États de chargement, erreur et liste vide ──────────────── -->
+    @if (loading()) {
+      <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+        @for (placeholder of skeletons; track placeholder) {
+          <div class="animate-pulse rounded-3xl border border-gray-200 p-5">
+            <div class="mb-4 h-44 w-full rounded-2xl bg-gray-200"></div>
+            <div class="mb-2 h-4 w-1/3 rounded bg-gray-200"></div>
+            <div class="mb-2 h-5 w-full rounded bg-gray-200"></div>
+            <div class="h-4 w-2/3 rounded bg-gray-200"></div>
+          </div>
+        }
+      </div>
+    } @else if (error()) {
+      <div class="mx-auto max-w-xl rounded-3xl border border-gray-200 p-10 text-center">
+        <i class="pi pi-exclamation-triangle text-primary" style="font-size: 32px"></i>
+        <p class="font-body mt-4 text-gray-700">{{ error() }}</p>
+        <p class="font-body mt-2 text-sm text-gray-600">
+          Réessayez dans un instant, ou
+          <a routerLink="/contact" class="text-primary underline underline-offset-4">écrivez-nous</a
+          >.
+        </p>
+      </div>
+    } @else if (posts().length === 0) {
+      <div class="mx-auto max-w-xl rounded-3xl border border-gray-200 p-10 text-center">
+        <i class="pi pi-inbox text-primary" style="font-size: 32px"></i>
+        <h3 class="font-heading mt-4 text-xl text-gray-800">
+          @if (pastLastPage()) {
+            Cette page n&apos;existe pas
+          } @else if (query()) {
+            Aucun article ne correspond à cette recherche
+          } @else {
+            Les premiers articles arrivent bientôt
+          }
+        </h3>
+        <p class="font-body mt-2 text-gray-600">
+          @if (pastLastPage()) {
+            Le blog compte {{ totalElements() }} {{ totalElements() > 1 ? 'articles' : 'article' }},
+            et vous en demandez une page au-delà de la dernière.
+          } @else if (query()) {
+            Essayez un autre mot-clé, ou parcourez tous nos articles.
+          } @else {
+            Nous préparons nos premiers contenus. En attendant, parlons de votre projet.
+          }
+        </p>
+        <div class="mt-6 flex justify-center">
+          @if (pastLastPage()) {
+            <a
+              routerLink="/blog"
+              [queryParams]="pageLink(0)"
+              class="bg-primary font-body rounded-full px-6 py-3 text-white"
+            >
+              Revenir au début
+            </a>
+          } @else if (query()) {
+            <button
+              type="button"
+              class="bg-primary font-body rounded-full px-6 py-3 text-white"
+              (click)="clearSearch()"
+            >
+              Voir tous les articles
+            </button>
+          } @else {
+            <a routerLink="/contact" class="bg-primary font-body rounded-full px-6 py-3 text-white">
+              Discuter de mon projet
+            </a>
+          }
+        </div>
+      </div>
+    } @else {
+      <!-- ──────────────── Article mis en avant ──────────────── -->
+      @if (featured(); as post) {
+        <a
+          [routerLink]="['/blog', post.slug]"
+          class="group mb-10 grid grid-cols-1 items-center gap-6 rounded-3xl p-5 transition-shadow duration-200 hover:shadow-2xl md:grid-cols-2 md:gap-10 md:p-10"
+        >
+          <div class="overflow-hidden rounded-2xl bg-gray-100">
+            @if (post.coverImage) {
+              <img
+                [src]="post.coverImage"
+                [alt]="post.title"
+                class="h-64 w-full object-cover transition-transform duration-300 group-hover:scale-105 md:h-80"
+              />
+            } @else {
+              <div class="bg-primary/10 flex h-64 w-full items-center justify-center md:h-80">
+                <i class="pi pi-pencil text-primary" style="font-size: 40px"></i>
+              </div>
+            }
+          </div>
+
+          <div class="font-body flex flex-col gap-3 text-gray-700">
+            <div class="flex flex-wrap items-center gap-2 text-sm text-gray-600">
+              <span class="bg-primary/10 text-primary rounded-full px-3 py-1">À la une</span>
+              @if (post.category) {
+                <span class="rounded-full bg-gray-100 px-3 py-1">{{ post.category }}</span>
+              }
+            </div>
+
+            <h3 class="font-heading text-2xl text-gray-800 lg:text-3xl">{{ post.title }}</h3>
+
+            @if (post.excerpt) {
+              <p class="text-gray-700">{{ post.excerpt }}</p>
+            }
+
+            <div class="flex flex-wrap items-center gap-3 text-sm text-gray-600">
+              @if (post.authorName) {
+                <span>{{ post.authorName }}</span>
+                <span aria-hidden="true">•</span>
+              }
+              @if (post.publishedAt) {
+                <time [attr.datetime]="post.publishedAt">{{ formatDate(post.publishedAt) }}</time>
+              }
+            </div>
+
+            <span
+              class="text-primary flex items-center gap-1 transition-all duration-150 group-hover:font-bold"
+            >
+              Lire l&apos;article
+              <i class="pi pi-arrow-right translate-y-[1.4px]"></i>
+            </span>
+          </div>
+        </a>
+      }
+
+      <!-- ──────────────── Grille des articles ──────────────── -->
+      <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+        @for (post of rest(); track post.id) {
+          <a
+            [routerLink]="['/blog', post.slug]"
+            class="group flex flex-col overflow-hidden rounded-3xl border border-gray-200 transition-shadow duration-200 hover:shadow-2xl"
+          >
+            <div class="overflow-hidden bg-gray-100">
+              @if (post.coverImage) {
+                <img
+                  [src]="post.coverImage"
+                  [alt]="post.title"
+                  loading="lazy"
+                  class="h-48 w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                />
+              } @else {
+                <div class="bg-primary/10 flex h-48 w-full items-center justify-center">
+                  <i class="pi pi-pencil text-primary" style="font-size: 32px"></i>
+                </div>
+              }
+            </div>
+
+            <div class="font-body flex flex-1 flex-col gap-2 p-5 text-gray-700">
+              @if (post.category) {
+                <span class="bg-primary/10 text-primary w-fit rounded-full px-3 py-1 text-xs">
+                  {{ post.category }}
+                </span>
+              }
+
+              <h3 class="font-heading text-lg text-gray-800">{{ post.title }}</h3>
+
+              @if (post.excerpt) {
+                <p class="excerpt text-sm text-gray-600">{{ post.excerpt }}</p>
+              }
+
+              <div class="mt-auto flex flex-wrap items-center gap-2 pt-3 text-xs text-gray-600">
+                @if (post.authorName) {
+                  <span>{{ post.authorName }}</span>
+                  <span aria-hidden="true">•</span>
+                }
+                @if (post.publishedAt) {
+                  <time [attr.datetime]="post.publishedAt">{{ formatDate(post.publishedAt) }}</time>
+                }
+              </div>
+            </div>
+          </a>
+        }
+      </div>
+
+      <!-- ──────────────── Pagination ──────────────── -->
+      @if (totalPages() > 1) {
+        <nav class="mt-12 flex justify-center" aria-label="Pagination des articles">
+          <ul class="flex flex-wrap items-center gap-2">
+            @if (page() > 0) {
+              <li>
+                <a
+                  [routerLink]="[]"
+                  [queryParams]="pageLink(page() - 1)"
+                  [fragment]="articlesAnchor"
+                  rel="prev"
+                  class="font-body hover:border-primary hover:text-primary inline-flex items-center gap-1 rounded-full border border-gray-300 px-4 py-2 text-sm text-gray-700 transition-colors"
+                >
+                  <i class="pi pi-arrow-left"></i>
+                  Précédent
+                </a>
+              </li>
+            }
+
+            @for (number of pageNumbers(); track number) {
+              <li>
+                <a
+                  [routerLink]="[]"
+                  [queryParams]="pageLink(number)"
+                  [fragment]="articlesAnchor"
+                  [attr.aria-current]="number === page() ? 'page' : null"
+                  class="font-body inline-block rounded-full border px-4 py-2 text-sm transition-colors"
+                  [class]="
+                    number === page()
+                      ? 'border-primary bg-primary text-white'
+                      : 'border-gray-300 text-gray-700 hover:border-primary hover:text-primary'
+                  "
+                >
+                  {{ number + 1 }}
+                </a>
+              </li>
+            }
+
+            @if (page() < totalPages() - 1) {
+              <li>
+                <a
+                  [routerLink]="[]"
+                  [queryParams]="pageLink(page() + 1)"
+                  [fragment]="articlesAnchor"
+                  rel="next"
+                  class="font-body hover:border-primary hover:text-primary inline-flex items-center gap-1 rounded-full border border-gray-300 px-4 py-2 text-sm text-gray-700 transition-colors"
+                >
+                  Suivant
+                  <i class="pi pi-arrow-right"></i>
+                </a>
+              </li>
+            }
+          </ul>
+        </nav>
+      }
+    }
+  </my-container>
+</main>
+
+<my-cta-section />
+
+<my-footer />

@@ -18,6 +18,13 @@ export const routes: Routes = [
   { path: 'sandbox', loadComponent: () => import('./pages/sandbox/sandbox') },
   { path: 'contact', loadComponent: () => import('./pages/contact/contact') },
 
+  // ──────────────── Blog ────────────────
+  // `:slug` et non `:id` : l'adresse publique d'un article est le slug posé par le backend,
+  // et c'est lui que `/public/v1/blog/:slug` attend. Le chemin doit rester stable une fois
+  // l'article en ligne, sous peine de casser les liens partagés.
+  { path: 'blog', loadComponent: () => import('./pages/blog/blog-list/blog-list') },
+  { path: 'blog/:slug', loadComponent: () => import('./pages/blog/blog-article/blog-article') },
+
   // ──────────────── Pages légales ────────────────
   // Pré-rendues comme le reste du site vitrine : ce sont des pages publiques, que les
   // moteurs doivent pouvoir indexer et que les visiteurs atteignent depuis le pied de page.

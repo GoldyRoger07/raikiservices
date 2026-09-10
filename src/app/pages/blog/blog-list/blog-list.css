@@ -1,0 +1,16 @@
+/* Le champ de recherche natif affiche sa propre croix de remise à zéro dans les navigateurs
+   WebKit : elle double le bouton « Effacer la recherche » et déborde du bord arrondi. */
+input[type='search']::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+/* Chapô des cartes : trois lignes au plus, pour que toutes les cartes d'une rangée gardent
+   la même hauteur quelle que soit la longueur du résumé. */
+.excerpt {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  overflow: hidden;
+}

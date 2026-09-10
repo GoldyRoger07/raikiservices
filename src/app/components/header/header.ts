@@ -72,6 +72,7 @@ export class Header {
         },
       ],
     },
+    { label: 'Blog', link: '/blog' },
     { label: 'Tarifs', link: '/tarifs' },
     { label: 'Contact', link: '/contact' },
   ];

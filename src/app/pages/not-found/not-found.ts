@@ -29,6 +29,7 @@ export default class NotFound implements OnInit {
   protected readonly suggestions = [
     { label: 'Création de sites web', link: '/sites-web' },
     { label: 'Référencement (SEO)', link: '/seo' },
+    { label: 'Blog', link: '/blog' },
     { label: 'Tarifs', link: '/tarifs' },
     { label: 'Études de cas', link: '/etudes-de-cas' },
     { label: 'Portfolio', link: '/portfolio' },

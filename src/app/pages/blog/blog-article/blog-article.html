@@ -1,0 +1,167 @@
+<my-header />
+
+<main class="pt-32 pb-20">
+  <my-container>
+    @if (loading()) {
+      <div class="mx-auto max-w-3xl animate-pulse">
+        <div class="mb-4 h-4 w-1/4 rounded bg-gray-200"></div>
+        <div class="mb-3 h-10 w-full rounded bg-gray-200"></div>
+        <div class="mb-8 h-10 w-2/3 rounded bg-gray-200"></div>
+        <div class="mb-8 h-72 w-full rounded-3xl bg-gray-200"></div>
+        @for (line of skeletonLines; track line) {
+          <div class="mb-3 h-4 w-full rounded bg-gray-200"></div>
+        }
+      </div>
+    } @else if (notFound()) {
+      <div class="mx-auto max-w-2xl text-center">
+        <p class="font-accent text-primary text-6xl md:text-7xl">404</p>
+
+        <h1 class="font-heading mt-4 text-3xl font-bold text-gray-800 md:text-4xl">
+          Cet article n&apos;existe pas
+        </h1>
+
+        <p class="font-body mt-4 text-gray-600">
+          Le lien que vous avez suivi est peut-être erroné, ou l&apos;article a été retiré. Tous nos
+          articles restent accessibles depuis le blog.
+        </p>
+
+        <div class="mt-8 flex flex-wrap justify-center gap-3">
+          <a routerLink="/blog" class="bg-primary font-body rounded-full px-6 py-3 text-white">
+            Voir tous les articles
+          </a>
+          <a
+            routerLink="/contact"
+            class="font-body hover:border-primary hover:text-primary rounded-full border border-gray-300 px-6 py-3 text-gray-700 transition-colors"
+          >
+            Nous écrire
+          </a>
+        </div>
+      </div>
+    } @else if (post(); as article) {
+      <article class="mx-auto max-w-3xl">
+        <!-- ──────────────── En-tête ──────────────── -->
+        <nav class="font-body mb-6 text-sm text-gray-600" aria-label="Fil d'Ariane">
+          <a routerLink="/blog" class="hover:text-primary inline-flex items-center gap-1">
+            <i class="pi pi-arrow-left text-xs"></i>
+            Tous les articles
+          </a>
+        </nav>
+
+        @if (article.category) {
+          <span class="bg-primary/10 text-primary font-body rounded-full px-3 py-1 text-sm">
+            {{ article.category }}
+          </span>
+        }
+
+        <h1 class="font-heading mt-4 text-3xl leading-tight text-gray-800 md:text-4xl">
+          {{ article.title }}
+        </h1>
+
+        @if (article.excerpt) {
+          <p class="font-body mt-4 text-lg text-gray-600">{{ article.excerpt }}</p>
+        }
+
+        <div class="font-body mt-6 flex flex-wrap items-center gap-3 text-sm text-gray-600">
+          @if (article.authorPhotoUrl) {
+            <img
+              [src]="article.authorPhotoUrl"
+              [alt]="article.authorName ?? ''"
+              class="h-10 w-10 rounded-full object-cover"
+            />
+          }
+          @if (article.authorName) {
+            <span class="font-medium text-gray-700">{{ article.authorName }}</span>
+            <span aria-hidden="true">•</span>
+          }
+          @if (article.publishedAt) {
+            <time [attr.datetime]="article.publishedAt">{{ formatDate(article.publishedAt) }}</time>
+            <span aria-hidden="true">•</span>
+          }
+          <span>{{ readingMinutes() }} min de lecture</span>
+        </div>
+
+        @if (article.coverImage) {
+          <img
+            [src]="article.coverImage"
+            [alt]="article.title"
+            class="mt-8 max-h-[28rem] w-full rounded-3xl object-cover"
+          />
+        }
+
+        <!-- ──────────────── Corps ──────────────── -->
+        <div class="article-body font-body mt-10 text-gray-700">
+          @if (isHtml()) {
+            <div [innerHTML]="article.content"></div>
+          } @else {
+            @for (paragraph of paragraphs(); track $index) {
+              <p>{{ paragraph }}</p>
+            }
+          }
+        </div>
+
+        <!-- ──────────────── Étiquettes ──────────────── -->
+        @if (article.tags.length > 0) {
+          <div class="mt-10 flex flex-wrap items-center gap-2">
+            @for (tag of article.tags; track tag) {
+              <span
+                class="font-body rounded-full border border-gray-300 px-3 py-1 text-sm text-gray-700"
+              >
+                #{{ tag }}
+              </span>
+            }
+          </div>
+        }
+
+        <div class="mt-12">
+          <separator-design />
+        </div>
+      </article>
+
+      <!-- ──────────────── Poursuivre la lecture ──────────────── -->
+      @if (related().length > 0) {
+        <section class="mx-auto mt-12 max-w-5xl">
+          <h2 class="font-heading mb-6 text-center text-2xl text-gray-800">À lire également</h2>
+
+          <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
+            @for (other of related(); track other.id) {
+              <a
+                [routerLink]="['/blog', other.slug]"
+                class="group flex flex-col overflow-hidden rounded-3xl border border-gray-200 transition-shadow duration-200 hover:shadow-2xl"
+              >
+                <div class="overflow-hidden bg-gray-100">
+                  @if (other.coverImage) {
+                    <img
+                      [src]="other.coverImage"
+                      [alt]="other.title"
+                      loading="lazy"
+                      class="h-40 w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                    />
+                  } @else {
+                    <div class="bg-primary/10 flex h-40 w-full items-center justify-center">
+                      <i class="pi pi-pencil text-primary" style="font-size: 28px"></i>
+                    </div>
+                  }
+                </div>
+                <div class="font-body flex flex-1 flex-col gap-2 p-5">
+                  <h3 class="font-heading text-base text-gray-800">{{ other.title }}</h3>
+                  @if (other.publishedAt) {
+                    <time
+                      [attr.datetime]="other.publishedAt"
+                      class="mt-auto pt-2 text-xs text-gray-600"
+                    >
+                      {{ formatDate(other.publishedAt) }}
+                    </time>
+                  }
+                </div>
+              </a>
+            }
+          </div>
+        </section>
+      }
+    }
+  </my-container>
+</main>
+
+<my-cta-section />
+
+<my-footer />

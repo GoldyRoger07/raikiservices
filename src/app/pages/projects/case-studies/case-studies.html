@@ -7,20 +7,20 @@
         <my-container>
             <separator-design/>
 
-            <div class="mx-auto flex flex-col items-center text-center w-[80%] my-10">
+            <div class="mx-auto flex flex-col items-center text-center w-full lg:w-[80%] my-10">
                 <span class="font-accent text-primary">Nos réalisations</span>
-                <h2 class="text-3xl text-gray-800 font-heading">Des solutions digitales conçues pour produire des résultats concrets.</h2>
+                <h2 class="text-2xl lg:text-3xl text-gray-800 font-heading">Des solutions digitales conçues pour produire des résultats concrets.</h2>
                 <p class="font-body text-gray-700">Des résultats mesurables dans différents secteurs, où la crédibilité et la performance sont essentielles.</p>
             </div>
 
             <div class="flex flex-col gap-5">
                 @for(projet of projets; track $index){
 
-                    <div class="grid grid-cols-2  gap-10 p-10 hover:shadow-2xl transition-shadow duration-200 rounded-3xl">
-                        <img [src]="projet.cover" alt="">
+                    <div class="grid grid-cols-1 md:grid-cols-2 items-center gap-6 md:gap-10 p-5 md:p-10 hover:shadow-2xl transition-shadow duration-200 rounded-3xl">
+                        <img [src]="projet.cover" class="w-full h-auto" alt="">
                         <div class="flex flex-col gap-3 text-gray-700 font-body">
                             <i [class]="projet.icon" style="font-size: 32px;"></i>
-                            <span class="font-heading text-3xl text-gray-800">{{projet.title}}</span>
+                            <span class="font-heading text-2xl lg:text-3xl text-gray-800">{{projet.title}}</span>
                             <span class="text-gray-600 ">{{projet.subtitle}}</span>
                             <p>{{projet.desc}}</p>
                             <div  class="flex flex-wrap gap-2 items-center">

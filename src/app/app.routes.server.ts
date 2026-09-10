@@ -30,6 +30,20 @@ export const serverRoutes: ServerRoute[] = [
     path: 'reset-password',
     renderMode: RenderMode.Client,
   },
+  // Blog : rendu à la demande sur le serveur (SSR), pas au build.
+  // Le pré-rendu figerait la liste et les articles dans le bundle : publier depuis le
+  // back-office ne changerait rien avant le déploiement suivant, et le build échouerait dès
+  // que le backend n'est pas joignable. Le SSR donne malgré tout du HTML complet aux moteurs
+  // de recherche, contenu inclus, puisque Angular attend la fin des appels HTTP avant de
+  // rendre la réponse.
+  {
+    path: 'blog',
+    renderMode: RenderMode.Server,
+  },
+  {
+    path: 'blog/:slug',
+    renderMode: RenderMode.Server,
+  },
   // Toutes les pages vitrine sont pré-rendues en HTML statique au build (SSG)
   // pour un SEO optimal. Le contenu est présent dès la première réponse ;
   // l'app s'hydrate ensuite côté client.

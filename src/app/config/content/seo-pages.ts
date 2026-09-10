@@ -54,6 +54,13 @@ export const pageSeo = {
     path: '/a-propos',
   },
 
+  blog: {
+    title: 'Blog : conseils web & SEO | RaikiServices',
+    description:
+      'Nos articles sur la création de sites web, le référencement et la visibilité en ligne. Des conseils concrets pour attirer plus de clients.',
+    path: '/blog',
+  },
+
   contact: {
     title: 'Contact & devis | RaikiServices',
     description:
