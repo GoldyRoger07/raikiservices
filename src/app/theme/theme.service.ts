@@ -17,15 +17,15 @@ export class ThemeService {
 
   constructor() {
     // Applique la classe sur <html> et persiste à chaque changement.
-    effect(() => {
-      const mode = this.theme();
-      if (!this.isBrowser) {
-        return;
-      }
-      const root = this.document.documentElement;
-      root.classList.toggle(DARK_CLASS, mode === 'dark');
-      localStorage.setItem(STORAGE_KEY, mode);
-    });
+    // effect(() => {
+    //   const mode = this.theme();
+    //   if (!this.isBrowser) {
+    //     return;
+    //   }
+    //   const root = this.document.documentElement;
+    //   root.classList.toggle(DARK_CLASS, mode === 'dark');
+    //   localStorage.setItem(STORAGE_KEY, mode);
+    // });
   }
 
   toggle(): void {

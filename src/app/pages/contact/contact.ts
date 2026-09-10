@@ -1,23 +1,101 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { SeoService } from '../../services/seo.service';
 import { pageSeo } from '../../config/content/seo-pages';
-import { Header } from "../../components/header/header";
-import { Footer } from "../../components/footer/footer";
-import { HeroSection } from "../../components/hero-section/hero-section";
-import { Container } from "../../components/container/container";
+import { Header } from '../../components/header/header';
+import { Footer } from '../../components/footer/footer';
+import { HeroSection } from '../../components/hero-section/hero-section';
+import { Container } from '../../components/container/container';
 import { SeparatorDesign } from '../../components/separator-design/separator-design';
-import { MyButton } from "../../components/my-button/my-button";
+import { MyButton } from '../../components/my-button/my-button';
+import { ContactService } from '../../core/services/contact.service';
+import { apiErrorMessage, apiFieldErrors } from '../../core/utils/http.util';
 
 @Component({
   selector: 'app-contact',
-  imports: [Header, Footer, HeroSection, Container, SeparatorDesign, MyButton],
+  imports: [
+    Header,
+    Footer,
+    HeroSection,
+    Container,
+    SeparatorDesign,
+    MyButton,
+    ReactiveFormsModule,
+  ],
   templateUrl: './contact.html',
   styleUrl: './contact.css',
 })
 export default class Contact implements OnInit {
   private readonly seo = inject(SeoService);
+  private readonly contacts = inject(ContactService);
+
+  protected readonly sending = signal(false);
+  protected readonly sent = signal(false);
+  protected readonly error = signal('');
+
+  /** Prestations proposées dans le sélecteur ; reprises telles quelles en base. */
+  protected readonly services = [
+    'Création de site web',
+    'Refonte de site',
+    'Référencement (SEO)',
+    'Maintenance',
+    'Autre',
+  ];
+
+  protected readonly form = inject(FormBuilder).nonNullable.group({
+    firstName: ['', [Validators.required, Validators.maxLength(100)]],
+    lastName: ['', [Validators.maxLength(100)]],
+    email: ['', [Validators.required, Validators.email, Validators.maxLength(255)]],
+    phone: ['', [Validators.maxLength(30)]],
+    companyName: ['', [Validators.maxLength(150)]],
+    serviceCategory: [''],
+    subject: ['', [Validators.maxLength(200)]],
+    message: ['', [Validators.required, Validators.maxLength(5000)]],
+    newsletterOptIn: [false],
+  });
 
   ngOnInit(): void {
     this.seo.update(pageSeo.contact);
+  }
+
+  protected submit(): void {
+    if (this.form.invalid || this.sending()) {
+      this.form.markAllAsTouched();
+      return;
+    }
+
+    const value = this.form.getRawValue();
+    this.sending.set(true);
+    this.error.set('');
+
+    this.contacts
+      .submit({
+        firstName: value.firstName.trim(),
+        lastName: value.lastName.trim() || null,
+        email: value.email.trim(),
+        phone: value.phone.trim() || null,
+        companyName: value.companyName.trim() || null,
+        serviceCategory: value.serviceCategory || null,
+        subject: value.subject.trim() || null,
+        message: value.message.trim(),
+        newsletterOptIn: value.newsletterOptIn,
+      })
+      .subscribe({
+        next: () => {
+          this.sending.set(false);
+          this.sent.set(true);
+          this.form.reset();
+        },
+        error: (failure: unknown) => {
+          this.sending.set(false);
+          // Le backend valide champ par champ : on remonte le premier message précis
+          // plutôt qu'un « une erreur est survenue » qui n'aide personne à corriger.
+          const fields = apiFieldErrors(failure);
+          this.error.set(
+            Object.values(fields)[0] ??
+              apiErrorMessage(failure, "Votre message n'a pas pu être envoyé. Réessayez."),
+          );
+        },
+      });
   }
 }

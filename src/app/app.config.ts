@@ -1,16 +1,24 @@
 import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
-import { provideRouter } from '@angular/router';
-
-import { routes } from './app.routes';
+import { provideRouter, withInMemoryScrolling } from '@angular/router';
+import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import { provideClientHydration } from '@angular/platform-browser';
 import { providePrimeNG } from 'primeng/config';
+
+import { routes } from './app.routes';
 import { AppPreset } from './theme/app-preset';
+import { authInterceptor } from './core/interceptors/auth.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
-    provideRouter(routes), 
+    provideRouter(
+      routes,
+      // Le back-office enchaîne les listes : sans cela, on arrive au milieu de la page suivante.
+      withInMemoryScrolling({ scrollPositionRestoration: 'top', anchorScrolling: 'enabled' }),
+    ),
     provideClientHydration(),
+    // `withFetch` évite le double appel HTTP entre rendu serveur et hydratation.
+    provideHttpClient(withFetch(), withInterceptors([authInterceptor])),
     providePrimeNG({
       theme: {
         preset: AppPreset,
@@ -26,6 +34,6 @@ export const appConfig: ApplicationConfig = {
           },
         },
       },
-    })
-  ]
+    }),
+  ],
 };

@@ -1,0 +1,122 @@
+<a routerLink="/admin/contact" class="font-body mb-4 inline-flex items-center gap-2 text-sm opacity-70 hover:opacity-100">
+  <i class="pi pi-arrow-left text-xs"></i> Retour aux messages
+</a>
+
+@if (loading()) {
+  <div class="panel p-6">
+    <p-skeleton width="14rem" height="1.75rem" class="mb-4" />
+    <p-skeleton height="8rem" />
+  </div>
+} @else if (notFound()) {
+  <div class="panel empty-state">Ce message n'existe pas ou a été supprimé.</div>
+} @else if (message(); as item) {
+  <header class="page-header">
+    <div>
+      <h1 class="page-title">{{ item.firstName }} {{ item.lastName }}</h1>
+      <p class="page-subtitle">
+        Reçu le {{ item.submittedAt | date: 'dd MMMM yyyy à HH:mm' }}
+      </p>
+    </div>
+    <div class="flex items-center gap-2">
+      <p-tag [value]="statusLabels[item.status]" [severity]="statusSeverity[item.status]" />
+      <a [href]="mailtoLink(item)">
+        <p-button label="Répondre" icon="pi pi-reply" severity="secondary" [outlined]="true" />
+      </a>
+      <p-button
+        *appHasPermission="'DELETE_CONTACT'"
+        icon="pi pi-trash"
+        severity="danger"
+        [outlined]="true"
+        pTooltip="Supprimer"
+        (onClick)="confirmDelete()"
+      />
+    </div>
+  </header>
+
+  <div class="grid gap-5 lg:grid-cols-3">
+    <!-- ──────────────── Message ──────────────── -->
+    <section class="panel lg:col-span-2">
+      <div class="panel-header">
+        <h2 class="font-heading text-base font-semibold">
+          {{ item.subject || 'Sans objet' }}
+        </h2>
+        @if (item.serviceCategory) {
+          <span class="permission-chip">{{ item.serviceCategory }}</span>
+        }
+      </div>
+      <p class="font-body px-4 py-5 text-sm leading-relaxed whitespace-pre-line">
+        {{ item.message }}
+      </p>
+    </section>
+
+    <!-- ──────────────── Coordonnées ──────────────── -->
+    <section class="panel">
+      <div class="panel-header">
+        <h2 class="font-heading text-base font-semibold">Coordonnées</h2>
+      </div>
+      <dl class="font-body flex flex-col gap-3 p-4 text-sm">
+        <div>
+          <dt class="text-xs opacity-60">Email</dt>
+          <dd><a [href]="'mailto:' + item.email" class="text-primary hover:underline">{{ item.email }}</a></dd>
+        </div>
+        @if (item.phone) {
+          <div>
+            <dt class="text-xs opacity-60">Téléphone</dt>
+            <dd><a [href]="'tel:' + item.phone" class="text-primary hover:underline">{{ item.phone }}</a></dd>
+          </div>
+        }
+        @if (item.companyName) {
+          <div>
+            <dt class="text-xs opacity-60">Société</dt>
+            <dd>{{ item.companyName }}</dd>
+          </div>
+        }
+        <div>
+          <dt class="text-xs opacity-60">Newsletter</dt>
+          <dd>{{ item.newsletterOptIn ? 'Inscrit' : 'Non inscrit' }}</dd>
+        </div>
+      </dl>
+    </section>
+
+    <!-- ──────────────── Suivi interne ──────────────── -->
+    <section class="panel lg:col-span-3" *appHasPermission="'UPDATE_CONTACT'">
+      <div class="panel-header">
+        <h2 class="font-heading text-base font-semibold">Suivi interne</h2>
+        <span class="font-body text-xs opacity-60">Visible uniquement dans l'administration.</span>
+      </div>
+      <div class="grid gap-4 p-4 md:grid-cols-3">
+        <div class="flex flex-col gap-1.5">
+          <label for="status" class="font-body text-sm font-medium">Statut</label>
+          <p-select
+            inputId="status"
+            [options]="statusOptions"
+            [(ngModel)]="status"
+            optionLabel="label"
+            optionValue="value"
+            class="w-full"
+          />
+        </div>
+        <div class="flex flex-col gap-1.5 md:col-span-2">
+          <label for="notes" class="font-body text-sm font-medium">Notes</label>
+          <textarea
+            pTextarea
+            id="notes"
+            [(ngModel)]="adminNotes"
+            rows="4"
+            maxlength="5000"
+            placeholder="Devis envoyé, relance prévue le…"
+            class="w-full"
+          ></textarea>
+        </div>
+      </div>
+      <div class="flex justify-end gap-2 border-t border-[var(--panel-border)] px-4 py-3">
+        <p-button
+          label="Enregistrer"
+          icon="pi pi-check"
+          [loading]="saving()"
+          (onClick)="save()"
+        />
+      </div>
+    </section>
+  </div>
+}

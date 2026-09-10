@@ -1,0 +1,186 @@
+<header class="page-header">
+  <div>
+    <h1 class="page-title">Rôles</h1>
+    <p class="page-subtitle">
+      Un rôle regroupe des permissions ; les comptes reçoivent leurs droits par ce biais.
+    </p>
+  </div>
+  <p-button
+    *appHasPermission="'CREATE_ROLE'"
+    label="Nouveau rôle"
+    icon="pi pi-plus"
+    (onClick)="openCreate()"
+  />
+</header>
+
+<section class="panel">
+  <div class="table-toolbar">
+    <p-iconfield iconPosition="left">
+      <p-inputicon class="pi pi-search" />
+      <input
+        pInputText
+        type="search"
+        [(ngModel)]="search"
+        (ngModelChange)="onSearchChange()"
+        placeholder="Nom ou description…"
+        class="w-full sm:w-72"
+        aria-label="Rechercher un rôle"
+      />
+    </p-iconfield>
+  </div>
+
+  <div class="table-scroll">
+    <p-table
+      [value]="items()"
+      [lazy]="true"
+      (onLazyLoad)="load($event)"
+      [loading]="loading()"
+      [paginator]="true"
+      [rows]="10"
+      [totalRecords]="total()"
+      [rowsPerPageOptions]="[10, 25, 50]"
+      [rowHover]="true"
+      dataKey="id"
+      currentPageReportTemplate="{first} à {last} sur {totalRecords} rôles"
+      [showCurrentPageReport]="true"
+      class="p-datatable-sm"
+    >
+      <ng-template #header>
+        <tr>
+          <th pSortableColumn="name">Rôle <p-sortIcon field="name" /></th>
+          <th>Permissions</th>
+          <th pSortableColumn="createdAt">Créé le <p-sortIcon field="createdAt" /></th>
+          <th class="w-24 text-right">Actions</th>
+        </tr>
+      </ng-template>
+
+      <ng-template #body let-role>
+        <tr>
+          <td>
+            <span class="flex items-center gap-2 text-sm font-medium">
+              {{ role.name }}
+              @if (role.system) {
+                <p-tag value="Système" severity="secondary" />
+              }
+            </span>
+            <span class="block text-xs opacity-70">{{ role.description || '—' }}</span>
+          </td>
+          <td>
+            <div class="flex max-w-2xl flex-wrap gap-1">
+              @for (permission of role.permissions.slice(0, 6); track permission.id) {
+                <span class="permission-chip">{{ permission.name }}</span>
+              } @empty {
+                <span class="text-xs opacity-60">Aucune permission</span>
+              }
+              @if (role.permissions.length > 6) {
+                <span class="permission-chip">+{{ role.permissions.length - 6 }}</span>
+              }
+            </div>
+          </td>
+          <td class="text-sm whitespace-nowrap">{{ role.createdAt | date: 'dd/MM/yyyy' }}</td>
+          <td class="text-right whitespace-nowrap">
+            <p-button
+              *appHasPermission="'UPDATE_ROLE'"
+              icon="pi pi-pencil"
+              severity="secondary"
+              [text]="true"
+              [rounded]="true"
+              pTooltip="Modifier"
+              (onClick)="openEdit(role)"
+            />
+            @if (!role.system) {
+              <p-button
+                *appHasPermission="'DELETE_ROLE'"
+                icon="pi pi-trash"
+                severity="danger"
+                [text]="true"
+                [rounded]="true"
+                pTooltip="Supprimer"
+                (onClick)="confirmDelete(role)"
+              />
+            }
+          </td>
+        </tr>
+      </ng-template>
+
+      <ng-template #emptymessage>
+        <tr>
+          <td colspan="4" class="empty-state">Aucun rôle ne correspond à cette recherche.</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</section>
+
+<!-- ──────────────── Création / modification ──────────────── -->
+<p-dialog
+  [visible]="dialogOpen()"
+  (visibleChange)="dialogOpen.set($event)"
+  [modal]="true"
+  [draggable]="false"
+  [style]="{ width: '44rem' }"
+  [breakpoints]="{ '960px': '95vw' }"
+  [header]="editing() ? 'Modifier le rôle' : 'Nouveau rôle'"
+>
+  <form [formGroup]="form" (ngSubmit)="save()" class="flex flex-col gap-4">
+    @if (formError()) {
+      <p class="rounded-md bg-red-50 px-3 py-2 text-sm text-red-700">{{ formError() }}</p>
+    }
+
+    @if (editing()?.system) {
+      <p class="rounded-md bg-amber-50 px-3 py-2 text-sm text-amber-800">
+        Rôle système : son nom est figé, et ses permissions sont réalignées sur le code à chaque
+        redémarrage du backend. Une modification faite ici ne survivra pas au prochain déploiement.
+      </p>
+    }
+
+    <div class="flex flex-col gap-1.5">
+      <label for="name" class="font-body text-sm font-medium">Nom *</label>
+      <input pInputText id="name" formControlName="name" placeholder="EDITOR" class="w-full" />
+      @if (form.controls.name.touched && form.controls.name.invalid) {
+        <small class="text-danger">
+          Majuscules, chiffres et tirets bas uniquement, en commençant par une lettre (ex. EDITOR).
+        </small>
+      }
+    </div>
+
+    <div class="flex flex-col gap-1.5">
+      <label for="description" class="font-body text-sm font-medium">Description</label>
+      <input
+        pInputText
+        id="description"
+        formControlName="description"
+        placeholder="Rédaction du blog et suivi des messages"
+        class="w-full"
+      />
+    </div>
+
+    <div class="flex flex-col gap-1.5">
+      <label for="permissionIds" class="font-body text-sm font-medium">Permissions</label>
+      <p-multiselect
+        inputId="permissionIds"
+        formControlName="permissionIds"
+        [options]="permissionGroups()"
+        [group]="true"
+        optionGroupLabel="module"
+        optionGroupChildren="items"
+        optionLabel="name"
+        optionValue="id"
+        display="chip"
+        [filter]="true"
+        filterBy="name,description"
+        placeholder="Aucune permission"
+        emptyMessage="Aucune permission disponible"
+        class="w-full"
+      />
+      <small class="opacity-70">
+        La liste enregistrée remplace l'existante : décocher une permission la retire du rôle.
+      </small>
+    </div>
+  </form>
+
+  <ng-template #footer>
+    <p-button label="Annuler" severity="secondary" [text]="true" (onClick)="dialogOpen.set(false)" />
+    <p-button label="Enregistrer" icon="pi pi-check" [loading]="saving()" (onClick)="save()" />
+  </ng-template>
+</p-dialog>

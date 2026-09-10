@@ -1,0 +1,55 @@
+<app-auth-card title="Connexion" subtitle="Accédez à l'administration du site.">
+  <form [formGroup]="form" (ngSubmit)="submit()" class="flex flex-col gap-4">
+    @if (error()) {
+      <p-message severity="error" styleClass="w-full">{{ error() }}</p-message>
+    }
+
+    <div class="flex flex-col gap-1.5">
+      <label for="login" class="font-body text-sm font-medium text-gray-800">
+        Email ou nom d'utilisateur
+      </label>
+      <input
+        pInputText
+        id="login"
+        formControlName="login"
+        autocomplete="username"
+        placeholder="vous@raikiservices.com"
+        class="w-full"
+      />
+      @if (form.controls.login.touched && form.controls.login.invalid) {
+        <small class="font-body text-danger">L'identifiant est obligatoire.</small>
+      }
+    </div>
+
+    <div class="flex flex-col gap-1.5">
+      <label for="password" class="font-body text-sm font-medium text-gray-800">Mot de passe</label>
+      <p-password
+        inputId="password"
+        formControlName="password"
+        [feedback]="false"
+        [toggleMask]="true"
+        autocomplete="current-password"
+        class="w-full"
+        inputStyleClass="w-full"
+      />
+      @if (form.controls.password.touched && form.controls.password.invalid) {
+        <small class="font-body text-danger">Le mot de passe est obligatoire.</small>
+      }
+    </div>
+
+    <p-button
+      type="submit"
+      label="Se connecter"
+      icon="pi pi-sign-in"
+      [loading]="loading()"
+      styleClass="w-full"
+    />
+
+    <a
+      routerLink="/forgot-password"
+      class="font-body text-center text-sm text-gray-600 underline-offset-4 hover:text-primary hover:underline"
+    >
+      Mot de passe oublié ?
+    </a>
+  </form>
+</app-auth-card>

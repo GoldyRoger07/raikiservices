@@ -1,0 +1,20 @@
+/*
+ * Le sommaire suit la lecture sur grand écran ; sur mobile il reste en tête de page,
+ * au-dessus du document.
+ */
+@media (min-width: 1024px) {
+  .legal-toc {
+    position: sticky;
+    top: 6rem;
+    align-self: start;
+    max-height: calc(100dvh - 8rem);
+    overflow-y: auto;
+    padding-right: 0.5rem;
+    border-right: 1px solid #e5e7eb;
+  }
+}
+
+/* Une ancre cliquée ne doit pas se retrouver sous le header fixe. */
+.legal-body > section {
+  scroll-margin-top: 6rem;
+}

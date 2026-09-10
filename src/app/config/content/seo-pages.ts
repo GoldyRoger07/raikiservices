@@ -61,6 +61,42 @@ export const pageSeo = {
     path: '/contact',
   },
 
+  mentionsLegales: {
+    title: 'Mentions légales | RaikiServices',
+    description:
+      "Éditeur, hébergement, propriété intellectuelle et conditions d'utilisation du site RaikiServices.",
+    path: '/mentions-legales',
+  },
+
+  privacy: {
+    title: 'Politique de confidentialité | RaikiServices',
+    description:
+      'Quelles données personnelles nous collectons, pourquoi, combien de temps nous les conservons et comment exercer vos droits.',
+    path: '/politique-de-confidentialite',
+  },
+
+  cookies: {
+    title: 'Politique de cookies | RaikiServices',
+    description:
+      'Les cookies et le stockage local utilisés par RaikiServices, leur finalité et la façon de les gérer depuis votre navigateur.',
+    path: '/politique-de-cookies',
+  },
+
+  terms: {
+    title: 'Conditions générales | RaikiServices',
+    description:
+      'Le cadre de nos prestations web et SEO : devis, prix, délais, propriété intellectuelle, responsabilité et résiliation.',
+    path: '/conditions-generales',
+  },
+
+  notFound: {
+    title: 'Page introuvable | RaikiServices',
+    description:
+      "La page demandée n'existe pas ou a été déplacée. Retrouvez nos services de création de site web et de référencement depuis l'accueil.",
+    path: '/404',
+    noindex: true,
+  },
+
   sandbox: {
     title: 'Sandbox | RaikiServices',
     description: '',

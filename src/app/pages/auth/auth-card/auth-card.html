@@ -1,0 +1,20 @@
+<div class="auth-shell">
+  <div class="auth-card">
+    <a routerLink="/" class="auth-brand">
+      <img [src]="company().logo.light" [alt]="company().legalName" class="h-9 w-auto" />
+    </a>
+
+    <h1 class="font-heading text-2xl font-semibold text-gray-900">{{ title() }}</h1>
+    @if (subtitle()) {
+      <p class="font-body text-sm text-gray-600">{{ subtitle() }}</p>
+    }
+
+    <div class="mt-6">
+      <ng-content />
+    </div>
+  </div>
+
+  <p class="font-body mt-6 text-center text-xs text-gray-500">
+    {{ company().legalName }} — espace d'administration
+  </p>
+</div>

@@ -7,13 +7,12 @@ import { SeparatorDesign } from "../../../components/separator-design/separator-
 import { Header } from "../../../components/header/header";
 import { HeroSection } from "../../../components/hero-section/hero-section";
 import { Footer } from "../../../components/footer/footer";
-import { MyButton } from "../../../components/my-button/my-button";
 import { CardData } from '../../../models/card-data.model';
 import { Image } from "primeng/image";
 
 @Component({
   selector: 'app-portfolio',
-  imports: [CtaSection, Container, SeparatorDesign, Header, HeroSection, Footer, MyButton, Image],
+  imports: [CtaSection, Container, SeparatorDesign, Header, HeroSection, Footer, Image],
   templateUrl: './portfolio.html',
   styleUrl: './portfolio.css',
 })

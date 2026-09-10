@@ -1,0 +1,90 @@
+<div class="admin-shell">
+  <!-- ──────────────── Menu latéral ──────────────── -->
+  <aside class="admin-sidebar" [class.open]="menuOpen()">
+    <a routerLink="/admin" class="admin-logo" (click)="closeMenu()">
+      <img [src]="company().logo.light" [alt]="company().legalName" class="h-8 w-auto" />
+      <span class="font-heading text-sm font-semibold">Administration</span>
+    </a>
+
+    <nav class="admin-nav">
+      @for (item of visibleNav(); track item.route) {
+        <a
+          [routerLink]="item.route"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: item.route === '/admin' }"
+          (click)="closeMenu()"
+          class="admin-nav-link"
+        >
+          <i [class]="item.icon"></i>
+          <span class="font-body">{{ item.label }}</span>
+          @if (badgeFor(item) > 0) {
+            <p-badge [value]="badgeFor(item)" severity="danger" class="ml-auto" />
+          }
+        </a>
+      }
+    </nav>
+
+    <div class="admin-sidebar-footer">
+      <a routerLink="/admin/profil" routerLinkActive="active" class="admin-nav-link" (click)="closeMenu()">
+        <i class="pi pi-user"></i>
+        <span class="font-body">Mon profil</span>
+      </a>
+    </div>
+  </aside>
+
+  <!-- Voile de fermeture du menu sur mobile -->
+  @if (menuOpen()) {
+    <button type="button" class="admin-backdrop" aria-label="Fermer le menu" (click)="closeMenu()"></button>
+  }
+
+  <!-- ──────────────── Contenu ──────────────── -->
+  <div class="admin-main">
+    <header class="admin-topbar">
+      <button
+        type="button"
+        class="admin-icon-button lg:hidden"
+        aria-label="Ouvrir le menu"
+        (click)="toggleMenu()"
+      >
+        <i class="pi pi-bars"></i>
+      </button>
+
+      <div class="ml-auto flex items-center gap-1">
+        <button
+          type="button"
+          class="admin-icon-button"
+          [pTooltip]="theme() === 'dark' ? 'Mode clair' : 'Mode sombre'"
+          tooltipPosition="bottom"
+          [attr.aria-label]="theme() === 'dark' ? 'Passer en mode clair' : 'Passer en mode sombre'"
+          (click)="toggleTheme()"
+        >
+          <i [class]="theme() === 'dark' ? 'pi pi-sun' : 'pi pi-moon'"></i>
+        </button>
+
+        <app-notification-bell />
+
+        <button
+          type="button"
+          class="admin-account"
+          (click)="accountMenuRef.toggle($event)"
+          aria-haspopup="true"
+        >
+          <span class="admin-avatar">{{ initials() }}</span>
+          <span class="hidden text-left sm:block">
+            <span class="font-body block text-sm font-medium">{{ displayName() }}</span>
+            <span class="font-body block text-xs opacity-70">{{ user()?.roles?.join(', ') }}</span>
+          </span>
+          <i class="pi pi-chevron-down text-xs opacity-70"></i>
+        </button>
+        <p-menu #accountMenuRef [model]="accountMenu" [popup]="true" appendTo="body" />
+      </div>
+    </header>
+
+    <main class="admin-content">
+      <router-outlet />
+    </main>
+  </div>
+</div>
+
+<p-toast position="top-right" />
+<p-confirmDialog />

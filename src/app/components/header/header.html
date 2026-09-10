@@ -1,11 +1,13 @@
 <header
-  class="fixed top-0 z-50 w-full py-2  transition-all duration-300 will-change-transform "
-  [class.-translate-y-full]="hidden()" [class.backdrop-blur]="!onTop()">
+  class="fixed top-0 z-50 w-full py-2 transition-all duration-300 will-change-transform"
+  [class.-translate-y-full]="hidden()"
+  [class.backdrop-blur]="!onTop()"
+>
   <my-container>
-    <nav class="w-full flex items-center justify-between gap-4 ">
+    <nav class="w-full flex items-center justify-between gap-4">
       <!-- Logo -->
-      <a href="#" class="flex items-center gap-2 shrink-0" aria-label="Accueil">
-        <img [src]="company().logo.light" class="w-20" [alt]="company().name">
+      <a routerLink="/" class="flex items-center gap-2 shrink-0" aria-label="Accueil">
+        <img [src]="company().logo.light" class="w-20" [alt]="company().name" />
         <span class="font-accent text-primary text-2xl">Raiki Services</span>
         <!-- <span
           class="flex h-9 w-9 items-center justify-center rounded-lg bg-(--p-primary-color) font-bold text-white"
@@ -14,66 +16,15 @@
         </span>
         <span class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">Raf</span> -->
       </a>
-  
-    <p-popover #op>
-        <ng-template #content>
-            <div class="flex flex-col gap-2 w-110 p-2">
-                  <a routerLink="/sites-web" class="grid grid-cols-[50px_1fr] gap-3 h-fit">
-                    <span style="aspect-ratio: 1 / 1;" class="flex shrink-0 items-center justify-center w-full  bg-primary/50 rounded-sm">
-                      <i class="pi pi-desktop" style="font-size: 24px;"></i>
-                    </span>
-                    <div class="flex flex-col">
-                      <span class="font-heading text-gray-800">Web Design</span>
-                      <span class="font-body text-gray-500 text-sm">Des sites web personnaliser qui transforme vos visiteurs en clients</span>
-                    </div>
-                  </a>
 
-                  <a routerLink="/seo" class="grid grid-cols-[50px_1fr] gap-3 h-fit">
-                    <span style="aspect-ratio: 1 / 1;" class="flex shrink-0 items-center justify-center w-full  bg-primary/50 rounded-sm">
-                      <i class="pi pi-search-plus" style="font-size: 24px;"></i>
-                    </span>
-                    <div class="flex flex-col">
-                      <span class="font-heading text-gray-800">SEO</span>
-                      <span class="font-body text-gray-500 text-sm">Améliorez votre classement sur Google et générez du trafic organique.</span>
-                    </div>
-                  </a>
-            </div>
-        </ng-template>
-    </p-popover>
-    <p-popover #op2>
-        <ng-template #content>
-            <div class="flex flex-col gap-2 w-110 p-2">
-                  <a routerLink="/etudes-de-cas" class="grid grid-cols-[50px_1fr] gap-3 h-fit">
-                    <span style="aspect-ratio: 1 / 1;" class="flex shrink-0 items-center justify-center w-full  bg-primary/50 rounded-sm">
-                      <i class="pi pi-file" style="font-size: 24px;"></i>
-                    </span>
-                    <div class="flex flex-col">
-                      <span class="font-heading text-gray-800">Études de cas</span>
-                      <span class="font-body text-gray-500 text-sm">Des résultats détaillés issus de projets réalisés pour de vrais clients</span>
-                    </div>
-                  </a>
-
-                  <a routerLink="/portfolio" class="grid grid-cols-[50px_1fr] gap-3 h-fit">
-                    <span style="aspect-ratio: 1 / 1;" class="flex shrink-0 items-center justify-center w-full  bg-primary/50 rounded-sm">
-                      <i class="pi pi-th-large" style="font-size: 24px;"></i>
-                    </span>
-                    <div class="flex flex-col">
-                      <span class="font-heading text-gray-800">Portfolio</span>
-                      <span class="font-body text-gray-500 text-sm">Découvrez notre galerie de créations de sites web.</span>
-                    </div>
-                  </a>
-            </div>
-        </ng-template>
-    </p-popover>
       <!-- Menu (desktop) -->
       <ul class="hidden items-center gap-8 lg:flex">
         @for (item of navItems; track item.label) {
-
-          @if(item.children && item.children.length > 0){
-              <li>
-                <my-dropdown [items]="item.children" [label]="item.label"></my-dropdown>
-              </li>
-          }@else {
+          @if (item.children && item.children.length > 0) {
+            <li>
+              <my-dropdown [items]="item.children" [label]="item.label"></my-dropdown>
+            </li>
+          } @else {
             <li>
               <a
                 [routerLink]="item.link"
@@ -85,14 +36,14 @@
           }
         }
       </ul>
-  
+
       <!-- Actions (desktop) -->
       <div class="hidden items-center gap-3 lg:flex">
         <!-- <button class="rounded-full bg-primary/15 p-3 border border-primary flex items-center gap-3"> -->
-          <my-button>
-            <i class="pi pi-phone" style="font-size: large;"></i>
-            Appelez ou Ecrivez: 509 34 97 7530
-          </my-button>  
+        <my-button>
+          <i class="pi pi-phone" style="font-size: large"></i>
+          Appelez ou Ecrivez: 509 34 97 7530
+        </my-button>
         <!-- </button> -->
         <!-- Bascule de thème -->
         <!-- <button
@@ -114,7 +65,7 @@
             </svg>
           }
         </button> -->
-  
+
         <!-- <app-button [v]="2">Sign in</app-button>
         <app-button [v]="1" >Sign up</app-button> -->
         <!-- <my-3d-button size="medium" backBgColor="bg-[#ce7c00]" frontBgColor="bg-(--p-primary-color)">
@@ -124,7 +75,7 @@
                     S'inscrire
         </my-3d-button> -->
       </div>
-  
+
       <!-- Actions (mobile) -->
       <div class="flex items-center gap-1 lg:hidden">
         <!-- Bascule de thème -->
@@ -145,44 +96,79 @@
             </svg>
           }
         </button> -->
-  
+
         <!-- Bouton menu -->
+
         <button
           type="button"
           class="inline-flex h-10 w-10 items-center justify-center rounded text-gray-700 bg-primary transition-colors hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-800"
-          [attr.aria-expanded]="menuOpen()"
-          aria-controls="mobile-menu"
-          aria-label="Ouvrir le menu"
-          (click)="toggleMenu()"
+          (click)="openMenu()"
         >
-          @if (menuOpen()) {
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          @if (isMenuOpen()) {
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
               <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
             </svg>
           } @else {
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
               <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
             </svg>
           }
         </button>
       </div>
     </nav>
-
   </my-container>
 
   <!-- Menu déroulant (mobile) -->
-  @if (menuOpen()) {
-    <div id="mobile-menu" class="border-t border-gray-200 bg-white lg:hidden dark:border-gray-800 dark:bg-gray-900">
+  @if (isMenuOpen()) {
+    <div
+      id="mobile-menu"
+      class="border-t border-gray-200 bg-white lg:hidden dark:border-gray-800 dark:bg-gray-900"
+    >
       <ul class="space-y-1 px-4 py-3">
         @for (item of navItems; track item.label) {
           <li>
-            <a
-              [href]="item.link"
-              class="block rounded-lg px-3 py-2 text-base font-medium text-gray-700 transition-colors hover:bg-orange-50 hover:text-orange-600 dark:text-gray-200 dark:hover:bg-orange-500/10 dark:hover:text-orange-500"
-              (click)="closeMenu()"
-            >
-              {{ item.label }}
-            </a>
+            @if (item.link) {
+              <a
+                [routerLink]="item.link"
+                class="block rounded-lg px-3 py-2 text-base font-medium text-gray-700 transition-colors hover:bg-orange-50 hover:text-orange-600 dark:text-gray-200 dark:hover:bg-orange-500/10 dark:hover:text-orange-500"
+                (click)="closeMenu()"
+              >
+                {{ item.label }}
+              </a>
+            } @else {
+              <span
+                class="block px-3 pt-3 pb-1 text-xs font-semibold tracking-wide text-gray-500 uppercase dark:text-gray-400"
+              >
+                {{ item.label }}
+              </span>
+              <ul>
+                @for (child of item.children; track child.url) {
+                  <li>
+                    <a
+                      [routerLink]="child.url"
+                      class="block rounded-lg py-2 pr-3 pl-6 text-base font-medium text-gray-700 transition-colors hover:bg-orange-50 hover:text-orange-600 dark:text-gray-200 dark:hover:bg-orange-500/10 dark:hover:text-orange-500"
+                      (click)="closeMenu()"
+                    >
+                      {{ child.label }}
+                    </a>
+                  </li>
+                }
+              </ul>
+            }
           </li>
         }
       </ul>

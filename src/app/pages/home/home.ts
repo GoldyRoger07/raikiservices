@@ -10,17 +10,15 @@ import { SeparatorDesign } from "../../components/separator-design/separator-des
 import { Image } from 'primeng/image';
 import { NgxParticlesComponent } from '@omnedia/ngx-particles';
 import { NgxTypewriterComponent } from '@omnedia/ngx-typewriter';
-import { NgxNumberTickerComponent } from '@omnedia/ngx-number-ticker';
 import { CardData } from '../../models/card-data.model';
 import { AccentTitle } from '../../components/accent-title/accent-title';
-import { MySlider } from '../../components/my-slider/my-slider';
 import { CommonModule } from '@angular/common';
 
 
 
 @Component({
   selector: 'app-home',
-  imports: [Header, Footer, Container, AccentTitle, MyButton, SeparatorDesign, Image, NgxParticlesComponent, NgxTypewriterComponent, NgxNumberTickerComponent, MySlider, CommonModule],
+  imports: [Header, Footer, Container, AccentTitle, MyButton, SeparatorDesign, Image, NgxParticlesComponent, NgxTypewriterComponent, CommonModule],
   templateUrl: './home.html',
   styleUrl: './home.css',
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

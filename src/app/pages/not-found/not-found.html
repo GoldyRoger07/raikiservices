@@ -1,0 +1,56 @@
+<my-header />
+
+<main class="pt-32 pb-20">
+  <my-container>
+    <div class="mx-auto max-w-2xl text-center">
+      <p class="font-accent text-primary text-7xl md:text-8xl">404</p>
+
+      <h1 class="font-heading mt-4 text-3xl font-bold text-gray-800 md:text-4xl">
+        Cette page n'existe pas
+      </h1>
+
+      <p class="font-body mt-4 text-gray-600">
+        Le lien que vous avez suivi est peut-être erroné, ou la page a été déplacée. Rien n'est
+        perdu : reprenez depuis l'accueil ou choisissez une destination ci-dessous.
+      </p>
+
+      <div class="mt-8 flex justify-center">
+        <a routerLink="/" aria-label="Retour à l'accueil">
+          <my-button>Retour à l'accueil</my-button>
+        </a>
+      </div>
+
+      <div class="mt-14">
+        <separator-design />
+      </div>
+
+      <nav class="mt-8" aria-label="Pages principales">
+        <h2 class="font-heading text-sm font-semibold tracking-wide text-gray-800 uppercase">
+          Pages principales
+        </h2>
+        <ul class="mt-4 flex flex-wrap justify-center gap-2">
+          @for (item of suggestions; track item.link) {
+            <li>
+              <a
+                [routerLink]="item.link"
+                class="font-body hover:border-primary hover:text-primary inline-block rounded-full border border-gray-300 px-4 py-2 text-sm text-gray-700 transition-colors"
+              >
+                {{ item.label }}
+              </a>
+            </li>
+          }
+        </ul>
+      </nav>
+
+      <p class="font-body mt-10 text-sm text-gray-600">
+        Vous cherchiez autre chose ?
+        <a routerLink="/contact" class="text-primary underline underline-offset-4">
+          Écrivez-nous
+        </a>
+        , nous vous répondrons rapidement.
+      </p>
+    </div>
+  </my-container>
+</main>
+
+<my-footer />

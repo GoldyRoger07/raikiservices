@@ -82,9 +82,6 @@ export default class AboutUs implements OnInit {
   // Gère le mouvement de la souris dans la carte
   onMouseMove(event: MouseEvent) {
     // offsetX et offsetY donnent la position par rapport aux bords de la carte
-   
-    console.log(event.offsetX)
-   
     this.coords.set({
       x: event.offsetX,
       y: event.offsetY

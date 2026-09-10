@@ -21,7 +21,6 @@ export class ThemeService {
         const root = document.documentElement;
     
         Object.entries(theme.colors).forEach(([key, value]) => {
-            console.log(`key= ${key} \nkebab=${this.toKebabCase(key)}`)
             root.style.setProperty(`--brand-${this.toKebabCase(key)}`, value  );
         });
     

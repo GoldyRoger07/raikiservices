@@ -1,0 +1,173 @@
+/*
+ * Styles partagés du back-office.
+ *
+ * Rassemblés ici plutôt que dupliqués dans chaque page : les écrans d'administration
+ * utilisent tous les mêmes cartes, panneaux et en-têtes. Les noms sont préfixés ou assez
+ * spécifiques pour ne pas entrer en collision avec le site vitrine.
+ */
+
+.admin-shell,
+.admin-page {
+  --panel-bg: #ffffff;
+  --panel-border: #e5e7eb;
+  --panel-muted: #6b7280;
+}
+
+.app-dark .admin-shell,
+.app-dark .admin-page {
+  --panel-bg: #171a21;
+  --panel-border: #262b36;
+  --panel-muted: #9ca3af;
+}
+
+/* ──────────────── En-tête de page ──────────────── */
+
+.page-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.page-title {
+  font-family: var(--font-heading, inherit);
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.page-subtitle {
+  font-family: var(--font-body, inherit);
+  font-size: 0.875rem;
+  color: var(--panel-muted);
+}
+
+/* ──────────────── Panneau ──────────────── */
+
+.panel {
+  background: var(--panel-bg);
+  border: 1px solid var(--panel-border);
+  border-radius: 0.75rem;
+  overflow: hidden;
+}
+
+.panel-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.875rem 1rem;
+  border-bottom: 1px solid var(--panel-border);
+}
+
+/* ──────────────── Carte de compteur ──────────────── */
+
+.stat-card {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  padding: 1rem;
+  background: var(--panel-bg);
+  border: 1px solid var(--panel-border);
+  border-radius: 0.75rem;
+  transition:
+    border-color 150ms ease,
+    box-shadow 150ms ease;
+}
+
+.stat-card:hover {
+  border-color: color-mix(in srgb, var(--brand-primary, #c89a2d) 45%, var(--panel-border));
+  box-shadow: 0 10px 24px -18px rgb(17 24 39 / 45%);
+}
+
+.stat-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  flex: none;
+  border-radius: 0.625rem;
+  color: var(--stat-tint, #c89a2d);
+  background: color-mix(in srgb, var(--stat-tint, #c89a2d) 14%, transparent);
+  font-size: 1.125rem;
+}
+
+.stat-body {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+}
+
+.stat-label {
+  font-family: var(--font-body, inherit);
+  font-size: 0.8125rem;
+  color: var(--panel-muted);
+}
+
+.stat-value {
+  font-family: var(--font-heading, inherit);
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+/* ──────────────── Ligne de liste cliquable ──────────────── */
+
+.message-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--panel-border);
+  transition: background 150ms ease;
+}
+
+.message-row:hover {
+  background: color-mix(in srgb, var(--brand-primary, #c89a2d) 6%, transparent);
+}
+
+li:last-child > .message-row {
+  border-bottom: 0;
+}
+
+/* ──────────────── Étiquette de permission ──────────────── */
+
+.permission-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.125rem 0.5rem;
+  border-radius: 999px;
+  border: 1px solid var(--panel-border);
+  background: color-mix(in srgb, var(--brand-primary, #c89a2d) 8%, transparent);
+  font-family: var(--font-body, monospace);
+  font-size: 0.6875rem;
+  letter-spacing: 0.02em;
+}
+
+/* ──────────────── Barre d'outils d'un tableau ──────────────── */
+
+.table-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.875rem 1rem;
+  border-bottom: 1px solid var(--panel-border);
+}
+
+.empty-state {
+  padding: 2.5rem 1rem;
+  text-align: center;
+  font-family: var(--font-body, inherit);
+  font-size: 0.875rem;
+  color: var(--panel-muted);
+}
+
+/* Les tableaux du back-office débordent sur mobile : le conteneur défile, pas la page. */
+.table-scroll {
+  overflow-x: auto;
+}

@@ -1,0 +1,172 @@
+<header class="page-header">
+  <div>
+    <h1 class="page-title">Mon profil</h1>
+    <p class="page-subtitle">Vos informations, vos droits et vos appareils connectés.</p>
+  </div>
+</header>
+
+<div class="grid gap-5 lg:grid-cols-3">
+  <!-- ──────────────── Identité ──────────────── -->
+  <section class="panel lg:col-span-1">
+    <div class="panel-header">
+      <h2 class="font-heading text-base font-semibold">Compte</h2>
+    </div>
+    <div class="flex flex-col items-center gap-3 p-5 text-center">
+      @if (user()?.photoUrl) {
+        <img [src]="user()!.photoUrl" alt="" class="h-20 w-20 rounded-full object-cover" />
+      } @else {
+        <span
+          class="flex h-20 w-20 items-center justify-center rounded-full bg-primary text-xl font-bold text-white"
+        >
+          {{ initials() }}
+        </span>
+      }
+      <div>
+        <p class="font-heading text-lg font-semibold">{{ displayName() }}</p>
+        <p class="font-body text-sm opacity-70">{{ user()?.email }}</p>
+        @if (user()?.position) {
+          <p class="font-body text-sm opacity-70">{{ user()?.position }}</p>
+        }
+      </div>
+      <div class="flex flex-wrap justify-center gap-1.5">
+        @for (role of user()?.roles ?? []; track role) {
+          <p-tag [value]="role" severity="secondary" />
+        } @empty {
+          <span class="font-body text-xs opacity-60">Aucun rôle</span>
+        }
+      </div>
+      <p class="font-body mt-2 text-xs opacity-60">
+        Pour modifier ces informations ou votre mot de passe, passez par l'écran
+        « Utilisateurs » — ou demandez-le à un administrateur.
+      </p>
+    </div>
+  </section>
+
+  <!-- ──────────────── Droits ──────────────── -->
+  <section class="panel lg:col-span-2">
+    <div class="panel-header">
+      <h2 class="font-heading text-base font-semibold">Permissions effectives</h2>
+      <span class="font-body text-xs opacity-60">
+        {{ (user()?.permissions ?? []).length }} permission(s), cumulées sur vos rôles
+      </span>
+    </div>
+    <div class="flex flex-wrap gap-1.5 p-4">
+      @for (permission of user()?.permissions ?? []; track permission) {
+        <span class="permission-chip">{{ permission }}</span>
+      } @empty {
+        <span class="font-body text-sm opacity-70">
+          Aucune permission : vous pouvez vous connecter, mais aucun écran ne vous est ouvert.
+        </span>
+      }
+    </div>
+  </section>
+
+  <!-- ──────────────── Préférences de notification ──────────────── -->
+  <section class="panel lg:col-span-3">
+    <div class="panel-header">
+      <h2 class="font-heading text-base font-semibold">Notifications</h2>
+      <span class="font-body text-xs opacity-60">
+        Vous ne recevez que les évènements que vos permissions vous autorisent à voir.
+      </span>
+    </div>
+
+    @if (loadingPreferences()) {
+      <p class="empty-state">Chargement…</p>
+    } @else if (preferences().length === 0) {
+      <p class="empty-state">Aucun type d'évènement ne vous concerne pour l'instant.</p>
+    } @else {
+      <div class="table-scroll">
+        <table class="w-full text-sm">
+          <thead>
+            <tr class="border-b border-[var(--panel-border)] text-left">
+              <th class="px-4 py-2 font-medium">Évènement</th>
+              <th class="px-4 py-2 font-medium">Dans l'application</th>
+              <th class="px-4 py-2 font-medium">Email</th>
+              <th class="px-4 py-2 font-medium">Push navigateur</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (preference of preferences(); track preference.eventType) {
+              <tr class="border-b border-[var(--panel-border)] last:border-0">
+                <td class="px-4 py-3">{{ preference.label }}</td>
+                <td class="px-4 py-3">
+                  <p-toggleswitch
+                    [(ngModel)]="preference.inApp"
+                    (ngModelChange)="savePreference(preference)"
+                    [ariaLabel]="'Notifications dans l\'application pour ' + preference.label"
+                  />
+                </td>
+                <td class="px-4 py-3">
+                  <p-toggleswitch
+                    [(ngModel)]="preference.email"
+                    (ngModelChange)="savePreference(preference)"
+                    [ariaLabel]="'Notifications par email pour ' + preference.label"
+                  />
+                </td>
+                <td class="px-4 py-3">
+                  <p-toggleswitch
+                    [(ngModel)]="preference.push"
+                    (ngModelChange)="savePreference(preference)"
+                    [ariaLabel]="'Notifications push pour ' + preference.label"
+                  />
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  </section>
+
+  <!-- ──────────────── Appareils ──────────────── -->
+  <section class="panel lg:col-span-3">
+    <div class="panel-header">
+      <h2 class="font-heading text-base font-semibold">Mes appareils connectés</h2>
+      <p-button
+        label="Me déconnecter partout"
+        icon="pi pi-power-off"
+        severity="danger"
+        [outlined]="true"
+        size="small"
+        (onClick)="confirmRevokeAll()"
+      />
+    </div>
+
+    <div class="table-scroll">
+      <p-table [value]="mySessions()" [loading]="loadingSessions()" class="p-datatable-sm">
+        <ng-template #header>
+          <tr>
+            <th>Appareil</th>
+            <th>Adresse IP</th>
+            <th>Dernière activité</th>
+            <th>Expire le</th>
+          </tr>
+        </ng-template>
+        <ng-template #body let-session>
+          <tr>
+            <td>
+              <span class="flex items-center gap-2 text-sm">
+                {{ deviceLabel(session.device) }}
+                @if (session.current) {
+                  <p-tag value="Cet appareil" severity="success" />
+                }
+              </span>
+            </td>
+            <td class="font-mono text-xs">{{ session.ipAddress || '—' }}</td>
+            <td class="text-sm whitespace-nowrap">
+              {{ session.lastUsedAt | date: 'dd/MM/yyyy HH:mm' }}
+            </td>
+            <td class="text-sm whitespace-nowrap">
+              {{ session.expiresAt | date: 'dd/MM/yyyy HH:mm' }}
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template #emptymessage>
+          <tr>
+            <td colspan="4" class="empty-state">Aucune session ouverte.</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </section>
+</div>

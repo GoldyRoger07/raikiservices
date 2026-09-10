@@ -35,13 +35,9 @@ app.use(
   }),
 );
 
-
-
-app.get('/api/ping', (req, res) => { 
-  res.json({ message: 'pong' })
+app.get('/api/ping', (req, res) => {
+  res.json({ message: 'pong' });
 });
-
-
 
 /**
  * Handle all other requests by rendering the Angular application.
@@ -49,10 +45,24 @@ app.get('/api/ping', (req, res) => {
 app.use((req, res, next) => {
   angularApp
     .handle(req)
-    .then((response) =>
-      response ? writeResponseToNodeResponse(response, res) : next(),
-    )
+    .then((response) => (response ? writeResponseToNodeResponse(response, res) : next()))
     .catch(next);
+});
+
+/**
+ * Aucune route Angular ne reconnaît l'URL : on sert la page 404 pré-rendue avec un vrai
+ * statut HTTP 404. Sans ce dernier maillon, Express répondrait son « Cannot GET /… » brut.
+ *
+ * Le statut compte autant que la page : une 404 renvoyée en 200 (« soft 404 ») fait indexer
+ * des pages vides par les moteurs. On garde donc le code d'erreur et on ne remplace que le
+ * corps de la réponse.
+ */
+app.use((req, res) => {
+  res.status(404).sendFile(join(browserDistFolder, '404', 'index.html'), (error) => {
+    if (error && !res.headersSent) {
+      res.status(404).type('text/plain').send('404 - Page introuvable');
+    }
+  });
 });
 
 /**

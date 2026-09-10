@@ -1,0 +1,183 @@
+<a
+  routerLink="/admin/blog"
+  class="font-body mb-4 inline-flex items-center gap-2 text-sm opacity-70 hover:opacity-100"
+>
+  <i class="pi pi-arrow-left text-xs"></i> Retour aux articles
+</a>
+
+@if (loading()) {
+  <div class="panel p-6">
+    <p-skeleton width="14rem" height="1.75rem" class="mb-4" />
+    <p-skeleton height="12rem" />
+  </div>
+} @else if (notFound()) {
+  <div class="panel empty-state">Cet article n'existe pas ou a été supprimé.</div>
+} @else {
+  <header class="page-header">
+    <div>
+      <h1 class="page-title">{{ post() ? 'Modifier l’article' : 'Nouvel article' }}</h1>
+      @if (post(); as item) {
+        <p class="page-subtitle">
+          @if (item.publishedAt) {
+            Publié le {{ item.publishedAt | date: 'dd MMMM yyyy à HH:mm' }}
+          } @else {
+            Jamais publié — modifié le {{ item.updatedAt | date: 'dd/MM/yyyy à HH:mm' }}
+          }
+        </p>
+      } @else {
+        <p class="page-subtitle">
+          Enregistré en brouillon tant que le statut n'est pas passé à « Publié ».
+        </p>
+      }
+    </div>
+    <div class="flex items-center gap-2">
+      @if (post(); as item) {
+        <p-tag [value]="statusLabels[item.status]" [severity]="statusSeverity[item.status]" />
+      }
+      <p-button label="Annuler" severity="secondary" [text]="true" routerLink="/admin/blog" />
+      <p-button label="Enregistrer" icon="pi pi-check" [loading]="saving()" (onClick)="save()" />
+    </div>
+  </header>
+
+  <form [formGroup]="form" (ngSubmit)="save()" class="grid gap-4 lg:grid-cols-3">
+    @if (formError()) {
+      <p class="rounded-md bg-red-50 px-3 py-2 text-sm text-red-700 lg:col-span-3">
+        {{ formError() }}
+      </p>
+    }
+
+    <!-- ──────────────── Contenu ──────────────── -->
+    <section class="panel flex flex-col gap-4 p-5 lg:col-span-2">
+      <div class="flex flex-col gap-1.5">
+        <label for="title" class="font-body text-sm font-medium">Titre *</label>
+        <input pInputText id="title" formControlName="title" class="w-full" />
+        @if (form.controls.title.touched && form.controls.title.invalid) {
+          <small class="text-danger">Titre obligatoire, 255 caractères au plus.</small>
+        }
+      </div>
+
+      <div class="flex flex-col gap-1.5">
+        <label for="excerpt" class="font-body text-sm font-medium">Chapô</label>
+        <textarea
+          pTextarea
+          id="excerpt"
+          formControlName="excerpt"
+          rows="3"
+          class="w-full"
+        ></textarea>
+        <small class="opacity-70">
+          Résumé affiché dans les listes d'articles et repris comme description de partage.
+        </small>
+      </div>
+
+      <div class="flex flex-col gap-1.5">
+        <label for="content" class="font-body text-sm font-medium">Contenu</label>
+        <textarea
+          pTextarea
+          id="content"
+          formControlName="content"
+          rows="20"
+          class="w-full font-mono text-sm"
+        ></textarea>
+        <small class="opacity-70">
+          Le texte est enregistré tel quel : la mise en forme dépendra du gabarit qui l'affichera
+          côté site.
+        </small>
+      </div>
+    </section>
+
+    <!-- ──────────────── Publication et classement ──────────────── -->
+    <aside class="flex flex-col gap-4">
+      <section class="panel flex flex-col gap-4 p-5">
+        <div class="flex flex-col gap-1.5">
+          <label for="status" class="font-body text-sm font-medium">Statut</label>
+          <p-select
+            inputId="status"
+            formControlName="status"
+            [options]="statusOptions"
+            optionLabel="label"
+            optionValue="value"
+            class="w-full"
+          />
+          <small class="opacity-70">
+            Le passage en « Publié » date l'article et prévient l'équipe. Les enregistrements
+            suivants ne renotifient personne.
+          </small>
+        </div>
+
+        @if (canPickAuthor()) {
+          <div class="flex flex-col gap-1.5">
+            <label for="authorId" class="font-body text-sm font-medium">Auteur</label>
+            <p-select
+              inputId="authorId"
+              formControlName="authorId"
+              [options]="authors()"
+              optionLabel="name"
+              optionValue="id"
+              placeholder="Aucun auteur affiché"
+              emptyMessage="Aucun compte disponible"
+              [showClear]="true"
+              class="w-full"
+            />
+          </div>
+        }
+
+        <div class="flex flex-col gap-1.5">
+          <label for="slug" class="font-body text-sm font-medium">Slug</label>
+          <input pInputText id="slug" formControlName="slug" class="w-full" />
+          <small class="opacity-70">
+            Laissé vide, il est dérivé du titre. Le modifier après publication casse les liens déjà
+            partagés.
+          </small>
+        </div>
+      </section>
+
+      <section class="panel flex flex-col gap-4 p-5">
+        <div class="flex flex-col gap-1.5">
+          <label for="category" class="font-body text-sm font-medium">Catégorie</label>
+          <input pInputText id="category" formControlName="category" class="w-full" />
+          @if (form.controls.category.touched && form.controls.category.invalid) {
+            <small class="text-danger">100 caractères au plus.</small>
+          }
+        </div>
+
+        <div class="flex flex-col gap-1.5">
+          <label for="tags" class="font-body text-sm font-medium">Étiquettes</label>
+          <p-autocomplete
+            inputId="tags"
+            formControlName="tags"
+            [suggestions]="tagSuggestions()"
+            (completeMethod)="searchTags($event)"
+            [multiple]="true"
+            [typeahead]="false"
+            [addOnBlur]="true"
+            [unique]="true"
+            separator=","
+            placeholder="Ajouter une étiquette"
+            class="w-full"
+            styleClass="w-full"
+          />
+          <small class="opacity-70">Validez chaque étiquette par Entrée ou une virgule.</small>
+        </div>
+
+        <div class="flex flex-col gap-1.5">
+          <label for="coverImage" class="font-body text-sm font-medium">Image de couverture</label>
+          <input
+            pInputText
+            id="coverImage"
+            formControlName="coverImage"
+            placeholder="/img/blog/mon-article.webp"
+            class="w-full"
+          />
+          @if (form.controls.coverImage.value) {
+            <img
+              [src]="form.controls.coverImage.value"
+              alt=""
+              class="mt-1 aspect-video w-full rounded-md object-cover"
+            />
+          }
+        </div>
+      </section>
+    </aside>
+  </form>
+}

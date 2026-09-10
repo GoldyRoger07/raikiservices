@@ -1,0 +1,55 @@
+<button
+  type="button"
+  class="bell-button"
+  aria-label="Notifications"
+  (click)="panel.toggle($event); load()"
+>
+  <i class="pi pi-bell"></i>
+  @if (unreadCount() > 0) {
+    <p-badge [value]="unreadCount()" severity="danger" class="bell-badge" />
+  }
+</button>
+
+<p-popover #panel appendTo="body" styleClass="bell-panel">
+  <ng-template #content>
+    <div class="flex w-80 flex-col">
+      <div class="flex items-center justify-between border-b border-gray-200 px-3 py-2">
+        <span class="font-heading text-sm font-semibold">Notifications</span>
+        @if (unreadCount() > 0) {
+          <button
+            type="button"
+            class="font-body text-xs text-primary hover:underline"
+            (click)="markAllAsRead()"
+          >
+            Tout marquer comme lu
+          </button>
+        }
+      </div>
+
+      @if (loading()) {
+        <p class="font-body px-3 py-6 text-center text-sm opacity-70">Chargement…</p>
+      } @else if (items().length === 0) {
+        <p class="font-body px-3 py-6 text-center text-sm opacity-70">Aucune notification.</p>
+      } @else {
+        <ul class="max-h-96 overflow-y-auto">
+          @for (item of items(); track item.id) {
+            <li>
+              <button
+                type="button"
+                class="bell-item"
+                [class.unread]="!item.read"
+                (click)="panel.hide(); open(item)"
+              >
+                <span class="font-body block text-sm font-medium">{{ item.title }}</span>
+                <span class="font-body block text-xs opacity-70">{{ item.message }}</span>
+                <span class="font-body mt-1 block text-[11px] opacity-60">
+                  {{ item.createdAt | date: 'dd/MM/yyyy à HH:mm' }}
+                </span>
+              </button>
+            </li>
+          }
+        </ul>
+      }
+    </div>
+  </ng-template>
+</p-popover>

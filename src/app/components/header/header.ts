@@ -1,15 +1,14 @@
 import { Component, HostListener, PLATFORM_ID, inject, signal } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { ThemeService } from '../../theme/theme.service';
-import { Container } from "../container/container";
+import { Container } from '../container/container';
 import { CompanyService } from '../../services/company.service';
-import { MyButton } from "../my-button/my-button";
+import { MyButton } from '../my-button/my-button';
 // import { My3dButton } from "../buttons/my3d-button/my3d-button";
 import { PopoverModule } from 'primeng/popover';
 import { RouterLink } from '@angular/router';
 import { NavItem } from '../../models/nav-item.model';
-import { Dropdown } from "../dropdown/dropdown";
-
+import { Dropdown } from '../dropdown/dropdown';
 
 // interface NavItem {
 //   label: string;
@@ -26,11 +25,11 @@ export class Header {
   private readonly themeService = inject(ThemeService);
   private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
 
-  private readonly companyService = inject(CompanyService)
-  company = this.companyService.company
-  
+  private readonly companyService = inject(CompanyService);
+  company = this.companyService.company;
+
   protected readonly theme = this.themeService.theme;
-  protected readonly menuOpen = signal(false);
+  protected readonly isMenuOpen = signal(false);
 
   /** Vrai quand le header doit être masqué (scroll vers le bas). */
   protected readonly hidden = signal(false);
@@ -39,48 +38,53 @@ export class Header {
 
   protected readonly navItems: NavItem[] = [
     { label: 'A propos', link: '/a-propos' },
-    { label: 'Services', children: [
-      {
-        label: 'Web Design',
-        subtitle: 'Des sites web personnaliser qui transforme vos visiteurs en clients',
-        url: '/sites-web',
-        icon: 'pi pi-desktop'
-      },
-      {
-        label: 'SEO',
-        subtitle: 'Améliorez votre classement sur Google et générez du trafic organique.',
-        url: '/seo',
-        icon: 'pi pi-search-plus'
-      }
-    ] },
-    { label: 'Projets', children:[
-      {
-        label: 'Études de cas',
-        subtitle: 'Des résultats détaillés issus de projets réalisés pour de vrais clients.',
-        url: '/etudes-de-cas',
-        icon: 'pi pi-file'
-      },
-      {
-        label: 'Portfolio',
-        subtitle: 'Découvrez notre galerie de créations de sites web.',
-        url: '/portfolio',
-        icon: 'pi pi-th-large'
-      }
-    ] },
-    { label: 'Tarifs', link: '/tarifs' }, 
+    {
+      label: 'Services',
+      children: [
+        {
+          label: 'Web Design',
+          subtitle: 'Des sites web personnaliser qui transforme vos visiteurs en clients',
+          url: '/sites-web',
+          icon: 'pi pi-desktop',
+        },
+        {
+          label: 'SEO',
+          subtitle: 'Améliorez votre classement sur Google et générez du trafic organique.',
+          url: '/seo',
+          icon: 'pi pi-search-plus',
+        },
+      ],
+    },
+    {
+      label: 'Projets',
+      children: [
+        {
+          label: 'Études de cas',
+          subtitle: 'Des résultats détaillés issus de projets réalisés pour de vrais clients.',
+          url: '/etudes-de-cas',
+          icon: 'pi pi-file',
+        },
+        {
+          label: 'Portfolio',
+          subtitle: 'Découvrez notre galerie de créations de sites web.',
+          url: '/portfolio',
+          icon: 'pi pi-th-large',
+        },
+      ],
+    },
+    { label: 'Tarifs', link: '/tarifs' },
     { label: 'Contact', link: '/contact' },
   ];
 
   @HostListener('window:scroll')
   protected onScroll(): void {
-    
     if (!this.isBrowser) {
       return;
     }
     const current = window.scrollY;
 
     // On garde le header visible tant que le menu mobile est ouvert.
-    if (this.menuOpen()) {
+    if (this.isMenuOpen()) {
       this.lastScrollY = current;
       return;
     }
@@ -93,22 +97,18 @@ export class Header {
       this.hidden.set(false);
     }
 
-    if(current === 0)
-      this.onTop.set(true)
-    else
-      this.onTop.set(false)
+    if (current === 0) this.onTop.set(true);
+    else this.onTop.set(false);
 
     this.lastScrollY = current;
-
-    
   }
 
-  protected toggleMenu(): void {
-    this.menuOpen.update((open) => !open);
+  protected openMenu(): void {
+    this.isMenuOpen.update((open) => !open);
   }
 
   protected closeMenu(): void {
-    this.menuOpen.set(false);
+    this.isMenuOpen.set(false);
   }
 
   protected toggleTheme(): void {

@@ -1,0 +1,133 @@
+<header class="mb-6">
+  <h1 class="font-heading text-2xl font-semibold">Bonjour {{ displayName() }}</h1>
+  <p class="font-body text-sm opacity-70">Voici l'activité récente du site.</p>
+</header>
+
+<!-- ──────────────── Compteurs ──────────────── -->
+<div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+  <a routerLink="/admin/contact" class="stat-card" *appHasPermission="'READ_CONTACT'">
+    <span class="stat-icon" style="--stat-tint: #2563eb"><i class="pi pi-inbox"></i></span>
+    <span class="stat-body">
+      <span class="stat-label">Nouveaux messages</span>
+      @if (newMessages() === null) {
+        <p-skeleton width="3rem" height="1.75rem" />
+      } @else {
+        <span class="stat-value">{{ newMessages() }}</span>
+      }
+    </span>
+  </a>
+
+  <a routerLink="/admin/contact" class="stat-card" *appHasPermission="'READ_CONTACT'">
+    <span class="stat-icon" style="--stat-tint: #c89a2d"><i class="pi pi-envelope"></i></span>
+    <span class="stat-body">
+      <span class="stat-label">Messages reçus</span>
+      @if (totalMessages() === null) {
+        <p-skeleton width="3rem" height="1.75rem" />
+      } @else {
+        <span class="stat-value">{{ totalMessages() }}</span>
+      }
+    </span>
+  </a>
+
+  <a routerLink="/admin/users" class="stat-card" *appHasPermission="'READ_USER'">
+    <span class="stat-icon" style="--stat-tint: #059669"><i class="pi pi-users"></i></span>
+    <span class="stat-body">
+      <span class="stat-label">Utilisateurs</span>
+      @if (totalUsers() === null) {
+        <p-skeleton width="3rem" height="1.75rem" />
+      } @else {
+        <span class="stat-value">{{ totalUsers() }}</span>
+      }
+    </span>
+  </a>
+
+  <a routerLink="/admin/blog" class="stat-card" *appHasPermission="'READ_BLOG'">
+    <span class="stat-icon" style="--stat-tint: #db2777"><i class="pi pi-file-edit"></i></span>
+    <span class="stat-body">
+      <span class="stat-label">Articles</span>
+      @if (totalPosts() === null) {
+        <p-skeleton width="3rem" height="1.75rem" />
+      } @else {
+        <span class="stat-value">{{ totalPosts() }}</span>
+      }
+    </span>
+  </a>
+
+  <a routerLink="/admin/roles" class="stat-card" *appHasPermission="'READ_ROLE'">
+    <span class="stat-icon" style="--stat-tint: #7c3aed"><i class="pi pi-shield"></i></span>
+    <span class="stat-body">
+      <span class="stat-label">Rôles</span>
+      @if (totalRoles() === null) {
+        <p-skeleton width="3rem" height="1.75rem" />
+      } @else {
+        <span class="stat-value">{{ totalRoles() }}</span>
+      }
+    </span>
+  </a>
+</div>
+
+<!-- ──────────────── Derniers messages ──────────────── -->
+<section class="panel mt-6" *appHasPermission="'READ_CONTACT'">
+  <div class="panel-header">
+    <h2 class="font-heading text-base font-semibold">Derniers messages</h2>
+    <a routerLink="/admin/contact" class="font-body text-sm text-primary hover:underline">
+      Tout voir
+    </a>
+  </div>
+
+  @if (loadingLatest()) {
+    <div class="flex flex-col gap-3 p-4">
+      @for (row of [1, 2, 3]; track row) {
+        <p-skeleton height="2.5rem" />
+      }
+    </div>
+  } @else if (latest().length === 0) {
+    <p class="font-body p-6 text-center text-sm opacity-70">Aucun message pour le moment.</p>
+  } @else {
+    <ul>
+      @for (message of latest(); track message.id) {
+        <li>
+          <a [routerLink]="['/admin/contact', message.id]" class="message-row">
+            <span class="min-w-0 flex-1">
+              <span class="font-body block truncate text-sm font-medium">
+                {{ message.firstName }} {{ message.lastName }}
+                @if (message.companyName) {
+                  <span class="opacity-60">— {{ message.companyName }}</span>
+                }
+              </span>
+              <span class="font-body block truncate text-xs opacity-70">
+                {{ message.subject || message.message }}
+              </span>
+            </span>
+            <p-tag
+              [value]="statusLabels[message.status]"
+              [severity]="statusSeverity[message.status]"
+            />
+            <span class="font-body hidden text-xs opacity-60 sm:block">
+              {{ message.submittedAt | date: 'dd/MM/yyyy' }}
+            </span>
+          </a>
+        </li>
+      }
+    </ul>
+  }
+</section>
+
+<!-- ──────────────── Droits du compte ──────────────── -->
+<section class="panel mt-6">
+  <div class="panel-header">
+    <h2 class="font-heading text-base font-semibold">Vos droits</h2>
+  </div>
+  <div class="p-4">
+    <p class="font-body mb-3 text-sm opacity-70">
+      Rôles : <strong>{{ user()?.roles?.join(', ') || 'aucun' }}</strong>
+    </p>
+    <div class="flex flex-wrap gap-1.5">
+      @for (permission of user()?.permissions ?? []; track permission) {
+        <span class="permission-chip">{{ permission }}</span>
+      } @empty {
+        <span class="font-body text-sm opacity-70">Aucune permission attribuée.</span>
+      }
+    </div>
+  </div>
+</section>

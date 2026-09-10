@@ -1,0 +1,62 @@
+<my-header />
+
+<my-hero-section [title]="document().heroTitle" [desc]="document().heroDesc" />
+
+<section class="py-16">
+  <my-container>
+    <separator-design />
+
+    <p class="font-body mt-8 text-sm text-gray-600">
+      Dernière mise à jour : {{ document().updatedAt }}
+    </p>
+
+    <div class="mt-8 grid gap-10 lg:grid-cols-[16rem_1fr] lg:gap-14">
+      <!-- ──────────────── Sommaire ──────────────── -->
+      <nav class="legal-toc" aria-label="Sommaire">
+        <h2 class="font-heading mb-3 text-sm font-semibold tracking-wide text-gray-800 uppercase">
+          Sommaire
+        </h2>
+        <ol class="flex flex-col gap-1.5">
+          @for (section of document().sections; track section.title; let i = $index) {
+            <li>
+              <a [href]="'#' + anchor(i)" class="font-body text-sm text-gray-600 hover:text-primary">
+                {{ i + 1 }}. {{ section.title }}
+              </a>
+            </li>
+          }
+        </ol>
+      </nav>
+
+      <!-- ──────────────── Corps du document ──────────────── -->
+      <article class="legal-body flex flex-col gap-10">
+        @for (section of document().sections; track section.title; let i = $index) {
+          <section [id]="anchor(i)">
+            <h2 class="font-heading mb-3 text-xl text-gray-800">
+              {{ i + 1 }}. {{ section.title }}
+            </h2>
+
+            @for (block of section.blocks; track $index) {
+              @switch (block.kind) {
+                @case ('p') {
+                  <p class="font-body mb-3 leading-relaxed text-gray-700">{{ block.text }}</p>
+                }
+                @case ('list') {
+                  <ul class="mb-3 flex flex-col gap-1.5">
+                    @for (item of block.items; track $index) {
+                      <li class="font-body flex gap-2 leading-relaxed text-gray-700">
+                        <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-primary"></span>
+                        <span>{{ item }}</span>
+                      </li>
+                    }
+                  </ul>
+                }
+              }
+            }
+          </section>
+        }
+      </article>
+    </div>
+  </my-container>
+</section>
+
+<my-footer />

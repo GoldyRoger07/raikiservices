@@ -18,7 +18,7 @@
 
                             <span class="font-body text-gray-800 font-bold">Appelez-nous</span>
                             <span class="font-body text-gray-700">(509) 34 97 7530</span>
-                        </div>    
+                        </div>
                     </a>
 
                     <a href="mailto:contact@raikiservices.com"  class="border border-gray-300 rounded-sm flex items-center gap-2 px-5 py-2 hover:shadow-xl transition-shadow duration-200">
@@ -27,44 +27,104 @@
 
                             <span class="font-body text-gray-800 font-bold">Ecrivez-nous</span>
                             <span class="font-body text-gray-700">contact@raikiservices.com</span>
-                        </div>   
+                        </div>
                     </a>
 
-                    
+
 
                 </div>
-                <form action="#" class="grid grid-cols-2  rounded-sm gap-5 p-5 border border-gray-300">
+                @if (sent()) {
+                    <div class="flex flex-col items-center justify-center gap-3 rounded-sm border border-gray-300 p-8 text-center">
+                        <i class="pi pi-check-circle text-primary" style="font-size: 40px;"></i>
+                        <h4 class="font-heading text-xl font-semibold text-gray-800">Message envoyé</h4>
+                        <p class="font-body text-gray-700">
+                            Merci ! Nous avons bien reçu votre demande et vous répondrons sous 24 heures.
+                        </p>
+                        <button type="button" class="font-body text-primary underline underline-offset-4" (click)="sent.set(false)">
+                            Envoyer un autre message
+                        </button>
+                    </div>
+                } @else {
+                <form [formGroup]="form" (ngSubmit)="submit()" class="grid grid-cols-2  rounded-sm gap-5 p-5 border border-gray-300">
                     <div class="col-span-2 flex flex-col mb-5">
                         <h4 class="font-heading font-semibold text-gray-800 text-xl">Envoyez-nous un message</h4>
                         <p class="font-body text-gray-700">Nous vous repondrons dans moins de 24 heures</p>
                     </div>
+
+                    @if (error()) {
+                        <p class="col-span-2 rounded-xs border border-red-300 bg-red-50 px-3 py-2 font-body text-sm text-red-700">
+                            {{ error() }}
+                        </p>
+                    }
+
                     <div class="col-span-2 md:col-span-1 flex flex-col ">
-                        <label for="#" class="font-body text-gray-800 font-bold">Nom Complet</label>
-                        <input  type="text" class="border border-gray-300 rounded-xs py-1 px-2 focus:outline-primary">
+                        <label for="firstName" class="font-body text-gray-800 font-bold">Prénom *</label>
+                        <input id="firstName" formControlName="firstName" type="text" autocomplete="given-name" class="border border-gray-300 rounded-xs py-1 px-2 focus:outline-primary">
+                        @if (form.controls.firstName.touched && form.controls.firstName.invalid) {
+                            <small class="font-body text-red-600">Le prénom est obligatoire.</small>
+                        }
                     </div>
-                    
+
+                    <div class="col-span-2 md:col-span-1 flex flex-col ">
+                        <label for="lastName" class="font-body text-gray-800 font-bold">Nom</label>
+                        <input id="lastName" formControlName="lastName" type="text" autocomplete="family-name" class="border border-gray-300 rounded-xs py-1 px-2 focus:outline-primary">
+                    </div>
 
                     <div class="col-span-2 md:col-span-1 flex flex-col">
-                        <label for="#"   class="font-body text-gray-800 font-bold">Email</label>
-                        <input type="email" class="border border-gray-300 rounded-xs py-1 px-2 focus:outline-primary">
+                        <label for="email" class="font-body text-gray-800 font-bold">Email *</label>
+                        <input id="email" formControlName="email" type="email" autocomplete="email" class="border border-gray-300 rounded-xs py-1 px-2 focus:outline-primary">
+                        @if (form.controls.email.touched && form.controls.email.invalid) {
+                            <small class="font-body text-red-600">Saisissez une adresse email valide.</small>
+                        }
                     </div>
 
-                    <div class="flex flex-col col-span-2">
-                        <label for="#"    class="font-body text-gray-800 font-bold">Telephone</label>
-                        <input type="tel" class="border border-gray-300 rounded-xs py-1 px-2 focus:outline-primary">
+                    <div class="col-span-2 md:col-span-1 flex flex-col">
+                        <label for="phone" class="font-body text-gray-800 font-bold">Téléphone</label>
+                        <input id="phone" formControlName="phone" type="tel" autocomplete="tel" class="border border-gray-300 rounded-xs py-1 px-2 focus:outline-primary">
+                    </div>
+
+                    <div class="col-span-2 md:col-span-1 flex flex-col">
+                        <label for="companyName" class="font-body text-gray-800 font-bold">Société</label>
+                        <input id="companyName" formControlName="companyName" type="text" autocomplete="organization" class="border border-gray-300 rounded-xs py-1 px-2 focus:outline-primary">
+                    </div>
+
+                    <div class="col-span-2 md:col-span-1 flex flex-col">
+                        <label for="serviceCategory" class="font-body text-gray-800 font-bold">Prestation souhaitée</label>
+                        <select id="serviceCategory" formControlName="serviceCategory" class="border border-gray-300 rounded-xs py-1 px-2 focus:outline-primary bg-white">
+                            <option value="">Sélectionnez…</option>
+                            @for (service of services; track service) {
+                                <option [value]="service">{{ service }}</option>
+                            }
+                        </select>
                     </div>
 
                     <div class="col-span-2 flex flex-col">
-                        <label for="#" class="font-body text-gray-800 font-bold">Parlez nous de votre</label>
-                        <textarea  rowa="10" class="border border-gray-300 rounded-xs py-1 px-2 focus:outline-primary"></textarea>
+                        <label for="subject" class="font-body text-gray-800 font-bold">Sujet</label>
+                        <input id="subject" formControlName="subject" type="text" class="border border-gray-300 rounded-xs py-1 px-2 focus:outline-primary">
                     </div>
-                    <div class="col-span-2">
 
-                        <my-button>
-                           <span>Envoyer</span> 
+                    <div class="col-span-2 flex flex-col">
+                        <label for="message" class="font-body text-gray-800 font-bold">Parlez-nous de votre projet *</label>
+                        <textarea id="message" formControlName="message" rows="6" maxlength="5000" class="border border-gray-300 rounded-xs py-1 px-2 focus:outline-primary"></textarea>
+                        @if (form.controls.message.touched && form.controls.message.invalid) {
+                            <small class="font-body text-red-600">Le message est obligatoire.</small>
+                        }
+                    </div>
+
+                    <div class="col-span-2 flex items-center gap-2">
+                        <input id="newsletterOptIn" formControlName="newsletterOptIn" type="checkbox" class="accent-primary">
+                        <label for="newsletterOptIn" class="font-body text-gray-700 text-sm">
+                            Je souhaite recevoir les actualités de Raiki Services
+                        </label>
+                    </div>
+
+                    <div class="col-span-2">
+                        <my-button [attr.aria-busy]="sending()">
+                           <span>{{ sending() ? 'Envoi en cours…' : 'Envoyer' }}</span>
                         </my-button>
                     </div>
                 </form>
+                }
             </div>
         </my-container>
     </section>

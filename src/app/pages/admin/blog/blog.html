@@ -1,0 +1,98 @@
+<header class="page-header">
+  <div>
+    <h1 class="page-title">Blog</h1>
+    <p class="page-subtitle">Les articles du site, brouillons compris.</p>
+  </div>
+  <a *appHasPermission="'CREATE_BLOG'" routerLink="/admin/blog/nouveau">
+    <p-button label="Nouvel article" icon="pi pi-plus" />
+  </a>
+</header>
+
+<section class="panel">
+  <div class="table-toolbar">
+    <p-iconfield iconPosition="left">
+      <p-inputicon class="pi pi-search" />
+      <input
+        pInputText
+        type="search"
+        [(ngModel)]="search"
+        (ngModelChange)="onSearchChange()"
+        placeholder="Titre, catégorie, contenu…"
+        class="w-full sm:w-72"
+        aria-label="Rechercher un article"
+      />
+    </p-iconfield>
+  </div>
+
+  <div class="table-scroll">
+    <p-table
+      [value]="items()"
+      [lazy]="true"
+      (onLazyLoad)="load($event)"
+      [loading]="loading()"
+      [paginator]="true"
+      [rows]="10"
+      [totalRecords]="total()"
+      [rowsPerPageOptions]="[10, 25, 50]"
+      [rowHover]="true"
+      dataKey="id"
+      currentPageReportTemplate="{first} à {last} sur {totalRecords} articles"
+      [showCurrentPageReport]="true"
+      class="p-datatable-sm"
+    >
+      <ng-template #header>
+        <tr>
+          <th pSortableColumn="title">Article <p-sortIcon field="title" /></th>
+          <th pSortableColumn="category">Catégorie <p-sortIcon field="category" /></th>
+          <th>Auteur</th>
+          <th pSortableColumn="status">Statut <p-sortIcon field="status" /></th>
+          <th pSortableColumn="publishedAt">Publié le <p-sortIcon field="publishedAt" /></th>
+          <th class="w-24 text-right">Actions</th>
+        </tr>
+      </ng-template>
+
+      <ng-template #body let-post>
+        <tr>
+          <td>
+            <span class="block text-sm font-medium">{{ post.title }}</span>
+            <span class="block text-xs opacity-70">/{{ post.slug }}</span>
+          </td>
+          <td class="text-sm">{{ post.category || '—' }}</td>
+          <td class="text-sm">{{ post.authorName || '—' }}</td>
+          <td>
+            <p-tag [value]="statusLabels[post.status]" [severity]="statusSeverity[post.status]" />
+          </td>
+          <td class="text-sm whitespace-nowrap">
+            {{ post.publishedAt ? (post.publishedAt | date: 'dd/MM/yyyy') : '—' }}
+          </td>
+          <td class="text-right whitespace-nowrap">
+            <a *appHasPermission="'UPDATE_BLOG'" [routerLink]="['/admin/blog', post.id]">
+              <p-button
+                icon="pi pi-pencil"
+                severity="secondary"
+                [text]="true"
+                [rounded]="true"
+                pTooltip="Modifier"
+              />
+            </a>
+            <p-button
+              *appHasPermission="'DELETE_BLOG'"
+              icon="pi pi-trash"
+              severity="danger"
+              [text]="true"
+              [rounded]="true"
+              pTooltip="Supprimer"
+              (onClick)="confirmDelete(post)"
+            />
+          </td>
+        </tr>
+      </ng-template>
+
+      <ng-template #emptymessage>
+        <tr>
+          <td colspan="6" class="empty-state">Aucun article ne correspond à cette recherche.</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</section>

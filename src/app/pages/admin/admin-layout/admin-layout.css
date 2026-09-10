@@ -1,0 +1,198 @@
+/* Palette locale du back-office : une seule redéfinition pour le mode sombre. */
+:host {
+  --admin-bg: #f6f7f9;
+  --admin-panel: #ffffff;
+  --admin-border: #e5e7eb;
+  --admin-text: #111827;
+  --admin-muted: #6b7280;
+  --admin-hover: #f3f4f6;
+
+  display: block;
+}
+
+:host-context(.app-dark) {
+  --admin-bg: #0f1115;
+  --admin-panel: #171a21;
+  --admin-border: #262b36;
+  --admin-text: #e5e7eb;
+  --admin-muted: #9ca3af;
+  --admin-hover: #1f242e;
+}
+
+.admin-shell {
+  min-height: 100dvh;
+  background: var(--admin-bg);
+  color: var(--admin-text);
+}
+
+/* ──────────────── Menu latéral ──────────────── */
+
+.admin-sidebar {
+  position: fixed;
+  inset: 0 auto 0 0;
+  z-index: 40;
+  width: 16rem;
+  display: flex;
+  flex-direction: column;
+  background: var(--admin-panel);
+  border-right: 1px solid var(--admin-border);
+  transform: translateX(-100%);
+  transition: transform 200ms ease-in-out;
+}
+
+.admin-sidebar.open {
+  transform: translateX(0);
+}
+
+.admin-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  padding: 1.125rem 1.25rem;
+  border-bottom: 1px solid var(--admin-border);
+}
+
+.admin-logo span {
+  color: var(--admin-text);
+}
+
+.admin-nav {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+}
+
+.admin-nav-link {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.625rem 0.75rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  color: var(--admin-muted);
+  transition:
+    background 150ms ease,
+    color 150ms ease;
+}
+
+.admin-nav-link:hover {
+  background: var(--admin-hover);
+  color: var(--admin-text);
+}
+
+.admin-nav-link.active {
+  background: color-mix(in srgb, var(--brand-primary, #c89a2d) 14%, transparent);
+  color: var(--brand-primary, #c89a2d);
+  font-weight: 600;
+}
+
+.admin-nav-link i {
+  font-size: 1rem;
+}
+
+.admin-sidebar-footer {
+  padding: 0.75rem;
+  border-top: 1px solid var(--admin-border);
+}
+
+.admin-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  background: rgb(17 24 39 / 45%);
+  border: 0;
+}
+
+/* ──────────────── Barre supérieure et contenu ──────────────── */
+
+.admin-main {
+  display: flex;
+  min-height: 100dvh;
+  flex-direction: column;
+}
+
+.admin-topbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  height: 3.75rem;
+  padding: 0 1rem;
+  background: color-mix(in srgb, var(--admin-panel) 90%, transparent);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--admin-border);
+}
+
+.admin-icon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 0.5rem;
+  color: var(--admin-muted);
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+}
+
+.admin-icon-button:hover {
+  background: var(--admin-hover);
+  color: var(--admin-text);
+}
+
+.admin-account {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.5rem;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+}
+
+.admin-account:hover {
+  background: var(--admin-hover);
+}
+
+.admin-account span span {
+  color: inherit;
+}
+
+.admin-avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 999px;
+  background: var(--brand-primary, #c89a2d);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.admin-content {
+  flex: 1;
+  padding: 1.5rem 1rem 3rem;
+}
+
+@media (min-width: 1024px) {
+  .admin-sidebar {
+    transform: translateX(0);
+  }
+
+  .admin-main {
+    margin-left: 16rem;
+  }
+
+  .admin-content {
+    padding: 2rem 2rem 4rem;
+  }
+}

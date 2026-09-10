@@ -1,0 +1,121 @@
+<header class="page-header">
+  <div>
+    <h1 class="page-title">Messages de contact</h1>
+    <p class="page-subtitle">
+      Les demandes déposées depuis le formulaire du site, du premier contact jusqu'à leur issue.
+    </p>
+  </div>
+</header>
+
+<section class="panel">
+  <div class="table-toolbar">
+    <p-iconfield iconPosition="left">
+      <p-inputicon class="pi pi-search" />
+      <input
+        pInputText
+        type="search"
+        [(ngModel)]="search"
+        (ngModelChange)="onSearchChange()"
+        placeholder="Nom, email, société, sujet…"
+        class="w-full sm:w-72"
+        aria-label="Rechercher un message"
+      />
+    </p-iconfield>
+
+    <p-select
+      [options]="statusOptions"
+      [(ngModel)]="statusFilter"
+      (ngModelChange)="onStatusChange()"
+      optionLabel="label"
+      optionValue="value"
+      class="w-full sm:w-52"
+      ariaLabel="Filtrer par statut"
+    />
+  </div>
+
+  <div class="table-scroll">
+    <p-table
+      [value]="items()"
+      [lazy]="true"
+      (onLazyLoad)="load($event)"
+      [loading]="loading()"
+      [paginator]="true"
+      [rows]="10"
+      [totalRecords]="total()"
+      [rowsPerPageOptions]="[10, 25, 50]"
+      [rowHover]="true"
+      dataKey="id"
+      currentPageReportTemplate="{first} à {last} sur {totalRecords} messages"
+      [showCurrentPageReport]="true"
+      class="p-datatable-sm"
+    >
+      <ng-template #header>
+        <tr>
+          <th pSortableColumn="firstName">Contact <p-sortIcon field="firstName" /></th>
+          <th pSortableColumn="companyName">Société <p-sortIcon field="companyName" /></th>
+          <th pSortableColumn="subject">Sujet <p-sortIcon field="subject" /></th>
+          <th pSortableColumn="status">Statut <p-sortIcon field="status" /></th>
+          <th pSortableColumn="submittedAt">Reçu le <p-sortIcon field="submittedAt" /></th>
+          <th class="w-24 text-right">Actions</th>
+        </tr>
+      </ng-template>
+
+      <ng-template #body let-message>
+        <tr class="cursor-pointer" (click)="open(message)">
+          <td>
+            <span class="block text-sm font-medium">
+              {{ message.firstName }} {{ message.lastName }}
+            </span>
+            <span class="block text-xs opacity-70">{{ message.email }}</span>
+          </td>
+          <td class="text-sm">{{ message.companyName || '—' }}</td>
+          <td class="max-w-xs">
+            <span class="block truncate text-sm">{{ message.subject || message.message }}</span>
+            @if (message.serviceCategory) {
+              <span class="block text-xs opacity-70">{{ message.serviceCategory }}</span>
+            }
+          </td>
+          <td>
+            <p-tag
+              [value]="statusLabels[message.status]"
+              [severity]="statusSeverity[message.status]"
+            />
+          </td>
+          <td class="text-sm whitespace-nowrap">
+            {{ message.submittedAt | date: 'dd/MM/yyyy HH:mm' }}
+          </td>
+          <td class="text-right whitespace-nowrap">
+            <a
+              [routerLink]="['/admin/contact', message.id]"
+              (click)="$event.stopPropagation()"
+              class="inline-flex"
+            >
+              <p-button
+                icon="pi pi-eye"
+                severity="secondary"
+                [text]="true"
+                [rounded]="true"
+                pTooltip="Ouvrir"
+              />
+            </a>
+            <p-button
+              *appHasPermission="'DELETE_CONTACT'"
+              icon="pi pi-trash"
+              severity="danger"
+              [text]="true"
+              [rounded]="true"
+              pTooltip="Supprimer"
+              (onClick)="confirmDelete(message, $event)"
+            />
+          </td>
+        </tr>
+      </ng-template>
+
+      <ng-template #emptymessage>
+        <tr>
+          <td colspan="6" class="empty-state">Aucun message ne correspond à cette recherche.</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</section>

@@ -1,0 +1,245 @@
+<header class="page-header">
+  <div>
+    <h1 class="page-title">Utilisateurs</h1>
+    <p class="page-subtitle">Les comptes ayant accès à l'administration, et leurs rôles.</p>
+  </div>
+  <p-button
+    *appHasPermission="'CREATE_USER'"
+    label="Nouvel utilisateur"
+    icon="pi pi-plus"
+    (onClick)="openCreate()"
+  />
+</header>
+
+<section class="panel">
+  <div class="table-toolbar">
+    <p-iconfield iconPosition="left">
+      <p-inputicon class="pi pi-search" />
+      <input
+        pInputText
+        type="search"
+        [(ngModel)]="search"
+        (ngModelChange)="onSearchChange()"
+        placeholder="Nom, email, poste…"
+        class="w-full sm:w-72"
+        aria-label="Rechercher un utilisateur"
+      />
+    </p-iconfield>
+  </div>
+
+  <div class="table-scroll">
+    <p-table
+      [value]="items()"
+      [lazy]="true"
+      (onLazyLoad)="load($event)"
+      [loading]="loading()"
+      [paginator]="true"
+      [rows]="10"
+      [totalRecords]="total()"
+      [rowsPerPageOptions]="[10, 25, 50]"
+      [rowHover]="true"
+      dataKey="id"
+      currentPageReportTemplate="{first} à {last} sur {totalRecords} comptes"
+      [showCurrentPageReport]="true"
+      class="p-datatable-sm"
+    >
+      <ng-template #header>
+        <tr>
+          <th pSortableColumn="username">Compte <p-sortIcon field="username" /></th>
+          <th pSortableColumn="position">Poste <p-sortIcon field="position" /></th>
+          <th>Rôles</th>
+          <th pSortableColumn="status">Statut <p-sortIcon field="status" /></th>
+          <th pSortableColumn="createdAt">Créé le <p-sortIcon field="createdAt" /></th>
+          <th class="w-24 text-right">Actions</th>
+        </tr>
+      </ng-template>
+
+      <ng-template #body let-user>
+        <tr>
+          <td>
+            <span class="block text-sm font-medium">
+              {{ user.firstName }} {{ user.lastName }}
+              @if (!user.firstName && !user.lastName) {
+                {{ user.username }}
+              }
+            </span>
+            <span class="block text-xs opacity-70">{{ user.email }}</span>
+          </td>
+          <td class="text-sm">{{ user.position || '—' }}</td>
+          <td>
+            <div class="flex flex-wrap gap-1">
+              @for (role of user.roles; track role.id) {
+                <span class="permission-chip">{{ role.name }}</span>
+              } @empty {
+                <span class="text-xs opacity-60">Aucun rôle</span>
+              }
+            </div>
+          </td>
+          <td>
+            <p-tag [value]="statusLabels[user.status]" [severity]="statusSeverity[user.status]" />
+            @if (!user.enabled) {
+              <span class="ml-1 text-xs opacity-60">désactivé</span>
+            }
+          </td>
+          <td class="text-sm whitespace-nowrap">{{ user.createdAt | date: 'dd/MM/yyyy' }}</td>
+          <td class="text-right whitespace-nowrap">
+            <p-button
+              *appHasPermission="'UPDATE_USER'"
+              icon="pi pi-pencil"
+              severity="secondary"
+              [text]="true"
+              [rounded]="true"
+              pTooltip="Modifier"
+              (onClick)="openEdit(user)"
+            />
+            @if (!isSelf(user)) {
+              <p-button
+                *appHasPermission="'DELETE_USER'"
+                icon="pi pi-trash"
+                severity="danger"
+                [text]="true"
+                [rounded]="true"
+                pTooltip="Supprimer"
+                (onClick)="confirmDelete(user)"
+              />
+            }
+          </td>
+        </tr>
+      </ng-template>
+
+      <ng-template #emptymessage>
+        <tr>
+          <td colspan="6" class="empty-state">Aucun compte ne correspond à cette recherche.</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</section>
+
+<!-- ──────────────── Création / modification ──────────────── -->
+<p-dialog
+  [visible]="dialogOpen()"
+  (visibleChange)="dialogOpen.set($event)"
+  [modal]="true"
+  [draggable]="false"
+  [style]="{ width: '46rem' }"
+  [breakpoints]="{ '960px': '95vw' }"
+  [header]="editing() ? 'Modifier le compte' : 'Nouvel utilisateur'"
+>
+  <form [formGroup]="form" (ngSubmit)="save()" class="grid gap-4 sm:grid-cols-2">
+    @if (formError()) {
+      <p class="rounded-md bg-red-50 px-3 py-2 text-sm text-red-700 sm:col-span-2">
+        {{ formError() }}
+      </p>
+    }
+
+    <div class="flex flex-col gap-1.5">
+      <label for="username" class="font-body text-sm font-medium">Nom d'utilisateur *</label>
+      <input pInputText id="username" formControlName="username" class="w-full" />
+      @if (form.controls.username.touched && form.controls.username.invalid) {
+        <small class="text-danger">Entre 3 et 50 caractères.</small>
+      }
+    </div>
+
+    <div class="flex flex-col gap-1.5">
+      <label for="email" class="font-body text-sm font-medium">Email *</label>
+      <input pInputText id="email" type="email" formControlName="email" class="w-full" />
+      @if (form.controls.email.touched && form.controls.email.invalid) {
+        <small class="text-danger">Adresse email invalide.</small>
+      }
+    </div>
+
+    <div class="flex flex-col gap-1.5 sm:col-span-2">
+      <label for="password" class="font-body text-sm font-medium">
+        Mot de passe {{ editing() ? '' : '*' }}
+      </label>
+      <p-password
+        inputId="password"
+        formControlName="password"
+        [toggleMask]="true"
+        [feedback]="!editing()"
+        autocomplete="new-password"
+        class="w-full"
+        inputStyleClass="w-full"
+      />
+      <small class="opacity-70">
+        {{
+          editing()
+            ? 'Laisser vide pour conserver le mot de passe actuel. Le modifier ferme toutes les sessions du compte.'
+            : '8 caractères minimum.'
+        }}
+      </small>
+    </div>
+
+    <div class="flex flex-col gap-1.5">
+      <label for="firstName" class="font-body text-sm font-medium">Prénom</label>
+      <input pInputText id="firstName" formControlName="firstName" class="w-full" />
+    </div>
+
+    <div class="flex flex-col gap-1.5">
+      <label for="lastName" class="font-body text-sm font-medium">Nom</label>
+      <input pInputText id="lastName" formControlName="lastName" class="w-full" />
+    </div>
+
+    <div class="flex flex-col gap-1.5">
+      <label for="phone" class="font-body text-sm font-medium">Téléphone</label>
+      <input pInputText id="phone" formControlName="phone" class="w-full" />
+    </div>
+
+    <div class="flex flex-col gap-1.5">
+      <label for="position" class="font-body text-sm font-medium">Poste</label>
+      <input pInputText id="position" formControlName="position" class="w-full" />
+    </div>
+
+    <div class="flex flex-col gap-1.5 sm:col-span-2">
+      <label for="roleIds" class="font-body text-sm font-medium">Rôles</label>
+      <p-multiselect
+        inputId="roleIds"
+        formControlName="roleIds"
+        [options]="availableRoles()"
+        optionLabel="name"
+        optionValue="id"
+        display="chip"
+        placeholder="Aucun rôle"
+        emptyMessage="Aucun rôle disponible"
+        class="w-full"
+      />
+      <small class="opacity-70">
+        Les permissions du compte sont l'union de celles de ses rôles. Un compte sans rôle peut
+        se connecter mais n'a accès à rien.
+      </small>
+    </div>
+
+    <div class="flex flex-col gap-1.5">
+      <label for="status" class="font-body text-sm font-medium">Statut</label>
+      <p-select
+        inputId="status"
+        formControlName="status"
+        [options]="statusOptions"
+        optionLabel="label"
+        optionValue="value"
+        class="w-full"
+      />
+    </div>
+
+    <div class="flex items-center gap-3 pt-6">
+      <p-toggleswitch inputId="enabled" formControlName="enabled" />
+      <label for="enabled" class="font-body text-sm font-medium">Compte actif</label>
+    </div>
+  </form>
+
+  <ng-template #footer>
+    <p-button
+      label="Annuler"
+      severity="secondary"
+      [text]="true"
+      (onClick)="dialogOpen.set(false)"
+    />
+    <p-button
+      label="Enregistrer"
+      icon="pi pi-check"
+      [loading]="saving()"
+      (onClick)="save()"
+    />
+  </ng-template>
+</p-dialog>

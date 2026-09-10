@@ -1,10 +1,11 @@
 import { Component, inject } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { Container } from "../container/container";
 import { CompanyService } from '../../services/company.service';
 
 @Component({
   selector: 'my-footer',
-  imports: [Container],
+  imports: [Container, RouterLink],
   templateUrl: './footer.html',
   styleUrl: './footer.css',
 })

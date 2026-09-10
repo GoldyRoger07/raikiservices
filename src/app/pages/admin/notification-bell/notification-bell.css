@@ -1,0 +1,55 @@
+:host {
+  display: inline-flex;
+  position: relative;
+}
+
+.bell-button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 0;
+  border-radius: 0.5rem;
+  background: transparent;
+  color: inherit;
+  opacity: 0.75;
+  cursor: pointer;
+}
+
+.bell-button:hover {
+  opacity: 1;
+  background: rgb(0 0 0 / 5%);
+}
+
+/* La pastille se pose sur l'angle de l'icône, hors du flux du bouton. */
+.bell-button ::ng-deep .bell-badge {
+  position: absolute;
+  top: 0.125rem;
+  right: 0.125rem;
+  transform: scale(0.8);
+  transform-origin: top right;
+}
+
+.bell-item {
+  display: block;
+  width: 100%;
+  padding: 0.625rem 0.75rem;
+  text-align: left;
+  border: 0;
+  border-bottom: 1px solid var(--p-content-border-color, #e5e7eb);
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+
+.bell-item:hover {
+  background: rgb(0 0 0 / 4%);
+}
+
+/* Un liseré doré signale ce qui n'a pas encore été lu. */
+.bell-item.unread {
+  border-left: 3px solid var(--brand-primary, #c89a2d);
+  background: color-mix(in srgb, var(--brand-primary, #c89a2d) 6%, transparent);
+}
