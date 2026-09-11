@@ -1,0 +1,150 @@
+@if (!selectionMode()) {
+  <header class="page-header">
+    <div>
+      <h1 class="page-title">Images</h1>
+      <p class="page-subtitle">
+        Les visuels du site. Chaque image est réduite puis livrée au format le plus léger que
+        supporte le navigateur du visiteur.
+      </p>
+    </div>
+  </header>
+}
+
+<section class="panel flex flex-col gap-4 p-5">
+  <div class="table-toolbar">
+    <p-iconfield iconPosition="left">
+      <p-inputicon class="pi pi-search" />
+      <input
+        pInputText
+        type="search"
+        [(ngModel)]="search"
+        (ngModelChange)="onSearchChange()"
+        placeholder="Nom de fichier, texte alternatif…"
+        class="w-full sm:w-72"
+        aria-label="Rechercher une image"
+      />
+    </p-iconfield>
+  </div>
+
+  <!-- ──────────────── Dépôt ──────────────── -->
+  <div
+    *appHasPermission="'CREATE_MEDIA'"
+    class="drop-zone"
+    [class.drop-zone--active]="dragging"
+    (dragover)="onDragOver($event)"
+    (dragleave)="onDragLeave()"
+    (drop)="onDrop($event)"
+  >
+    <i class="pi pi-cloud-upload text-2xl opacity-60"></i>
+    <p class="font-body text-sm">
+      Glissez vos images ici, ou
+      <label for="media-input" class="text-primary cursor-pointer underline">
+        choisissez des fichiers
+      </label>
+      .
+    </p>
+    <p class="text-xs opacity-60">
+      JPEG, PNG, WebP, AVIF ou GIF. Les images trop larges sont réduites avant l'envoi.
+    </p>
+    <input
+      id="media-input"
+      type="file"
+      class="sr-only"
+      multiple
+      [accept]="acceptedTypes"
+      (change)="onFilesChosen($event)"
+    />
+  </div>
+
+  @if (uploads().length) {
+    <ul class="flex flex-col gap-2">
+      @for (upload of uploads(); track upload.name) {
+        <li class="flex items-center gap-3 text-sm">
+          <span class="w-48 truncate opacity-80">{{ upload.name }}</span>
+          <p-progressbar [value]="upload.percent" class="flex-1" [style]="{ height: '0.5rem' }" />
+        </li>
+      }
+    </ul>
+  }
+
+  <!-- ──────────────── Grille ──────────────── -->
+  @if (loading() && !items().length) {
+    <p class="empty-state">Chargement…</p>
+  } @else if (!items().length) {
+    <p class="empty-state">
+      @if (search) {
+        Aucune image ne correspond à cette recherche.
+      } @else {
+        Aucune image pour l'instant. Déposez-en une ci-dessus.
+      }
+    </p>
+  } @else {
+    <ul class="media-grid">
+      @for (asset of items(); track asset.id) {
+        <li class="media-card">
+          @if (selectionMode()) {
+            <button type="button" class="media-thumb" (click)="choose(asset)">
+              <img [src]="thumbnail(asset)" [alt]="asset.alt ?? ''" loading="lazy" />
+              <span class="media-thumb__overlay">Choisir</span>
+            </button>
+          } @else {
+            <span class="media-thumb">
+              <img [src]="thumbnail(asset)" [alt]="asset.alt ?? ''" loading="lazy" />
+            </span>
+          }
+
+          <div class="flex flex-col gap-1.5 p-3">
+            <span class="truncate text-xs font-medium" [title]="asset.publicId">
+              {{ asset.originalFilename || asset.publicId }}
+            </span>
+            <span class="text-xs opacity-60">
+              {{ asset.width }}×{{ asset.height }} · {{ formatBytes(asset.bytes) }} ·
+              {{ asset.uploadedAt | date: 'dd/MM/yy' }}
+            </span>
+
+            @if (!selectionMode()) {
+              <input
+                pInputText
+                type="text"
+                class="w-full text-xs"
+                placeholder="Texte alternatif"
+                [value]="asset.alt ?? ''"
+                (blur)="saveAlt(asset, $any($event.target).value)"
+                [attr.aria-label]="'Texte alternatif de ' + asset.publicId"
+              />
+
+              <div class="flex justify-end gap-1">
+                <p-button
+                  icon="pi pi-copy"
+                  severity="secondary"
+                  [text]="true"
+                  [rounded]="true"
+                  pTooltip="Copier l'identifiant"
+                  (onClick)="copyId(asset)"
+                />
+                <p-button
+                  *appHasPermission="'DELETE_MEDIA'"
+                  icon="pi pi-trash"
+                  severity="danger"
+                  [text]="true"
+                  [rounded]="true"
+                  pTooltip="Supprimer"
+                  (onClick)="confirmDelete(asset)"
+                />
+              </div>
+            }
+          </div>
+        </li>
+      }
+    </ul>
+
+    <p-paginator
+      [first]="first()"
+      [rows]="pageSize"
+      [totalRecords]="total()"
+      (onPageChange)="load($event.first ?? 0)"
+      [showCurrentPageReport]="true"
+      currentPageReportTemplate="{first} à {last} sur {totalRecords} images"
+    />
+  }
+</section>

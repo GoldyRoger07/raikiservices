@@ -1,0 +1,125 @@
+<header class="page-header">
+  <div>
+    <h1 class="page-title">Offre de lancement</h1>
+    <p class="page-subtitle">
+      Décide de ce qu'affiche le haut de la page des tarifs. À zéro place restante, l'offre laisse
+      la place au bloc « état des lieux gratuit ».
+    </p>
+  </div>
+  @if (state(); as current) {
+    <p-tag
+      [value]="current.running ? 'Offre visible' : 'Offre masquée'"
+      [severity]="current.running ? 'success' : 'secondary'"
+    />
+  }
+</header>
+
+@if (loading()) {
+  <div class="panel p-6">
+    <p-skeleton width="12rem" height="1.5rem" class="mb-4" />
+    <p-skeleton height="8rem" />
+  </div>
+} @else {
+  @if (formError()) {
+    <p class="mb-4 rounded-md bg-red-50 px-3 py-2 text-sm text-red-700">{{ formError() }}</p>
+  }
+
+  <form [formGroup]="form" (ngSubmit)="save()" class="grid gap-4 lg:grid-cols-3">
+    <section class="panel flex flex-col gap-5 p-5 lg:col-span-2">
+      <div class="flex items-center justify-between gap-3">
+        <div>
+          <label for="active" class="font-body text-sm font-medium">Offre active</label>
+          <p class="text-xs opacity-70">
+            La désactiver retire l'offre du site sans toucher au compteur — utile pour la suspendre
+            le temps d'absorber les demandes en cours.
+          </p>
+        </div>
+        <p-toggleswitch inputId="active" formControlName="active" />
+      </div>
+
+      <div class="flex flex-col gap-1.5">
+        <label for="totalSlots" class="font-body text-sm font-medium">Places ouvertes</label>
+        <p-inputnumber
+          inputId="totalSlots"
+          formControlName="totalSlots"
+          [min]="1"
+          [max]="999"
+          [showButtons]="true"
+          styleClass="w-full"
+        />
+        @if (form.controls.totalSlots.touched && form.controls.totalSlots.invalid) {
+          <small class="text-danger">Entre 1 et 999.</small>
+        }
+      </div>
+
+      <div class="flex flex-col gap-1.5">
+        <label for="claimedSlots" class="font-body text-sm font-medium">Places attribuées</label>
+        <p-inputnumber
+          inputId="claimedSlots"
+          formControlName="claimedSlots"
+          [min]="0"
+          [max]="999"
+          [showButtons]="true"
+          styleClass="w-full"
+        />
+        <small class="opacity-70">
+          À incrémenter quand un client accepte l'offre. Rien ne le fait automatiquement : le
+          système ne sait pas ce qu'est un accord conclu.
+        </small>
+      </div>
+
+      <div class="flex flex-wrap items-center gap-2">
+        <p-button label="Enregistrer" icon="pi pi-check" [loading]="saving()" (onClick)="save()" />
+        <p-button
+          label="Une place de plus attribuée"
+          icon="pi pi-user-plus"
+          severity="secondary"
+          [outlined]="true"
+          [disabled]="
+            saving() || form.controls.claimedSlots.value >= form.controls.totalSlots.value
+          "
+          (onClick)="claimOne()"
+        />
+      </div>
+    </section>
+
+    <!-- Aperçu : ce que le visiteur verra une fois enregistré. -->
+    <aside class="panel flex flex-col gap-3 p-5">
+      <h2 class="font-body text-sm font-medium">Sur la page des tarifs</h2>
+
+      @if (state(); as current) {
+        @if (current.running) {
+          <p class="text-sm">
+            Le bloc <strong>« Offre de lancement »</strong> est affiché, avec la mention
+            <em>« il reste {{ current.remainingSlots }} places sur {{ current.totalSlots }} »</em>.
+          </p>
+        } @else {
+          <p class="text-sm">
+            Le bloc <strong>« état des lieux gratuit »</strong> est affiché à la place.
+            @if (!current.active) {
+              L'offre a été désactivée manuellement.
+            } @else {
+              Toutes les places ont été attribuées.
+            }
+          </p>
+        }
+
+        <div class="mt-2 border-t border-gray-200 pt-3 text-sm">
+          <div class="flex justify-between">
+            <span class="opacity-70">Enregistré</span>
+            <span>{{ current.claimedSlots }} / {{ current.totalSlots }}</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="opacity-70">Restant</span>
+            <span>{{ current.remainingSlots }}</span>
+          </div>
+        </div>
+      }
+
+      <p class="mt-2 text-xs opacity-70">
+        Ne revenez pas en arrière sur le compteur une fois les places annoncées : une rareté qui
+        redémarre se remarque, et coûte plus cher en confiance qu'elle ne rapporte en demandes.
+      </p>
+    </aside>
+  </form>
+}

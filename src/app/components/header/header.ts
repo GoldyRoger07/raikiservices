@@ -43,7 +43,7 @@ export class Header {
       children: [
         {
           label: 'Web Design',
-          subtitle: 'Des sites web personnaliser qui transforme vos visiteurs en clients',
+          subtitle: 'Des sites sur mesure qui transforment vos visiteurs en clients.',
           url: '/sites-web',
           icon: 'pi pi-desktop',
         },

@@ -85,6 +85,19 @@ export default class AdminLayout implements OnInit, OnDestroy {
     },
     { label: 'Blog', icon: 'pi pi-file-edit', route: '/admin/blog', permissions: ['READ_BLOG'] },
     {
+      label: 'Réalisations',
+      icon: 'pi pi-briefcase',
+      route: '/admin/projets',
+      permissions: ['READ_PROJECT'],
+    },
+    { label: 'Images', icon: 'pi pi-images', route: '/admin/medias', permissions: ['READ_MEDIA'] },
+    {
+      label: 'Offre de lancement',
+      icon: 'pi pi-megaphone',
+      route: '/admin/offre',
+      permissions: ['READ_SETTING'],
+    },
+    {
       label: 'Utilisateurs',
       icon: 'pi pi-users',
       route: '/admin/users',

@@ -1,0 +1,14 @@
+/* Vignette de ligne : cadre fixe, pour que le tableau ne se déforme pas au chargement. */
+.row-thumb {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.5rem;
+  height: 2.5rem;
+  border-radius: 0.35rem;
+  object-fit: cover;
+}
+
+.row-thumb--empty {
+  background-color: color-mix(in srgb, currentColor 8%, transparent);
+}

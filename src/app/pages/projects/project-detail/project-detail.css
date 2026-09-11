@@ -1,0 +1,51 @@
+/*
+ * Mise en forme du récit.
+ *
+ * Le texte vient du back-office : soit des paragraphes interpolés, soit du HTML injecté par
+ * `[innerHTML]`. Dans ce second cas Angular n'applique pas les attributs de portée du
+ * composant au contenu inséré — d'où `::ng-deep`, seul moyen d'atteindre des balises que le
+ * compilateur n'a jamais vues.
+ */
+.project-body p,
+.project-body ::ng-deep p {
+  margin-bottom: 1rem;
+  line-height: 1.75;
+}
+
+.project-body ::ng-deep h2,
+.project-body ::ng-deep h3 {
+  margin-top: 1.75rem;
+  margin-bottom: 0.75rem;
+  font-weight: 600;
+  color: var(--color-gray-800, #1e2939);
+}
+
+.project-body ::ng-deep h2 {
+  font-size: 1.5rem;
+}
+
+.project-body ::ng-deep h3 {
+  font-size: 1.25rem;
+}
+
+.project-body ::ng-deep ul,
+.project-body ::ng-deep ol {
+  margin-bottom: 1rem;
+  padding-left: 1.25rem;
+  list-style: revert;
+}
+
+.project-body ::ng-deep li {
+  margin-bottom: 0.35rem;
+}
+
+.project-body ::ng-deep a {
+  color: var(--color-primary, #c89a2d);
+  text-decoration: underline;
+}
+
+.project-body ::ng-deep img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 0.75rem;
+}

@@ -15,7 +15,7 @@ import { LegalDocument } from '../../models/legal.model';
  * un outil de mesure d'audience, un paiement en ligne ou un nouveau formulaire est ajouté.
  */
 
-const UPDATED_AT = '4 septembre 2026';
+const UPDATED_AT = '11 septembre 2026';
 
 const CONTACT_EMAIL = 'contact@raikiservices.com';
 const CONTACT_PHONE = '(509) 34 97 7530';
@@ -73,7 +73,7 @@ export const mentionsLegales: LegalDocument = {
       blocks: [
         {
           kind: 'p',
-          text: 'Le site web est hébergé par Render Services, Inc., dont les services sont accessibles à l\'adresse render.com.',
+          text: "Le site web est hébergé par Render Services, Inc., dont les services sont accessibles à l'adresse render.com.",
         },
         {
           kind: 'p',
@@ -90,7 +90,7 @@ export const mentionsLegales: LegalDocument = {
         },
         {
           kind: 'p',
-          text: "Toute reproduction, représentation, adaptation ou exploitation, totale ou partielle, de ces éléments, par quelque procédé que ce soit et sur quelque support que ce soit, est interdite sans autorisation écrite préalable. Les projets clients présentés dans les rubriques Portfolio et Études de cas restent la propriété de leurs titulaires respectifs et sont publiés avec leur accord.",
+          text: 'Toute reproduction, représentation, adaptation ou exploitation, totale ou partielle, de ces éléments, par quelque procédé que ce soit et sur quelque support que ce soit, est interdite sans autorisation écrite préalable. Les projets clients présentés dans les rubriques Portfolio et Études de cas restent la propriété de leurs titulaires respectifs et sont publiés avec leur accord.',
         },
       ],
     },
@@ -116,11 +116,11 @@ export const mentionsLegales: LegalDocument = {
         },
         {
           kind: 'p',
-          text: "Les informations présentées, notamment les descriptions de prestations et les indications tarifaires, ont une valeur informative et ne constituent pas une offre contractuelle. Seul un devis signé engage Raiki Services.",
+          text: 'Les informations présentées, notamment les descriptions de prestations et les indications tarifaires, ont une valeur informative et ne constituent pas une offre contractuelle. Seul un devis signé engage Raiki Services.',
         },
         {
           kind: 'p',
-          text: "Il vous appartient de prendre les mesures appropriées pour protéger votre équipement et vos données, notamment contre les logiciels malveillants.",
+          text: 'Il vous appartient de prendre les mesures appropriées pour protéger votre équipement et vos données, notamment contre les logiciels malveillants.',
         },
       ],
     },
@@ -147,7 +147,7 @@ export const mentionsLegales: LegalDocument = {
       blocks: [
         {
           kind: 'p',
-          text: "Les présentes mentions légales sont régies et interprétées conformément au droit en vigueur en République d’Haïti. En cas de litige relatif à l’utilisation du site, les parties s’efforceront de rechercher une solution amiable avant toute action judiciaire. À défaut de résolution amiable, tout litige sera soumis aux juridictions haïtiennes compétentes.",
+          text: 'Les présentes mentions légales sont régies et interprétées conformément au droit en vigueur en République d’Haïti. En cas de litige relatif à l’utilisation du site, les parties s’efforceront de rechercher une solution amiable avant toute action judiciaire. À défaut de résolution amiable, tout litige sera soumis aux juridictions haïtiennes compétentes.',
         },
       ],
     },
@@ -169,7 +169,7 @@ export const politiqueConfidentialite: LegalDocument = {
       blocks: [
         {
           kind: 'p',
-          text: "Raiki Services attache une importance particulière à la protection de votre vie privée. Nous ne collectons que les données nécessaires à la relation que vous engagez avec nous, nous ne les vendons pas et nous ne les utilisons pas à des fins de publicité ciblée.",
+          text: 'Raiki Services attache une importance particulière à la protection de votre vie privée. Nous ne collectons que les données nécessaires à la relation que vous engagez avec nous, nous ne les vendons pas et nous ne les utilisons pas à des fins de publicité ciblée.',
         },
         {
           kind: 'p',
@@ -202,8 +202,8 @@ export const politiqueConfidentialite: LegalDocument = {
             'le nom de votre société, si vous le renseignez',
             'la prestation qui vous intéresse et le sujet de votre demande',
             'le contenu de votre message (obligatoire)',
-            "votre accord éventuel pour recevoir nos actualités",
-            'la date et l\'heure de votre envoi',
+            'votre accord éventuel pour recevoir nos actualités',
+            "la date et l'heure de votre envoi",
           ],
         },
         {
@@ -220,7 +220,7 @@ export const politiqueConfidentialite: LegalDocument = {
         },
         {
           kind: 'p',
-          text: "Nous ne collectons aucune donnée sensible au sens de la réglementation (origine, opinions, santé, orientation sexuelle…) et nous vous demandons de ne pas nous en communiquer dans vos messages.",
+          text: 'Nous ne collectons aucune donnée sensible au sens de la réglementation (origine, opinions, santé, orientation sexuelle…) et nous vous demandons de ne pas nous en communiquer dans vos messages.',
         },
       ],
     },
@@ -232,7 +232,7 @@ export const politiqueConfidentialite: LegalDocument = {
           items: [
             "Répondre à votre demande et établir un devis : c'est la finalité principale du formulaire de contact. Le traitement repose sur votre demande, préalable à la conclusion d'un éventuel contrat.",
             "Assurer le suivi commercial de votre projet et conserver l'historique de nos échanges : ce traitement repose sur notre intérêt légitime à gérer notre activité.",
-            "Vous envoyer nos actualités : uniquement si vous avez coché la case correspondante, et donc sur la base de votre consentement, que vous pouvez retirer à tout moment.",
+            'Vous envoyer nos actualités : uniquement si vous avez coché la case correspondante, et donc sur la base de votre consentement, que vous pouvez retirer à tout moment.',
             "Sécuriser l'accès à l'espace d'administration et détecter les tentatives d'intrusion : ce traitement repose sur notre intérêt légitime à protéger le site et les données qui y sont stockées.",
             "Respecter nos obligations légales, notamment comptables, lorsqu'une relation contractuelle est engagée.",
           ],
@@ -253,14 +253,14 @@ export const politiqueConfidentialite: LegalDocument = {
         {
           kind: 'list',
           items: [
-            "Render Services, Inc. (render.com) — hébergement du site web.",
+            'Render Services, Inc. (render.com) — hébergement du site web.',
             "[À COMPLÉTER : hébergeur de la base de données et du serveur applicatif] — stockage des messages reçus et des comptes d'administration.",
-            "Resend — acheminement des courriels transactionnels : accusé de réception de votre message, notification interne à notre équipe, réinitialisation de mot de passe.",
+            'Resend — acheminement des courriels transactionnels : accusé de réception de votre message, notification interne à notre équipe, réinitialisation de mot de passe.',
           ],
         },
         {
           kind: 'p',
-          text: "Nous ne cédons, ne louons et ne vendons vos données à aucun tiers. Elles peuvent être communiquées à une autorité administrative ou judiciaire lorsque la loi nous y oblige.",
+          text: 'Nous ne cédons, ne louons et ne vendons vos données à aucun tiers. Elles peuvent être communiquées à une autorité administrative ou judiciaire lorsque la loi nous y oblige.',
         },
       ],
     },
@@ -279,8 +279,8 @@ export const politiqueConfidentialite: LegalDocument = {
         {
           kind: 'list',
           items: [
-            "Messages du formulaire de contact restés sans suite : [À COMPLÉTER : durée retenue, par exemple 3 ans à compter du dernier échange].",
-            "Dossiers ayant donné lieu à une relation contractuelle : pendant la durée de la relation, puis pendant la durée de prescription applicable et les délais légaux de conservation comptable.",
+            'Messages du formulaire de contact restés sans suite : [À COMPLÉTER : durée retenue, par exemple 3 ans à compter du dernier échange].',
+            'Dossiers ayant donné lieu à une relation contractuelle : pendant la durée de la relation, puis pendant la durée de prescription applicable et les délais légaux de conservation comptable.',
             "Coordonnées utilisées pour l'envoi de nos actualités : jusqu'à votre désinscription.",
             "Comptes d'administration : pendant la durée des fonctions de leur titulaire au sein de l'équipe.",
             "Journaux de connexion et sessions : les sessions expirent automatiquement et sont supprimées ; l'historique des connexions est conservé [À COMPLÉTER : durée retenue, par exemple 12 mois] à des fins de sécurité.",
@@ -301,7 +301,7 @@ export const politiqueConfidentialite: LegalDocument = {
             'la transmission des données en HTTPS entre votre navigateur et nos serveurs ;',
             "le stockage des mots de passe sous forme d'empreintes chiffrées non réversibles, jamais en clair ;",
             "un accès à l'administration protégé par jeton d'authentification à durée de vie courte, dont le jeton de renouvellement est déposé dans un cookie inaccessible au code JavaScript ;",
-            "un cloisonnement des droits par rôles et permissions, revu à chaque évolution du site ;",
+            'un cloisonnement des droits par rôles et permissions, revu à chaque évolution du site ;',
             "la possibilité de révoquer à distance toute session ouverte, notamment en cas de perte d'un appareil.",
           ],
         },
@@ -324,7 +324,7 @@ export const politiqueConfidentialite: LegalDocument = {
             "droit d'accès : obtenir la confirmation que des données vous concernant sont traitées et en recevoir une copie ;",
             'droit de rectification : faire corriger des données inexactes ou incomplètes ;',
             "droit à l'effacement : demander la suppression de vos données lorsque leur conservation n'est plus justifiée ;",
-            'droit à la limitation : demander le gel temporaire du traitement, le temps qu\'une contestation soit examinée ;',
+            "droit à la limitation : demander le gel temporaire du traitement, le temps qu'une contestation soit examinée ;",
             "droit d'opposition : vous opposer à un traitement fondé sur notre intérêt légitime, pour des raisons tenant à votre situation ;",
             'droit à la portabilité : recevoir dans un format structuré les données que vous nous avez fournies ;',
             'droit de retirer votre consentement à tout moment, lorsque le traitement repose sur celui-ci, sans que cela remette en cause la licéité du traitement effectué auparavant.',
@@ -436,7 +436,7 @@ export const politiqueCookies: LegalDocument = {
         },
         {
           kind: 'p',
-          text: "La navigation privée constitue une autre option : les éléments déposés y sont effacés à la fermeture de la fenêtre.",
+          text: 'La navigation privée constitue une autre option : les éléments déposés y sont effacés à la fermeture de la fenêtre.',
         },
       ],
     },
@@ -458,7 +458,7 @@ export const politiqueCookies: LegalDocument = {
         },
         {
           kind: 'p',
-          text: "Le traitement des données personnelles auquel ces éléments peuvent contribuer est détaillé dans notre Politique de confidentialité.",
+          text: 'Le traitement des données personnelles auquel ces éléments peuvent contribuer est détaillé dans notre Politique de confidentialité.',
         },
       ],
     },
@@ -472,11 +472,11 @@ export const politiqueCookies: LegalDocument = {
 export const conditionsGenerales: LegalDocument = {
   heroTitle: 'Conditions générales',
   heroDesc:
-    "Le cadre de nos prestations de création de sites web et de référencement : commande, prix, délais, droits et responsabilités.",
+    'Le cadre de nos prestations de création de sites web et de référencement : commande, prix, délais, droits et responsabilités.',
   updatedAt: UPDATED_AT,
   sections: [
     {
-      title: 'Objet et champ d\'application',
+      title: "Objet et champ d'application",
       blocks: [
         {
           kind: 'p',
@@ -516,10 +516,10 @@ export const conditionsGenerales: LegalDocument = {
         {
           kind: 'list',
           items: [
-            'Les prix sont ceux indiqués au devis, exprimés en [À COMPLÉTER : devise] et [À COMPLÉTER : hors taxes ou toutes taxes comprises].',
-            "Un acompte de [À COMPLÉTER : pourcentage] est exigible à la commande ; le solde est facturé [À COMPLÉTER : à la livraison, ou selon l'échéancier du devis].",
-            'Les factures sont payables sous [À COMPLÉTER : délai de paiement] à compter de leur date d\'émission.',
-            'Tout retard de paiement entraîne, après mise en demeure restée sans effet, [À COMPLÉTER : pénalités applicables] et peut justifier la suspension des prestations en cours, y compris de l\'hébergement et de la maintenance.',
+            'Les prix sont ceux indiqués au devis, exprimés en dollars américains (USD) et [À COMPLÉTER : hors taxes ou toutes taxes comprises].',
+            'Le prix de création est réglé en deux fois : un acompte de cinquante pour cent (50 %) à la commande, le solde à la mise en ligne du site. Le devis peut prévoir un échéancier différent.',
+            "Les factures sont payables sous [À COMPLÉTER : délai de paiement] à compter de leur date d'émission.",
+            "Tout retard de paiement entraîne, après mise en demeure restée sans effet, [À COMPLÉTER : pénalités applicables] et peut justifier la suspension des prestations en cours, y compris de l'hébergement et de la maintenance.",
             "Les abonnements (hébergement, maintenance, accompagnement) sont facturés d'avance selon la périodicité prévue au devis.",
           ],
         },
@@ -534,7 +534,7 @@ export const conditionsGenerales: LegalDocument = {
         },
         {
           kind: 'p',
-          text: "Il se réserve la possibilité de faire appel à des sous-traitants pour tout ou partie des prestations, tout en demeurant responsable de leur exécution vis-à-vis du Client.",
+          text: 'Il se réserve la possibilité de faire appel à des sous-traitants pour tout ou partie des prestations, tout en demeurant responsable de leur exécution vis-à-vis du Client.',
         },
       ],
     },
@@ -549,9 +549,9 @@ export const conditionsGenerales: LegalDocument = {
           kind: 'list',
           items: [
             'désigner un interlocuteur unique disposant du pouvoir de valider les étapes du projet ;',
-            'fournir dans les délais convenus l\'ensemble des contenus nécessaires (textes, images, logos, accès techniques) ;',
+            "fournir dans les délais convenus l'ensemble des contenus nécessaires (textes, images, logos, accès techniques) ;",
             'répondre aux demandes de validation dans un délai raisonnable ;',
-            'garantir qu\'il détient les droits sur les éléments qu\'il transmet, et garantir le Prestataire contre toute réclamation d\'un tiers à ce titre ;',
+            "garantir qu'il détient les droits sur les éléments qu'il transmet, et garantir le Prestataire contre toute réclamation d'un tiers à ce titre ;",
             'conserver la confidentialité des identifiants qui lui sont remis et signaler sans délai toute utilisation suspecte.',
           ],
         },
@@ -601,19 +601,66 @@ export const conditionsGenerales: LegalDocument = {
       ],
     },
     {
-      title: 'Hébergement et maintenance',
+      title: 'Abonnement, hébergement et nom de domaine',
       blocks: [
         {
           kind: 'p',
-          text: "Lorsque le devis prévoit une prestation d'hébergement ou de maintenance, celle-ci s'exécute sous forme d'abonnement, reconductible selon la périodicité convenue et résiliable par chacune des parties moyennant un préavis de [À COMPLÉTER : durée du préavis].",
+          text: "La mise en ligne et le maintien en ligne du site font l'objet d'un abonnement mensuel, distinct du prix de création. Cet abonnement n'est pas optionnel : il finance l'hébergement, le renouvellement du nom de domaine, le certificat de sécurité, les sauvegardes et les mises à jour techniques sans lesquels le site ne peut demeurer accessible.",
         },
         {
           kind: 'p',
-          text: "Le Prestataire ne peut garantir une disponibilité ininterrompue : des interruptions peuvent survenir du fait des opérateurs, de l'hébergeur ou d'opérations de maintenance, dont le Client est prévenu lorsqu'elles sont programmées. La sauvegarde des données fait l'objet des modalités précisées au devis.",
+          text: 'Sauf stipulation contraire du devis, cet abonnement comprend :',
+        },
+        {
+          kind: 'list',
+          items: [
+            "l'hébergement du site et sa mise à disposition du public ;",
+            "l'enregistrement puis le renouvellement du nom de domaine, dont le Client est titulaire ;",
+            'le certificat de sécurité et les mises à jour techniques ;',
+            'des sauvegardes régulières ;',
+            'les modifications de contenu, dans la limite prévue au devis.',
+          ],
         },
         {
           kind: 'p',
-          text: "À l'issue de la relation contractuelle, le Prestataire remet au Client, sur demande, les éléments nécessaires à la reprise du site par un tiers.",
+          text: "L'abonnement est conclu sans durée minimale. Il se reconduit tacitement chaque mois et peut être résilié dans les conditions prévues à l'article Résiliation ci-après.",
+        },
+        {
+          kind: 'p',
+          text: "Le nom de domaine est enregistré au nom du Client, qui en est titulaire dès le premier jour. Le Prestataire en assure la gestion technique et le renouvellement pendant toute la durée de l'abonnement. Cette prise en charge cesse à la date d'effet de la résiliation : il appartient alors au Client d'assurer lui-même le renouvellement auprès du bureau d'enregistrement, faute de quoi le nom de domaine peut être libéré à son échéance.",
+        },
+        {
+          kind: 'p',
+          text: "Le Prestataire ne peut garantir une disponibilité ininterrompue : des interruptions peuvent survenir du fait des opérateurs, de l'hébergeur ou d'opérations de maintenance, dont le Client est prévenu lorsqu'elles sont programmées.",
+        },
+      ],
+    },
+    {
+      title: 'Offre de lancement',
+      blocks: [
+        {
+          kind: 'p',
+          text: "Le Prestataire peut proposer, à un nombre limité de clients, une offre de lancement aux termes de laquelle la création du site est offerte et le premier mois d'abonnement n'est pas facturé. Le nombre de places encore disponibles est indiqué sur la page des tarifs du site ; l'offre prend fin lorsqu'il est épuisé.",
+        },
+        {
+          kind: 'p',
+          text: "Le bénéfice de cette offre est subordonné à l'accord du Client pour :",
+        },
+        {
+          kind: 'list',
+          items: [
+            'communiquer un témoignage sur la prestation une fois le site mis en ligne ;',
+            'autoriser la présentation du projet dans les références commerciales, le portfolio et les études de cas du Prestataire ;',
+            'fournir les textes, images et informations nécessaires dans un délai raisonnable.',
+          ],
+        },
+        {
+          kind: 'p',
+          text: "L'abonnement mensuel est dû à compter du deuxième mois. La gratuité porte sur la création et sur le premier mois d'abonnement ; elle n'emporte ni cession du site, ni dispense d'abonnement pour la suite, ni durée minimale d'engagement.",
+        },
+        {
+          kind: 'p',
+          text: "Le Client qui résilie son abonnement ne peut se voir réclamer a posteriori le prix de la création, qui demeure offert. Corrélativement, la création n'ayant pas été facturée, l'offre n'ouvre pas droit à la remise des éléments techniques permettant la reprise du site par un tiers ; la restitution des contenus fournis par le Client demeure quant à elle acquise, dans les conditions prévues à l'article Résiliation.",
         },
       ],
     },
@@ -657,11 +704,38 @@ export const conditionsGenerales: LegalDocument = {
       blocks: [
         {
           kind: 'p',
-          text: "En cas de manquement de l'une des parties à l'une de ses obligations, non réparé dans un délai de [À COMPLÉTER : délai] suivant une mise en demeure écrite, l'autre partie peut résilier le contrat de plein droit.",
+          text: `Le Client peut résilier son abonnement à tout moment, sans motif ni indemnité, par écrit adressé à ${CONTACT_EMAIL}. La résiliation prend effet au terme du mois en cours, déjà facturé : les sommes correspondant à ce mois restent acquises au Prestataire et aucun remboursement au prorata n'est dû.`,
         },
         {
           kind: 'p',
-          text: "En cas de résiliation par le Client d'un projet en cours, les prestations déjà réalisées restent dues au prorata de leur avancement, et les acomptes versés demeurent acquis au Prestataire.",
+          text: "Le Prestataire peut, de son côté, résilier l'abonnement moyennant un préavis écrit de trente (30) jours, délai destiné à permettre au Client d'organiser la reprise de son nom de domaine et, le cas échéant, de son site.",
+        },
+        {
+          kind: 'p',
+          text: "À défaut de paiement d'une échéance et après mise en demeure écrite restée sans effet pendant quinze (15) jours, le Prestataire peut suspendre l'accès au site. Si le défaut persiste trente (30) jours après la suspension, l'abonnement est résilié de plein droit, sans préjudice des sommes demeurant dues.",
+        },
+        {
+          kind: 'p',
+          text: "En cas de manquement de l'une des parties à l'une de ses obligations, non réparé dans un délai de trente (30) jours suivant une mise en demeure écrite, l'autre partie peut résilier le contrat de plein droit.",
+        },
+        {
+          kind: 'p',
+          text: "Quelle qu'en soit la cause, la résiliation produit les effets suivants :",
+        },
+        {
+          kind: 'list',
+          items: [
+            "le site est mis hors ligne à la date d'effet de la résiliation, le Prestataire en avertissant le Client par écrit au moins sept (7) jours à l'avance ;",
+            "le Client conserve son nom de domaine, dont il est titulaire, et en assume le renouvellement à compter de la date d'effet ;",
+            "sur demande formulée dans les trente (30) jours suivant la date d'effet, le Prestataire remet au Client les textes, images et autres contenus que celui-ci a fournis ou qui ont été produits pour lui ;",
+            'lorsque le prix de création a été facturé et réglé, le Prestataire remet en outre, sur la même demande, les éléments nécessaires à la reprise du site par un tiers ;',
+            "les adresses de messagerie rattachées au nom de domaine et gérées par le Prestataire cessent de fonctionner à la date d'effet ;",
+            "passé un délai de trente (30) jours suivant la date d'effet, les sauvegardes du site sont supprimées et celui-ci n'est plus restaurable.",
+          ],
+        },
+        {
+          kind: 'p',
+          text: "En cas de résiliation par le Client d'un projet dont la réalisation a commencé, les prestations déjà exécutées restent dues au prorata de leur avancement, et les acomptes versés demeurent acquis au Prestataire.",
         },
       ],
     },

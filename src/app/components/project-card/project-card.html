@@ -1,0 +1,48 @@
+<article
+  class="flex w-full flex-col gap-2 rounded-sm border border-gray-200 bg-white shadow-sm transition-all duration-300 hover:shadow-xl"
+>
+  <!-- Le visuel mène au détail plutôt qu'à un agrandissement : la page de la réalisation
+       montre la même image en grand, et bien davantage. -->
+  <a [routerLink]="['/portfolio', project().slug]" class="block">
+    @if (thumbnail()) {
+      <img
+        [src]="thumbnail()"
+        [srcset]="srcset()"
+        [sizes]="sizes"
+        [alt]="alt()"
+        loading="lazy"
+        class="mx-auto h-50 w-[95%] object-contain"
+      />
+    } @else {
+      <!-- Une réalisation sans visuel garde la hauteur de ses voisines : sans ce bloc, la
+           grille se déformerait autour d'elle. -->
+      <span class="flex h-50 w-full items-center justify-center bg-gray-50">
+        <i class="pi pi-image text-2xl text-gray-300"></i>
+      </span>
+    }
+  </a>
+
+  <div class="flex items-center justify-between gap-2 p-5">
+    <div class="flex min-w-0 flex-col">
+      <a
+        [routerLink]="['/portfolio', project().slug]"
+        class="font-heading truncate text-xl text-gray-700 hover:text-gray-900"
+      >
+        {{ project().title }}
+      </a>
+      @if (project().clientLabel) {
+        <span class="truncate text-xs text-gray-500">{{ project().clientLabel }}</span>
+      }
+    </div>
+    @if (project().websiteUrl) {
+      <a
+        [href]="project().websiteUrl"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="font-accent text-primary shrink-0"
+      >
+        Voir le Site
+      </a>
+    }
+  </div>
+</article>

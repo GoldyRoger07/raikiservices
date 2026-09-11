@@ -1,51 +1,106 @@
-<my-header/>
-    <my-hero-section 
-    title="Des projets réels. Des résultats concrets." 
-    desc="Découvrez comment nous aidons les entreprises à se développer grâce à des sites web sur mesure et des stratégies SEO efficaces. Chaque projet raconte une histoire." />
+<my-header />
+<my-hero-section
+  title="Des projets réels. Des résultats concrets."
+  desc="Découvrez comment nous aidons les entreprises à se développer grâce à des sites web sur mesure et des stratégies SEO efficaces. Chaque projet raconte une histoire."
+/>
 
-    <section class="py-10">
-        <my-container>
-            <separator-design/>
+<section class="py-10">
+  <my-container>
+    <separator-design />
 
-            <div class="mx-auto flex flex-col items-center text-center w-full lg:w-[80%] my-10">
-                <span class="font-accent text-primary">Nos réalisations</span>
-                <h2 class="text-2xl lg:text-3xl text-gray-800 font-heading">Des solutions digitales conçues pour produire des résultats concrets.</h2>
-                <p class="font-body text-gray-700">Des résultats mesurables dans différents secteurs, où la crédibilité et la performance sont essentielles.</p>
-            </div>
+    <div class="mx-auto my-10 flex w-full flex-col items-center text-center lg:w-[80%]">
+      <span class="font-accent text-primary">Nos réalisations</span>
+      <h2 class="font-heading text-2xl text-gray-800 lg:text-3xl">
+        Des solutions digitales conçues pour produire des résultats concrets.
+      </h2>
+      <p class="font-body text-gray-700">
+        Des résultats mesurables dans différents secteurs, où la crédibilité et la performance sont
+        essentielles.
+      </p>
+    </div>
 
-            <div class="flex flex-col gap-5">
-                @for(projet of projets; track $index){
+    @if (loading()) {
+      <div class="flex flex-col gap-5">
+        @for (placeholder of [1, 2]; track placeholder) {
+          <div class="h-64 w-full animate-pulse rounded-3xl bg-gray-100"></div>
+        }
+      </div>
+    } @else if (items().length) {
+      <div class="flex flex-col gap-5">
+        @for (projet of items(); track projet.id) {
+          <article
+            class="grid grid-cols-1 items-center gap-6 rounded-3xl p-5 transition-shadow duration-200 hover:shadow-2xl md:grid-cols-2 md:gap-10 md:p-10"
+          >
+            @if (cover(projet)) {
+              <img
+                [src]="cover(projet)"
+                [srcset]="coverSrcset(projet)"
+                [sizes]="sizes"
+                [alt]="'Aperçu du site réalisé pour ' + projet.title"
+                loading="lazy"
+                class="h-auto w-full"
+              />
+            } @else {
+              <div
+                class="flex aspect-video w-full items-center justify-center rounded-xl bg-gray-50"
+              >
+                <i class="pi pi-image text-3xl text-gray-300"></i>
+              </div>
+            }
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 items-center gap-6 md:gap-10 p-5 md:p-10 hover:shadow-2xl transition-shadow duration-200 rounded-3xl">
-                        <img [src]="projet.cover" class="w-full h-auto" alt="">
-                        <div class="flex flex-col gap-3 text-gray-700 font-body">
-                            <i [class]="projet.icon" style="font-size: 32px;"></i>
-                            <span class="font-heading text-2xl lg:text-3xl text-gray-800">{{projet.title}}</span>
-                            <span class="text-gray-600 ">{{projet.subtitle}}</span>
-                            <p>{{projet.desc}}</p>
-                            <div  class="flex flex-wrap gap-2 items-center">
+            <div class="font-body flex flex-col gap-3 text-gray-700">
+              @if (projet.icon) {
+                <i [class]="projet.icon" style="font-size: 32px"></i>
+              }
+              <h3 class="font-heading text-2xl text-gray-800 lg:text-3xl">{{ projet.title }}</h3>
+              @if (projet.clientLabel) {
+                <span class="text-gray-600">{{ projet.clientLabel }}</span>
+              }
+              <p>{{ projet.description || projet.summary }}</p>
 
-                                @for(item of projet.list; track $index){
-                                    <span class="bg-primary/10 text-primary rounded-full p-2 ">{{item}}</span>
-                                }
-                            </div>
-                            @if (projet.link) {
-                                <a
-                                    [href]="projet.link"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    class="flex items-center gap-1 text-gray-700 hover:font-bold transition-all duration-150"
-                                >
-                                    Voir le site web
-                                    <i class="pi pi-arrow-right translate-y-[1.4px]"></i>
-                                </a>
-                            }
-                        </div>
-                    </div>
+              @if (projet.services.length) {
+                <div class="flex flex-wrap items-center gap-2">
+                  @for (item of projet.services; track item) {
+                    <span class="bg-primary/10 text-primary rounded-full p-2">{{ item }}</span>
+                  }
+                </div>
+              }
+
+              <div class="flex flex-wrap items-center gap-4">
+                <a
+                  [routerLink]="['/portfolio', projet.slug]"
+                  class="font-accent text-primary flex items-center gap-1"
+                >
+                  Voir l'étude complète
+                  <i class="pi pi-arrow-right translate-y-[1.4px] text-xs"></i>
+                </a>
+                @if (projet.websiteUrl) {
+                  <a
+                    [href]="projet.websiteUrl"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="flex items-center gap-1 text-gray-700 transition-all duration-150 hover:font-bold"
+                  >
+                    Voir le site web
+                    <i class="pi pi-external-link translate-y-[1.4px] text-xs"></i>
+                  </a>
                 }
+              </div>
             </div>
-        </my-container>
-    </section>
-    
-    <my-cta-section></my-cta-section>
-<my-footer/>
+          </article>
+        }
+      </div>
+    } @else {
+      <p class="font-body py-10 text-center text-gray-600">
+        @if (failed()) {
+          Nos études de cas sont momentanément indisponibles. Réessayez dans un instant.
+        } @else {
+          Nos premières études de cas arrivent très bientôt.
+        }
+      </p>
+    }
+  </my-container>
+</section>
+
+<my-cta-section></my-cta-section>
+<my-footer />

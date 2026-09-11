@@ -1,817 +1,229 @@
-<my-header/>
-<my-hero-section 
-    title="Ne perdez plus de clients à cause d’un site web qui ne vous met pas en valeur." 
-    desc="Pas besoin de dépenser des milliers de dollars pour un site professionnel. Obtenez un site web moderne, conçu sur mesure et entièrement géré, avec un simple forfait mensuel." />
+<my-header />
+<my-hero-section
+  title="Un site professionnel, sans avance de fortune."
+  desc="Vous payez la création une fois, puis un abonnement mensuel qui garde votre site en ligne, sécurisé et à jour. Pas de frais cachés, pas de surprise au renouvellement."
+/>
 
-     <section class="pb-20">
-        <my-container>
-            <separator-design></separator-design>
-            <div class="flex flex-col w-4/7 text-center mx-auto gap-1 items-center mb-10">
+<!-- ──────────────── Offre du moment ────────────────
+     Deux blocs mutuellement exclusifs : l'offre de lancement tant qu'il reste des places,
+     l'état des lieux gratuit ensuite. Le basculement se fait sur le compteur tenu en base,
+     jamais sur une date écrite en dur. -->
+<section class="py-12">
+  <my-container>
+    @if (offerRunning()) {
+      <div class="offer-card offer-card--launch">
+        <div class="flex flex-wrap items-center justify-between gap-3">
+          <span class="offer-badge">{{ launch.badge }}</span>
+          <span class="offer-slots">
+            <i class="pi pi-clock text-xs"></i>
+            {{ slotsLabel() }}
+          </span>
+        </div>
 
-                    <span class="font-accent text-primary">Votre présence en ligne</span>
-                    <h2 class="font-heading text-gray-800 text-3xl">Investissez dans votre croissance, pas dans la complexité</h2>
-                    <p class="text-gray-700 font-body">Des solutions web pensées pour les entreprises haïtiennes, avec des tarifs simples, un accompagnement continu et tout ce dont vous avez besoin pour développer votre présence en ligne.</p>
-            </div>
+        <h2 class="font-heading mt-4 text-3xl text-gray-900 lg:text-4xl">{{ launch.title }}</h2>
+        <p class="font-body mt-3 max-w-2xl text-gray-700">{{ launch.intro }}</p>
 
-            <div class="grid grid-cols-3 gap-5">
-                    @for(pricingCard of pricingCards; track $index){
-                        @if(pricingCard.title.toLocaleLowerCase() === "Professional"){
-                            <div class="flex flex-col items-start p-5 h-fit gap-5 bg-primary border border-gray-300 rounded-3xl">
-                            <span class="text-primary">{{pricingCard.title}}</span>
-                            <span class="text-gray-600">{{pricingCard.desc}}</span>
-
-                            <div class="text-gray-800 font-bold flex items-center">
-                                <span class="text-5xl">{{pricingCard.pricing}}</span>
-                                <span class="text-md">HTG</span> / 
-                                <span class="text-sm text-gray-500">Mois</span>
-                            </div>
-
-                            <ul class="flex flex-col gap-2">
-                                @for(item of pricingCard.list; track $index){
-                                    <li>
-                                        <i class="pi pi-check"></i>
-                                        {{item}}
-                                    </li>
-                                }
-                            </ul>
-
-                            <my-button>Get Started</my-button>
-                            <!-- <a href="#">Get Started</a> -->
-                            </div>
-                        }@else{
-
-                            <div class="flex flex-col items-start p-5 h-fit gap-5 border border-gray-300 rounded-3xl">
-                                <span class="text-primary">{{pricingCard.title}}</span>
-                                <span class="text-gray-600">{{pricingCard.desc}}</span>
-    
-                                <div class="text-gray-800 font-bold flex items-center">
-                                    <span class="text-5xl">{{pricingCard.pricing}}</span>
-                                    <span class="text-md">HTG</span> / 
-                                    <span class="text-sm text-gray-500">Mois</span>
-                                </div>
-    
-                                <ul class="flex flex-col gap-2">
-                                    @for(item of pricingCard.list; track $index){
-                                        <li>
-                                            <i class="pi pi-check"></i>
-                                            {{item}}
-                                        </li>
-                                    }
-                                </ul>
-    
-                                <my-button>Get Started</my-button>
-                                <!-- <a href="#">Get Started</a> -->
-                            </div>
-                        }
-                    }
-            </div>
-        </my-container>
-
-
-    </section>
-
-    <section class="py-20 bg-white">
-    <!-- <div class="max-w-7xl mx-auto px-6">
-
-       
-    </div> -->
-    <my-container>
-         <!-- Header -->
-        <div class="text-center max-w-3xl mx-auto mb-16">
-            <span class="text-[#C89A2D] font-semibold uppercase tracking-wider">
-                Tarification
+        <!-- Le prix barré donne sa valeur au cadeau : sans point de comparaison,
+             « offert » se lit « sans valeur ». -->
+        <div class="mt-6 flex flex-wrap gap-8">
+          <div>
+            <span class="font-body block text-sm text-gray-600">{{ launch.anchorLabel }}</span>
+            <span class="font-heading text-lg text-gray-400 line-through">
+              dès {{ launch.anchorFrom }} $
             </span>
-
-            <h2 class="text-4xl font-bold mt-4">
-                Choisissez la solution adaptée à votre entreprise
-            </h2>
-
-            <p class="text-gray-600 mt-4">
-                Paiement unique pour la création de votre site, puis un abonnement
-                optionnel pour l'hébergement et la maintenance.
-            </p>
+            <span class="font-heading text-primary ml-2 text-2xl">
+              {{ launch.anchorReplacement }}
+            </span>
+          </div>
+          <div>
+            <span class="font-body block text-sm text-gray-600">{{ launch.secondLabel }}</span>
+            <span class="font-heading text-primary text-2xl">{{ launch.secondReplacement }}</span>
+          </div>
         </div>
 
-        <!-- Cards -->
-        <div class="grid md:grid-cols-3 gap-8">
-
-            <!-- Starter -->
-            <div class="border rounded-3xl p-8 bg-white shadow-sm">
-                <span class="text-sm font-semibold text-[#C89A2D]">
-                    Site vitrine
-                </span>
-
-                <h3 class="text-2xl font-bold mt-3">
-                    Starter
-                </h3>
-
-                <div class="mt-6">
-                    <span class="text-5xl font-bold">
-                        450$
-                    </span>
-
-                    <p class="text-gray-500 mt-2">
-                        Paiement unique
-                    </p>
-                </div>
-
-                <ul class="mt-8 space-y-4">
-                    <li>✓ Jusqu'à 5 pages</li>
-                    <li>✓ Design sur mesure</li>
-                    <li>✓ Version mobile</li>
-                    <li>✓ Formulaire de contact</li>
-                    <li>✓ SEO technique de base</li>
-                </ul>
-
-                <button class="w-full mt-8 bg-[#C89A2D] text-white py-4 rounded-xl">
-                    Commencer
-                </button>
-            </div>
-
-            <!-- Pro -->
-            <div class="relative border-2 border-[#C89A2D] rounded-3xl p-8 bg-white shadow-xl">
-
-                <div class="absolute top-0 right-8 -translate-y-1/2">
-                    <span class="bg-[#C89A2D] text-white px-4 py-2 rounded-full text-sm">
-                        Populaire
-                    </span>
-                </div>
-
-                <span class="text-sm font-semibold text-[#C89A2D]">
-                    Entreprise
-                </span>
-
-                <h3 class="text-2xl font-bold mt-3">
-                    Professional
-                </h3>
-
-                <div class="mt-6">
-                    <span class="text-5xl font-bold">
-                        850$
-                    </span>
-
-                    <p class="text-gray-500 mt-2">
-                        Paiement unique
-                    </p>
-                </div>
-
-                <ul class="mt-8 space-y-4">
-                    <li>✓ Jusqu'à 15 pages</li>
-                    <li>✓ Design premium</li>
-                    <li>✓ SEO avancé</li>
-                    <li>✓ Blog intégré</li>
-                    <li>✓ Optimisation vitesse</li>
-                    <li>✓ Formation incluse</li>
-                </ul>
-
-                <button class="w-full mt-8 bg-[#C89A2D] text-white py-4 rounded-xl">
-                    Choisir cette offre
-                </button>
-            </div>
-
-            <!-- Ecommerce -->
-            <div class="border rounded-3xl p-8 bg-white shadow-sm">
-                <span class="text-sm font-semibold text-[#C89A2D]">
-                    Boutique en ligne
-                </span>
-
-                <h3 class="text-2xl font-bold mt-3">
-                    Ecommerce
-                </h3>
-
-                <div class="mt-6">
-                    <span class="text-5xl font-bold">
-                        Sur devis
-                    </span>
-
-                    <p class="text-gray-500 mt-2">
-                        Paiement unique
-                    </p>
-                </div>
-
-                <ul class="mt-8 space-y-4">
-                    <li>✓ Catalogue produits</li>
-                    <li>✓ Paiements sécurisés</li>
-                    <li>✓ Gestion commandes</li>
-                    <li>✓ Comptes clients</li>
-                    <li>✓ SEO ecommerce</li>
-                </ul>
-
-                <button class="w-full mt-8 bg-[#C89A2D] text-white py-4 rounded-xl">
-                    Demander un devis
-                </button>
-            </div>
-
+        <div class="mt-6">
+          <p class="font-body text-sm font-medium text-gray-800">{{ launch.conditionsTitle }}</p>
+          <ul class="font-body mt-2 flex flex-col gap-1.5 text-sm text-gray-700">
+            @for (condition of launch.conditions; track condition) {
+              <li class="flex items-start gap-2">
+                <i class="pi pi-check text-primary mt-1 text-xs"></i>
+                <span>{{ condition }}</span>
+              </li>
+            }
+          </ul>
         </div>
-    </my-container>
+
+        <a
+          routerLink="/contact"
+          [queryParams]="contactParams(launch.ctaSubject)"
+          class="bg-primary font-accent mt-7 inline-flex items-center gap-2 rounded-full px-7 py-3 text-white transition-opacity hover:opacity-90"
+        >
+          {{ launch.ctaLabel }}
+          <i class="pi pi-arrow-right text-xs"></i>
+        </a>
+
+        <p class="font-body mt-4 max-w-2xl text-xs text-gray-500">{{ launch.smallPrint }}</p>
+      </div>
+    } @else {
+      <div class="offer-card">
+        <span class="offer-badge">{{ standard.badge }}</span>
+        <h2 class="font-heading mt-4 text-3xl text-gray-900 lg:text-4xl">{{ standard.title }}</h2>
+        <p class="font-body mt-3 max-w-2xl text-gray-700">{{ standard.intro }}</p>
+
+        <div class="mt-6">
+          <p class="font-body text-sm font-medium text-gray-800">{{ standard.conditionsTitle }}</p>
+          <ul class="font-body mt-2 flex flex-col gap-1.5 text-sm text-gray-700">
+            @for (condition of standard.conditions; track condition) {
+              <li class="flex items-start gap-2">
+                <i class="pi pi-check text-primary mt-1 text-xs"></i>
+                <span>{{ condition }}</span>
+              </li>
+            }
+          </ul>
+        </div>
+
+        <a
+          routerLink="/contact"
+          [queryParams]="contactParams(standard.ctaSubject)"
+          class="bg-primary font-accent mt-7 inline-flex items-center gap-2 rounded-full px-7 py-3 text-white transition-opacity hover:opacity-90"
+        >
+          {{ standard.ctaLabel }}
+          <i class="pi pi-arrow-right text-xs"></i>
+        </a>
+
+        <p class="font-body mt-4 max-w-2xl text-xs text-gray-500">{{ standard.smallPrint }}</p>
+      </div>
+    }
+  </my-container>
 </section>
 
+<!-- ──────────────── Les trois formules ──────────────── -->
+<section class="py-6">
+  <my-container>
+    <div class="flex w-full flex-col items-center">
+      <separator-design />
+      <div class="w-full py-5 text-center lg:w-[70%]">
+        <h2 class="font-heading text-3xl text-gray-800">Nos formules</h2>
+        <p class="font-body text-gray-700">
+          Un montant à la création, puis un abonnement mensuel. C'est lui qui héberge votre site,
+          renouvelle votre nom de domaine et le tient à jour.
+        </p>
+      </div>
+    </div>
 
-    <section class="py-24 bg-gray-50">
-        <my-container>
+    <div class="grid grid-cols-1 items-start gap-6 py-6 lg:grid-cols-3">
+      @for (plan of plans; track plan.id) {
+        <article class="plan-card" [class.plan-card--highlighted]="plan.highlighted">
+          @if (plan.highlighted) {
+            <span class="plan-flag">Le plus choisi</span>
+          }
 
-            <!-- ============================================ -->
-            <!-- SECTION HEADER -->
-            <!-- ============================================ -->
+          <h3 class="font-heading text-2xl text-gray-900">{{ plan.name }}</h3>
+          <p class="font-body mt-1 min-h-12 text-sm text-gray-600">{{ plan.audience }}</p>
 
-            <div class="max-w-3xl mx-auto text-center">
-
-            <span
-                class="inline-flex items-center rounded-full
-                    bg-[#C89A2D]/10 px-4 py-2
-                     font-accent text-[#C89A2D]"
-            >
-                Gestion & maintenance
-            </span>
-
-            <h2
-                class="mt-5 text-4xl md:text-5xl
-                    font-bold tracking-tight text-gray-900"
-            >
-                Votre site, toujours
-                <span class="text-[#C89A2D]">entre de bonnes mains.</span>
-            </h2>
-
-            <p class="mt-6 text-lg leading-8 text-gray-600">
-                Hébergement, sécurité, sauvegardes et maintenance :
-                nous nous occupons de votre site pour que vous puissiez
-                vous concentrer sur votre entreprise.
+          <div class="mt-5 border-t border-gray-200 pt-5">
+            <div class="flex items-baseline gap-2">
+              @if (plan.setupPrice !== null) {
+                <span class="font-heading text-4xl text-gray-900">{{ plan.setupPrice }} $</span>
+                <span class="font-body text-sm text-gray-600">à la création</span>
+              } @else {
+                <span class="font-heading text-3xl text-gray-900">Sur devis</span>
+              }
+            </div>
+            <p class="font-body mt-1 text-gray-700">
+              puis
+              <span class="text-primary font-medium">{{ plan.monthlyPrice }} $ par mois</span>
             </p>
-
-            </div>
-
-
-            <!-- ============================================ -->
-            <!-- VALUE PROPOSITION -->
-            <!-- ============================================ -->
-
-            <div
-            class="mt-12 mx-auto max-w-4xl
-                    rounded-full border border-gray-200
-                    bg-white p-6 md:p-8
-                    shadow-sm my-10 "
-            >
-
-            <div class="grid md:grid-cols-3 gap-6 p-2.5">
-
-                <!-- Item -->
-                <div class="flex gap-4">
-
-                <div
-                    class="flex h-11 w-11 shrink-0
-                        items-center justify-center
-                        rounded-xl bg-[#C89A2D]/10
-                        text-[#C89A2D]"
-                >
-                    <!-- Icon -->
-                    <svg
-                    class="w-5 h-5"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    >
-                    <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M12 15v2m0-8a4 4 0 00-4 4v1h8v-1a4 4 0 00-4-4z"
-                    />
-                    </svg>
-                </div>
-
-                <div>
-                    <h3 class="font-semibold text-gray-900">
-                    Sécurisé
-                    </h3>
-
-                    <p class="mt-1 text-sm text-gray-500">
-                    Votre site reste protégé.
-                    </p>
-                </div>
-
-                </div>
-
-
-                <!-- Item -->
-                <div class="flex gap-4">
-
-                <div
-                    class="flex h-11 w-11 shrink-0
-                        items-center justify-center
-                        rounded-xl bg-[#C89A2D]/10
-                        text-[#C89A2D]"
-                >
-                    <svg
-                    class="w-5 h-5"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    >
-                    <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M4 7h16M4 12h16M4 17h16"
-                    />
-                    </svg>
-                </div>
-
-                <div>
-                    <h3 class="font-semibold text-gray-900">
-                    Sauvegardé
-                    </h3>
-
-                    <p class="mt-1 text-sm text-gray-500">
-                    Vos données restent protégées.
-                    </p>
-                </div>
-
-                </div>
-
-
-                <!-- Item -->
-                <div class="flex gap-4">
-
-                <div
-                    class="flex h-11 w-11 shrink-0
-                        items-center justify-center
-                        rounded-xl bg-[#C89A2D]/10
-                        text-[#C89A2D]"
-                >
-                    <svg
-                    class="w-5 h-5"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    >
-                    <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M13 10V3L4 14h7v7l9-11h-7z"
-                    />
-                    </svg>
-                </div>
-
-                <div>
-                    <h3 class="font-semibold text-gray-900">
-                    Optimisé
-                    </h3>
-
-                    <p class="mt-1 text-sm text-gray-500">
-                    Nous veillons aux performances.
-                    </p>
-                </div>
-
-                </div>
-
-            </div>
-
-            </div>
-
-
-            <!-- ============================================ -->
-            <!-- PRICING CARDS -->
-            <!-- ============================================ -->
-
-            <div
-            class="mt-16 grid lg:grid-cols-3
-                    gap-8 items-stretch"
-            >
-
-
-            <!-- ======================================== -->
-            <!-- ESSENTIAL -->
-            <!-- ======================================== -->
-
-            <article
-                class="relative flex flex-col
-                    rounded-3xl border border-gray-200
-                    bg-white p-8
-                    shadow-sm"
-            >
-
-                <!-- Header -->
-                <div>
-
-                <span
-                    class="text-sm font-semibold
-                        uppercase tracking-wider
-                        text-gray-500"
-                >
-                    Essential
-                </span>
-
-                <h3
-                    class="mt-3 text-2xl font-bold
-                        text-gray-900"
-                >
-                    Essential Care
-                </h3>
-
-                <p class="mt-3 text-gray-600">
-                    L'essentiel pour garder votre site
-                    en ligne, sécurisé et fonctionnel.
-                </p>
-
-                </div>
-
-
-                <!-- Price -->
-                <div class="mt-8">
-
-                <div class="flex items-end gap-1">
-
-                    <span
-                    class="text-5xl font-bold
-                            tracking-tight text-gray-900"
-                    >
-                    $25
-                    </span>
-
-                    <span class="mb-1 text-gray-500">
-                    /mois
-                    </span>
-
-                </div>
-
-                <p class="mt-2 text-sm text-gray-500">
-                    Sans engagement annuel
-                </p>
-
-                </div>
-
-
-                <!-- Divider -->
-                <div class="my-8 border-t border-gray-100"></div>
-
-
-                <!-- Features -->
-                <div class="flex-1">
-
-                <p
-                    class="text-sm font-semibold
-                        text-gray-900"
-                >
-                    Ce qui est inclus
-                </p>
-
-                <ul class="mt-5 space-y-4">
-
-                    <li class="flex gap-3">
-                    <span class="text-[#C89A2D]">✓</span>
-                    <span class="text-gray-600">
-                        Hébergement du site
-                    </span>
-                    </li>
-
-                    <li class="flex gap-3">
-                    <span class="text-[#C89A2D]">✓</span>
-                    <span class="text-gray-600">
-                        Certificat SSL
-                    </span>
-                    </li>
-
-                    <li class="flex gap-3">
-                    <span class="text-[#C89A2D]">✓</span>
-                    <span class="text-gray-600">
-                        Sauvegardes automatiques
-                    </span>
-                    </li>
-
-                    <li class="flex gap-3">
-                    <span class="text-[#C89A2D]">✓</span>
-                    <span class="text-gray-600">
-                        Surveillance du site
-                    </span>
-                    </li>
-
-                    <li class="flex gap-3">
-                    <span class="text-[#C89A2D]">✓</span>
-                    <span class="text-gray-600">
-                        Maintenance technique
-                    </span>
-                    </li>
-
-                </ul>
-
-                </div>
-
-
-                <!-- CTA -->
-                <button
-                class="mt-8 w-full rounded-xl
-                        border border-gray-300
-                        px-6 py-3.5
-                        font-semibold text-gray-900
-                        transition hover:bg-gray-50"
-                >
-                Choisir Essential
-                </button>
-
-            </article>
-
-
-
-            <!-- ======================================== -->
-            <!-- GROWTH -->
-            <!-- ======================================== -->
-
-            <article
-                class="relative flex flex-col
-                    rounded-3xl
-                    border-2 border-[#C89A2D]
-                    bg-white p-8
-                    shadow-xl"
-            >
-
-                <!-- Popular Badge -->
-                <div
-                class="absolute left-1/2 top-0
-                        -translate-x-1/2 -translate-y-1/2"
-                >
-                <span
-                    class="inline-flex whitespace-nowrap
-                        rounded-full
-                        bg-[#C89A2D]
-                        px-4 py-2
-                        text-xs font-bold
-                        uppercase tracking-wider
-                        text-white"
-                >
-                    Recommandé
-                </span>
-                </div>
-
-
-                <!-- Header -->
-                <div>
-
-                <span
-                    class="text-sm font-semibold
-                        uppercase tracking-wider
-                        text-[#C89A2D]"
-                >
-                    Growth
-                </span>
-
-                <h3
-                    class="mt-3 text-2xl font-bold
-                        text-gray-900"
-                >
-                    Growth Care
-                </h3>
-
-                <p class="mt-3 text-gray-600">
-                    Pour les entreprises qui veulent
-                    maintenir et améliorer leur présence en ligne.
-                </p>
-
-                </div>
-
-
-                <!-- Price -->
-                <div class="mt-8">
-
-                <div class="flex items-end gap-1">
-
-                    <span
-                    class="text-5xl font-bold
-                            tracking-tight text-gray-900"
-                    >
-                    $60
-                    </span>
-
-                    <span class="mb-1 text-gray-500">
-                    /mois
-                    </span>
-
-                </div>
-
-                <p class="mt-2 text-sm text-gray-500">
-                    Sans engagement annuel
-                </p>
-
-                </div>
-
-
-                <div class="my-8 border-t border-gray-100"></div>
-
-
-                <!-- Features -->
-                <div class="flex-1">
-
-                <p
-                    class="text-sm font-semibold
-                        text-gray-900"
-                >
-                    Tout ce qui est inclus
-                </p>
-
-                <ul class="mt-5 space-y-4">
-
-                    <li class="flex gap-3">
-                    <span class="text-[#C89A2D]">✓</span>
-                    <span class="text-gray-600">
-                        Tout le contenu d'Essential Care
-                    </span>
-                    </li>
-
-                    <li class="flex gap-3">
-                    <span class="text-[#C89A2D]">✓</span>
-                    <span class="text-gray-600">
-                        SEO technique continu
-                    </span>
-                    </li>
-
-                    <li class="flex gap-3">
-                    <span class="text-[#C89A2D]">✓</span>
-                    <span class="text-gray-600">
-                        Optimisation des performances
-                    </span>
-                    </li>
-
-                    <li class="flex gap-3">
-                    <span class="text-[#C89A2D]">✓</span>
-                    <span class="text-gray-600">
-                        Petites modifications de contenu
-                    </span>
-                    </li>
-
-                    <li class="flex gap-3">
-                    <span class="text-[#C89A2D]">✓</span>
-                    <span class="text-gray-600">
-                        Rapport mensuel
-                    </span>
-                    </li>
-
-                </ul>
-
-                </div>
-
-
-                <!-- CTA -->
-                <button
-                class="mt-8 w-full rounded-xl
-                        bg-[#C89A2D]
-                        px-6 py-3.5
-                        font-semibold text-white
-                        transition
-                        hover:bg-[#b88b27]"
-                >
-                Choisir Growth
-                </button>
-
-            </article>
-
-
-
-            <!-- ======================================== -->
-            <!-- PREMIUM -->
-            <!-- ======================================== -->
-
-            <article
-                class="relative flex flex-col
-                    rounded-3xl border border-gray-200
-                    bg-gray-950 p-8
-                    shadow-sm"
-            >
-
-                <!-- Header -->
-                <div>
-
-                <span
-                    class="text-sm font-semibold
-                        uppercase tracking-wider
-                        text-[#C89A2D]"
-                >
-                    Premium
-                </span>
-
-                <h3
-                    class="mt-3 text-2xl font-bold
-                        text-white"
-                >
-                    Growth SEO
-                </h3>
-
-                <p class="mt-3 text-gray-400">
-                    Un accompagnement complet pour
-                    développer votre visibilité sur Google.
-                </p>
-
-                </div>
-
-
-                <!-- Price -->
-                <div class="mt-8">
-
-                <div class="flex items-end gap-1">
-
-                    <span
-                    class="text-5xl font-bold
-                            tracking-tight text-white"
-                    >
-                    $120
-                    </span>
-
-                    <span class="mb-1 text-gray-400">
-                    /mois
-                    </span>
-
-                </div>
-
-                <p class="mt-2 text-sm text-gray-500">
-                    Accompagnement continu
-                </p>
-
-                </div>
-
-
-                <div class="my-8 border-t border-white/10"></div>
-
-
-                <!-- Features -->
-                <div class="flex-1">
-
-                <p
-                    class="text-sm font-semibold
-                        text-white"
-                >
-                    Tout ce qui est inclus
-                </p>
-
-                <ul class="mt-5 space-y-4">
-
-                    <li class="flex gap-3">
-                    <span class="text-[#C89A2D]">✓</span>
-                    <span class="text-gray-300">
-                        Tout le contenu de Growth Care
-                    </span>
-                    </li>
-
-                    <li class="flex gap-3">
-                    <span class="text-[#C89A2D]">✓</span>
-                    <span class="text-gray-300">
-                        Recherche de mots-clés
-                    </span>
-                    </li>
-
-                    <li class="flex gap-3">
-                    <span class="text-[#C89A2D]">✓</span>
-                    <span class="text-gray-300">
-                        Optimisation SEO des pages
-                    </span>
-                    </li>
-
-                    <li class="flex gap-3">
-                    <span class="text-[#C89A2D]">✓</span>
-                    <span class="text-gray-300">
-                        Suivi des performances SEO
-                    </span>
-                    </li>
-
-                    <li class="flex gap-3">
-                    <span class="text-[#C89A2D]">✓</span>
-                    <span class="text-gray-300">
-                        Recommandations mensuelles
-                    </span>
-                    </li>
-
-                </ul>
-
-                </div>
-
-
-                <!-- CTA -->
-                <button
-                class="mt-8 w-full rounded-xl
-                        bg-white
-                        px-6 py-3.5
-                        font-semibold text-gray-900
-                        transition hover:bg-gray-100"
-                >
-                Parlons de votre projet
-                </button>
-
-            </article>
-
-            </div>
-
-
-            <!-- ============================================ -->
-            <!-- BOTTOM NOTE -->
-            <!-- ============================================ -->
-
-            <div class="mt-10 text-center">
-
-            <p class="text-sm text-gray-500 py-5">
-                Vous pouvez également gérer votre propre hébergement.
-                L'abonnement mensuel est entièrement optionnel.
-            </p>
-
-            </div>
-
-        </my-container>
-    </section>
-<my-footer/>
+          </div>
+
+          <ul class="font-body mt-5 flex flex-1 flex-col gap-2 text-sm text-gray-700">
+            @for (feature of plan.features; track feature) {
+              <li class="flex items-start gap-2">
+                <i class="pi pi-check text-primary mt-1 text-xs"></i>
+                <span>{{ feature }}</span>
+              </li>
+            }
+          </ul>
+
+          <a
+            routerLink="/contact"
+            [queryParams]="contactParams('Formule ' + plan.name)"
+            class="font-accent mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full px-6 py-3 transition-opacity hover:opacity-90"
+            [class]="
+              plan.highlighted
+                ? 'bg-primary text-white'
+                : 'border border-gray-300 text-gray-800 hover:border-gray-400'
+            "
+          >
+            Demander un devis
+            <i class="pi pi-arrow-right text-xs"></i>
+          </a>
+        </article>
+      }
+    </div>
+
+    <p class="font-body text-center text-sm text-gray-600">
+      Tous les prix sont en dollars américains. Le nom de domaine est enregistré à votre nom : il
+      vous appartient, quoi qu'il arrive.
+    </p>
+  </my-container>
+</section>
+
+<!-- ──────────────── Ce que couvre l'abonnement ──────────────── -->
+<section class="bg-gray-50 py-14">
+  <my-container>
+    <div class="mx-auto mb-8 w-full text-center lg:w-[70%]">
+      <span class="font-accent text-primary">L'abonnement mensuel</span>
+      <h2 class="font-heading text-2xl text-gray-800 lg:text-3xl">
+        Ce que vous n'avez plus à faire vous-même.
+      </h2>
+    </div>
+
+    <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+      @for (item of includes; track item.title) {
+        <div class="flex flex-col gap-2">
+          <i [class]="item.icon" class="text-primary text-2xl"></i>
+          <h3 class="font-heading text-lg text-gray-900">{{ item.title }}</h3>
+          <p class="font-body text-sm text-gray-700">{{ item.text }}</p>
+        </div>
+      }
+    </div>
+  </my-container>
+</section>
+
+<!-- ──────────────── Questions fréquentes ────────────────
+     Une page de tarifs se gagne sur les objections, pas sur la liste des fonctionnalités. -->
+<section class="py-14">
+  <my-container>
+    <div class="mx-auto mb-8 w-full text-center lg:w-[70%]">
+      <separator-design />
+      <h2 class="font-heading mt-4 text-2xl text-gray-800 lg:text-3xl">Vos questions</h2>
+    </div>
+
+    <div class="mx-auto flex max-w-3xl flex-col gap-3">
+      @for (item of faq; track item.question; let i = $index) {
+        <div class="faq-item">
+          <button
+            type="button"
+            class="faq-question"
+            (click)="toggleQuestion(i)"
+            [attr.aria-expanded]="openQuestion() === i"
+          >
+            <span class="font-heading text-left text-gray-900">{{ item.question }}</span>
+            <i
+              class="pi text-primary shrink-0 text-sm"
+              [class.pi-chevron-down]="openQuestion() !== i"
+              [class.pi-chevron-up]="openQuestion() === i"
+            ></i>
+          </button>
+          @if (openQuestion() === i) {
+            <p class="font-body px-5 pb-5 text-gray-700">{{ item.answer }}</p>
+          }
+        </div>
+      }
+    </div>
+  </my-container>
+</section>
+
+<my-cta-section></my-cta-section>
+<my-footer />

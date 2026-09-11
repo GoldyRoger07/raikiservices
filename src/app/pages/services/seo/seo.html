@@ -1,43 +1,106 @@
-<my-header/>
+<my-header />
 
-    <my-hero-section 
-        title="Arrêtez de payer pour un site web que personne ne trouve." 
-        desc="Nous aidons les entreprises à se positionner plus haut sur Google, à apparaître dans les recherches locales et à comprendre réellement leur trafic grâce à des analyses claires."/>
+<my-hero-section
+  title="Un beau site ne sert à rien si personne ne le trouve."
+  desc="Nous aidons les entreprises à remonter dans les résultats Google, à apparaître dans les recherches de proximité, et à comprendre d'où viennent réellement leurs visiteurs."
+/>
 
-    <section class="pb-20">
-        <my-container>
-            <separator-design></separator-design>
-            <div class="flex flex-col w-4/7 text-center mx-auto gap-1 items-center mb-10">
+<section class="pb-20">
+  <my-container>
+    <separator-design></separator-design>
+    <div class="mx-auto mb-10 flex w-full flex-col items-center gap-1 text-center lg:w-4/7">
+      <span class="font-accent text-primary">Nos services SEO</span>
+      <h2 class="font-heading text-3xl text-gray-800">
+        Comment nous rendons votre entreprise visible sur Google
+      </h2>
+      <p class="font-body text-gray-700">
+        Le référencement n'a rien de magique : c'est un travail technique et régulier, fait dans les
+        règles. Voici nos axes, et ce que chacun représente dans nos formules.
+      </p>
+    </div>
 
-                    <span class="font-accent text-primary">Nos Services SEO</span>
-                    <h2 class="font-heading text-gray-800 text-3xl">Comment nous rendons votre entreprise visible sur Google</h2>
-                    <p class="text-gray-700 font-body">Le SEO n’a rien de magique — c’est un travail technique et régulier, fait dans les règles de l’art. Voici nos axes prioritaires.</p>
-            </div>
+    <div class="grid gap-2 md:grid-cols-2 lg:grid-cols-3">
+      @for (card of cards; track card.title) {
+        <div
+          class="flex flex-col items-start justify-start gap-2.5 rounded-2xl border border-gray-200 p-5 text-start shadow transition-shadow duration-300 hover:shadow-2xl"
+        >
+          <div
+            class="flex h-15 w-15 aspect-square items-center justify-center rounded-2xl"
+            [class]="card.iconBackground"
+          >
+            <i [class]="card.icon" class="text-3xl"></i>
+          </div>
 
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-2 ">
-                @for(card of serviceCards; track $index){
+          <h3 class="font-heading text-2xl font-bold text-gray-800">{{ card.title }}</h3>
 
-                    <div class="flex flex-col gap-2.5 items-start justify-center border border-gray-200  text-start shadow hover:shadow-2xl transition-shadow duration-300 p-5 rounded-2xl">
-                        <div [class]="'rounded-2xl flex items-center justify-center h-15 w-15 aspect-square '+getIconColor($index+1) ">
-                            <i [class]="card.cover+' text-3xl'"></i>
-                        </div>
+          <!-- Rattachement à l'offre : c'est ce qui empêche la page de promettre plus que
+               ce que le devis proposera. -->
+          @if (card.coverage) {
+            <span
+              class="font-body rounded-full px-3 py-1 text-xs"
+              [class]="
+                card.coverage === 'dedicated'
+                  ? 'bg-gray-100 text-gray-600'
+                  : 'bg-primary/10 text-primary'
+              "
+            >
+              {{ coverage[card.coverage] }}
+            </span>
+          }
 
-                        <span class="font-heading font-bold text-gray-800 text-2xl">{{card.title}}</span>
-                        <p class="font-body text-gray-700">{{card.desc}}</p>
-                    
-                        <ul class="flex flex-col gap-2">
-                            @for(item of card.list; track $index){
-                                <li class="text-gray-700">
-                                    <i class="pi pi-check text-green-500"></i>
-                                    {{item}}
-                                </li>
-                            }
-                        </ul>
-                    
-                    </div>
-                }
-            </div>
-        </my-container>
-    </section>
-    <my-cta-section></my-cta-section>
-<my-footer/>
+          <p class="font-body text-gray-700">{{ card.description }}</p>
+
+          @if (card.details?.length) {
+            <ul class="flex flex-col gap-2">
+              @for (item of card.details; track item) {
+                <li class="font-body text-gray-700">
+                  <i class="pi pi-check text-green-500"></i>
+                  {{ item }}
+                </li>
+              }
+            </ul>
+          }
+        </div>
+      }
+    </div>
+
+    <p class="font-body mt-8 text-center text-sm text-gray-600">
+      La stratégie de contenu et l'acquisition de liens demandent un travail suivi, dont l'ampleur
+      dépend de vos objectifs : elles font l'objet d'un devis séparé.
+    </p>
+  </my-container>
+</section>
+
+<!-- ──────────────── Le modèle, avant le devis ──────────────── -->
+<section class="bg-gray-50 py-16">
+  <my-container>
+    <div class="grid items-center gap-8 lg:grid-cols-2">
+      <div>
+        <span class="font-accent text-primary">Sans mauvaise surprise</span>
+        <h2 class="font-heading mt-1 text-2xl text-gray-800 lg:text-3xl">
+          {{ pricingNote.title }}
+        </h2>
+        <p class="font-body mt-3 text-gray-700">{{ pricingNote.intro }}</p>
+        <a
+          [routerLink]="pricingNote.ctaLink"
+          class="font-accent text-primary mt-5 inline-flex items-center gap-2"
+        >
+          {{ pricingNote.ctaLabel }}
+          <i class="pi pi-arrow-right text-xs"></i>
+        </a>
+      </div>
+
+      <ul class="flex flex-col gap-4">
+        @for (point of pricingNote.points; track point.text) {
+          <li class="flex items-start gap-3">
+            <i [class]="point.icon" class="text-primary mt-1"></i>
+            <span class="font-body text-gray-700">{{ point.text }}</span>
+          </li>
+        }
+      </ul>
+    </div>
+  </my-container>
+</section>
+
+<my-cta-section></my-cta-section>
+<my-footer />

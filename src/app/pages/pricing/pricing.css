@@ -1,0 +1,113 @@
+/* ──────────────── Bloc d'offre ──────────────── */
+
+.offer-card {
+  padding: 2rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 1.5rem;
+  background-color: #fff;
+}
+
+/* L'offre de lancement se distingue par la couleur de marque, sans crier. */
+.offer-card--launch {
+  border-color: color-mix(in srgb, var(--color-primary, #c89a2d) 35%, transparent);
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--color-primary, #c89a2d) 7%, #fff),
+    #fff 60%
+  );
+}
+
+.offer-badge {
+  display: inline-block;
+  padding: 0.3rem 0.9rem;
+  border-radius: 9999px;
+  background-color: color-mix(in srgb, var(--color-primary, #c89a2d) 12%, transparent);
+  color: var(--color-primary, #c89a2d);
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.offer-slots {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.9rem;
+  border: 1px solid color-mix(in srgb, var(--color-primary, #c89a2d) 30%, transparent);
+  border-radius: 9999px;
+  color: var(--color-primary, #c89a2d);
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+/* ──────────────── Cartes de formule ──────────────── */
+
+.plan-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 1.75rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 1.25rem;
+  background-color: #fff;
+  transition:
+    box-shadow 0.2s,
+    transform 0.2s;
+}
+
+.plan-card:hover {
+  box-shadow: 0 12px 30px rgb(0 0 0 / 8%);
+}
+
+/*
+ * La formule mise en avant est surélevée d'un cran sur grand écran seulement : empilées sur
+ * téléphone, les cartes se suivent, et un décalage vertical y passerait pour un défaut.
+ */
+.plan-card--highlighted {
+  border-color: var(--color-primary, #c89a2d);
+  box-shadow: 0 12px 30px rgb(0 0 0 / 8%);
+}
+
+@media (width >= 1024px) {
+  .plan-card--highlighted {
+    transform: translateY(-0.75rem);
+  }
+}
+
+.plan-flag {
+  position: absolute;
+  top: -0.75rem;
+  left: 1.75rem;
+  padding: 0.25rem 0.8rem;
+  border-radius: 9999px;
+  background-color: var(--color-primary, #c89a2d);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+/* ──────────────── Questions fréquentes ──────────────── */
+
+.faq-item {
+  overflow: hidden;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.9rem;
+  background-color: #fff;
+}
+
+.faq-question {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  width: 100%;
+  padding: 1.1rem 1.25rem;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  text-align: left;
+}
+
+.faq-question:hover {
+  background-color: #fafafa;
+}

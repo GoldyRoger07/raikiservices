@@ -12,6 +12,12 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/projects/case-studies/case-studies'),
   },
   { path: 'portfolio', loadComponent: () => import('./pages/projects/portfolio/portfolio') },
+  // `:slug` et non `:id`, comme pour le blog : l'adresse publique d'une réalisation est le
+  // slug posé par le backend, et c'est lui que `/public/v1/projects/:slug` attend.
+  {
+    path: 'portfolio/:slug',
+    loadComponent: () => import('./pages/projects/project-detail/project-detail'),
+  },
   { path: 'tarifs', loadComponent: () => import('./pages/pricing/pricing') },
   { path: 'a-propos', loadComponent: () => import('./pages/about-us/about-us') },
   { path: 'seo', loadComponent: () => import('./pages/services/seo/seo') },
@@ -101,6 +107,34 @@ export const routes: Routes = [
         path: 'blog/:id',
         canActivate: [hasPermission('UPDATE_BLOG')],
         loadComponent: () => import('./pages/admin/blog-editor/blog-editor'),
+      },
+      {
+        path: 'projets',
+        canActivate: [hasPermission('READ_PROJECT')],
+        loadComponent: () => import('./pages/admin/projects/projects'),
+      },
+      // `nouveau` avant `:id`, comme pour le blog : sans cet ordre, le chemin de création
+      // serait capté par la route de modification et l'éditeur chercherait une réalisation
+      // d'identifiant « nouveau ».
+      {
+        path: 'projets/nouveau',
+        canActivate: [hasPermission('CREATE_PROJECT')],
+        loadComponent: () => import('./pages/admin/project-editor/project-editor'),
+      },
+      {
+        path: 'projets/:id',
+        canActivate: [hasPermission('UPDATE_PROJECT')],
+        loadComponent: () => import('./pages/admin/project-editor/project-editor'),
+      },
+      {
+        path: 'medias',
+        canActivate: [hasPermission('READ_MEDIA')],
+        loadComponent: () => import('./pages/admin/media-library/media-library'),
+      },
+      {
+        path: 'offre',
+        canActivate: [hasPermission('READ_SETTING')],
+        loadComponent: () => import('./pages/admin/launch-offer/launch-offer'),
       },
       {
         path: 'users',

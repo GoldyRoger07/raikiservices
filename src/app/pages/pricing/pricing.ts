@@ -1,84 +1,88 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { SeoService } from '../../services/seo.service';
-import { pageSeo } from '../../config/content/seo-pages';
-import { HeroSection } from "../../components/hero-section/hero-section";
-import { Header } from "../../components/header/header";
-import { Footer } from "../../components/footer/footer";
-import { Container } from "../../components/container/container";
-import { SeparatorDesign } from "../../components/separator-design/separator-design";
-import { CardData } from '../../models/card-data.model';
-import { MyButton } from "../../components/my-button/my-button";
+import { Component, OnInit, computed, inject, signal } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
+import { Container } from '../../components/container/container';
+import { CtaSection } from '../../components/cta-section/cta-section';
+import { Footer } from '../../components/footer/footer';
+import { Header } from '../../components/header/header';
+import { HeroSection } from '../../components/hero-section/hero-section';
+import { SeparatorDesign } from '../../components/separator-design/separator-design';
+import {
+  launchOffer,
+  monthlyIncludes,
+  pricingFaq,
+  pricingPlans,
+  standardOffer,
+} from '../../config/content/pricing';
+import { pageSeo } from '../../config/content/seo-pages';
+import { LaunchOfferState } from '../../core/models/launch-offer.model';
+import { LaunchOfferService } from '../../core/services/launch-offer.service';
+import { SeoService } from '../../services/seo.service';
+
+/**
+ * Page des tarifs.
+ *
+ * <p>Un modèle en deux temps : un paiement à la création, puis un abonnement mensuel qui
+ * maintient le site en ligne. Les deux montants sont annoncés dès la carte — le mensuel
+ * étant obligatoire, le cacher jusqu'au devis ne ferait que déplacer la mauvaise surprise.
+ *
+ * <p>Le haut de page bascule entre deux blocs : l'offre de lancement tant qu'il reste des
+ * places, et un état des lieux gratuit ensuite. Le compteur vit en base et se règle depuis
+ * le back-office, d'où le rendu serveur de cette page (voir `app.routes.server.ts`) : la
+ * pré-rendre figerait « il reste 10 places » jusqu'au déploiement suivant.
+ *
+ * <p>Si l'API ne répond pas, c'est le bloc de repli qui s'affiche. Mieux vaut ne pas
+ * annoncer une offre qu'en annoncer une qu'on ne peut pas honorer.
+ */
 @Component({
   selector: 'app-pricing',
-  imports: [HeroSection, Header, Footer, Container, SeparatorDesign, MyButton],
+  imports: [Header, Footer, HeroSection, CtaSection, Container, SeparatorDesign, RouterLink],
   templateUrl: './pricing.html',
   styleUrl: './pricing.css',
 })
 export default class Pricing implements OnInit {
   private readonly seo = inject(SeoService);
+  private readonly offers = inject(LaunchOfferService);
+
+  protected readonly plans = pricingPlans;
+  protected readonly includes = monthlyIncludes;
+  protected readonly faq = pricingFaq;
+  protected readonly launch = launchOffer;
+  protected readonly standard = standardOffer;
+
+  protected readonly offerState = signal<LaunchOfferState | null>(null);
+
+  /** Vrai seulement si le backend confirme qu'il reste des places. */
+  protected readonly offerRunning = computed(() => this.offerState()?.running === true);
+
+  protected readonly slotsLabel = computed(() => {
+    const state = this.offerState();
+    return state ? launchOffer.slotsLabel(state.remainingSlots, state.totalSlots) : '';
+  });
+
+  /** Question dépliée dans la FAQ ; `null` quand toutes sont fermées. */
+  protected readonly openQuestion = signal<number | null>(0);
 
   ngOnInit(): void {
     this.seo.update(pageSeo.pricing);
+
+    this.offers.getPublic().subscribe({
+      next: (state) => this.offerState.set(state),
+      error: () => this.offerState.set(null),
+    });
   }
 
+  protected toggleQuestion(index: number): void {
+    this.openQuestion.update((current) => (current === index ? null : index));
+  }
 
-  pricingCards: CardData[] = [
-    {
-      title: 'Starter',
-      desc: 'Get online fast and start getting found',
-      pricing: 2600,
-      list: [
-        "Custom responsive website",
-        "Domain, hosting, SSL & security",
-        "1 Google Workspace Email",
-        "ADA/accessibility compliant",
-        "10 content updates per month",
-        "Speed optimized",
-        "Basic SEO setup",
-        "Basic analytics",
-        "Monthly uptime monitoring",
-        "Basic e-commerce"
-      ],
-      link: ""
-    },
-    {
-      title: 'Professional',
-      desc: 'Everything you need to outrank competitors',
-      pricing: 4549,
-      list: [
-        "Everything in Starter",
-        "Premium custom design",
-        "3 Google Workspace Emails",
-        "Google Business management",
-        "On-page SEO optimization",
-        "1–2 SEO blog posts per month",
-        "Google Business Profile optimization",
-        "Unlimited content updates",
-        "Booking and CRM Systems",
-        "Google Analytics & monthly report",
-        "Fully customized e-commerce",
-        "Priority support"
-      ],
-      link: ""
-    },
-    {
-      title: 'Business',
-      desc: 'Your full digital team, on demand',
-      pricing: 5200,
-      list: [
-        "Everything in Professional",
-        "Custom software development",
-        "One team managing every website, storefront & listing",
-        "5 Google Workspace Emails",
-        "Google Business management",
-        "Custom SEO strategy & executio",
-        "AI chatbot or automation",
-        "Advanced Google Analytics & dashboard",
-        "Dedicated account manager",
-        "Same-day support"
-      ],
-      link: ""
-    }
-  ]
+  /**
+   * Paramètres du lien vers le formulaire de contact.
+   *
+   * <p>Le sujet est prérempli pour distinguer d'un coup d'œil, dans le back-office, une
+   * candidature à l'offre d'une demande ordinaire.
+   */
+  protected contactParams(subject: string): Record<string, string> {
+    return { sujet: subject };
+  }
 }

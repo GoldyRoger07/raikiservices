@@ -1,33 +1,72 @@
-<my-header/>
+<my-header />
 
- <my-hero-section 
-    title="Des sites web qui attirent réellement des clients" 
-    desc="Des sites web sur mesure, adaptés aux mobiles et rapides à charger. WordPress ou développement manuel — nous créons ce dont votre entreprise a besoin."/>
+<my-hero-section
+  title="Des sites web qui attirent réellement des clients"
+  desc="Des sites conçus sur mesure, lisibles sur téléphone et rapides à charger. Nous construisons ce dont votre entreprise a besoin, et nous le maintenons ensuite."
+/>
 
+<section class="py-20">
+  <my-container>
+    <div class="mb-10 flex flex-col items-center gap-2.5 text-center">
+      <separator-design></separator-design>
+      <span class="font-accent text-primary">Ce que nous construisons</span>
+      <h2 class="font-heading text-3xl text-gray-800">
+        Du simple site vitrine à la boutique en ligne complète
+      </h2>
+    </div>
 
-    <section class="py-20">
-        <my-container>
-            <div class="mb-10 flex flex-col gap-2.5 items-center text-center">
-                <separator-design></separator-design>
-                <span class="font-accent text-primary">Ce que nous contruisons</span>
-                <h2 class="font-heading text-gray-800 text-3xl"> Du simple site vitrine à la plateforme e-commerce complète</h2>
-            </div>
+    <div class="grid gap-2 md:grid-cols-2 lg:grid-cols-3">
+      @for (card of cards; track card.title) {
+        <!-- Hauteur libre plutôt que carrée : un texte un peu plus long débordait de la
+             carte, ou forçait des descriptions calibrées au caractère près. -->
+        <div
+          class="flex flex-col items-center justify-start gap-2.5 rounded-2xl border border-gray-200 p-5 text-center shadow transition-shadow duration-300 hover:shadow-2xl"
+        >
+          <div
+            class="flex h-15 w-15 aspect-square items-center justify-center rounded-2xl"
+            [class]="card.iconBackground"
+          >
+            <i [class]="card.icon" class="text-3xl"></i>
+          </div>
 
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-2 ">
-                @for(card of serviceCards; track $index){
+          <h3 class="font-heading text-2xl font-bold text-gray-800">{{ card.title }}</h3>
+          <p class="font-body text-gray-700">{{ card.description }}</p>
+        </div>
+      }
+    </div>
+  </my-container>
+</section>
 
-                    <div class="flex flex-col gap-2.5 items-center justify-center border border-gray-200 aspect-square text-center shadow hover:shadow-2xl transition-shadow duration-300 p-5 rounded-2xl">
-                        <div [class]="'rounded-2xl flex items-center justify-center h-15 w-15 aspect-square '+getIconColor($index+1) ">
-                            <i [class]="card.cover+' text-3xl'"></i>
-                        </div>
+<!-- ──────────────── Le modèle, avant le devis ──────────────── -->
+<section class="bg-gray-50 py-16">
+  <my-container>
+    <div class="grid items-center gap-8 lg:grid-cols-2">
+      <div>
+        <span class="font-accent text-primary">Sans mauvaise surprise</span>
+        <h2 class="font-heading mt-1 text-2xl text-gray-800 lg:text-3xl">
+          {{ pricingNote.title }}
+        </h2>
+        <p class="font-body mt-3 text-gray-700">{{ pricingNote.intro }}</p>
+        <a
+          [routerLink]="pricingNote.ctaLink"
+          class="font-accent text-primary mt-5 inline-flex items-center gap-2"
+        >
+          {{ pricingNote.ctaLabel }}
+          <i class="pi pi-arrow-right text-xs"></i>
+        </a>
+      </div>
 
-                        <span class="font-heading font-bold text-gray-800 text-2xl">{{card.title}}</span>
-                        <p class="font-body text-gray-700">{{card.desc}}</p>
-                    </div>
-                }
-            </div>
-        </my-container>
-    </section>
+      <ul class="flex flex-col gap-4">
+        @for (point of pricingNote.points; track point.text) {
+          <li class="flex items-start gap-3">
+            <i [class]="point.icon" class="text-primary mt-1"></i>
+            <span class="font-body text-gray-700">{{ point.text }}</span>
+          </li>
+        }
+      </ul>
+    </div>
+  </my-container>
+</section>
 
-    <my-cta-section></my-cta-section>
-<my-footer/>
+<my-cta-section></my-cta-section>
+<my-footer />

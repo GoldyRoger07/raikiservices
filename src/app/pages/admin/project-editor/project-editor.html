@@ -1,0 +1,293 @@
+<a
+  routerLink="/admin/projets"
+  class="font-body mb-4 inline-flex items-center gap-2 text-sm opacity-70 hover:opacity-100"
+>
+  <i class="pi pi-arrow-left text-xs"></i> Retour aux réalisations
+</a>
+
+@if (loading()) {
+  <div class="panel p-6">
+    <p-skeleton width="14rem" height="1.75rem" class="mb-4" />
+    <p-skeleton height="12rem" />
+  </div>
+} @else if (notFound()) {
+  <div class="panel empty-state">Cette réalisation n'existe pas ou a été supprimée.</div>
+} @else {
+  <header class="page-header">
+    <div>
+      <h1 class="page-title">
+        {{ project() ? 'Modifier la réalisation' : 'Nouvelle réalisation' }}
+      </h1>
+      @if (project(); as item) {
+        <p class="page-subtitle">
+          @if (item.publishedAt) {
+            Publiée le {{ item.publishedAt | date: 'dd MMMM yyyy à HH:mm' }}
+          } @else {
+            Jamais publiée — modifiée le {{ item.updatedAt | date: 'dd/MM/yyyy à HH:mm' }}
+          }
+        </p>
+      } @else {
+        <p class="page-subtitle">
+          Conservée en brouillon tant que le statut n'est pas passé à « Publié ».
+        </p>
+      }
+    </div>
+    <div class="flex items-center gap-2">
+      @if (project(); as item) {
+        <p-tag [value]="statusLabels[item.status]" [severity]="statusSeverity[item.status]" />
+      }
+      <p-button label="Annuler" severity="secondary" [text]="true" routerLink="/admin/projets" />
+      <p-button label="Enregistrer" icon="pi pi-check" [loading]="saving()" (onClick)="save()" />
+    </div>
+  </header>
+
+  <form [formGroup]="form" (ngSubmit)="save()" class="grid gap-4 lg:grid-cols-3">
+    @if (formError()) {
+      <p class="rounded-md bg-red-50 px-3 py-2 text-sm text-red-700 lg:col-span-3">
+        {{ formError() }}
+      </p>
+    }
+
+    <!-- ──────────────── Contenu ──────────────── -->
+    <section class="panel flex flex-col gap-4 p-5 lg:col-span-2">
+      <div class="flex flex-col gap-1.5">
+        <label for="title" class="font-body text-sm font-medium">Titre *</label>
+        <input pInputText id="title" formControlName="title" class="w-full" />
+        @if (form.controls.title.touched && form.controls.title.invalid) {
+          <small class="text-danger">Titre obligatoire, 255 caractères au plus.</small>
+        }
+      </div>
+
+      <div class="flex flex-col gap-1.5">
+        <label for="clientLabel" class="font-body text-sm font-medium">Client</label>
+        <input
+          pInputText
+          id="clientLabel"
+          formControlName="clientLabel"
+          placeholder="Restaurant — Pétion-Ville"
+          class="w-full"
+        />
+        <small class="opacity-70">Affiché sous le titre sur la page des études de cas.</small>
+      </div>
+
+      <div class="flex flex-col gap-1.5">
+        <label for="summary" class="font-body text-sm font-medium">Résumé</label>
+        <textarea
+          pTextarea
+          id="summary"
+          formControlName="summary"
+          rows="3"
+          class="w-full"
+        ></textarea>
+        <small class="opacity-70">
+          Une phrase, reprise sur les cartes du portfolio et de l'accueil.
+        </small>
+      </div>
+
+      <div class="flex flex-col gap-1.5">
+        <label for="description" class="font-body text-sm font-medium">
+          Description {{ form.controls.caseStudy.value ? '*' : '' }}
+        </label>
+        <textarea
+          pTextarea
+          id="description"
+          formControlName="description"
+          rows="10"
+          class="w-full"
+        ></textarea>
+        @if (form.controls.description.touched && form.controls.description.invalid) {
+          <small class="text-danger">
+            Obligatoire pour une étude de cas : c'est le texte que la page affiche.
+          </small>
+        } @else {
+          <small class="opacity-70">
+            Le récit du projet. Affiché en entier sur la page des études de cas.
+          </small>
+        }
+      </div>
+
+      <!-- ──────────────── Galerie ──────────────── -->
+      <div class="flex flex-col gap-2">
+        <div class="flex items-center justify-between">
+          <label class="font-body text-sm font-medium">Galerie</label>
+          <p-button
+            label="Ajouter une image"
+            icon="pi pi-plus"
+            severity="secondary"
+            [text]="true"
+            size="small"
+            (onClick)="openPicker('gallery')"
+          />
+        </div>
+
+        @if (form.controls.galleryPublicIds.value.length) {
+          <ul class="grid grid-cols-3 gap-2 sm:grid-cols-4">
+            @for (publicId of form.controls.galleryPublicIds.value; track publicId) {
+              <li class="relative overflow-hidden rounded-md border border-gray-200">
+                <img [src]="preview(publicId)" alt="" class="aspect-[4/3] w-full object-cover" />
+                <p-button
+                  icon="pi pi-times"
+                  severity="danger"
+                  [rounded]="true"
+                  size="small"
+                  class="absolute top-1 right-1"
+                  [attr.aria-label]="'Retirer ' + publicId"
+                  (onClick)="removeFromGallery(publicId)"
+                />
+              </li>
+            }
+          </ul>
+        } @else {
+          <p class="text-sm opacity-60">Aucune image supplémentaire.</p>
+        }
+      </div>
+    </section>
+
+    <!-- ──────────────── Publication et affichage ──────────────── -->
+    <aside class="flex flex-col gap-4">
+      <section class="panel flex flex-col gap-4 p-5">
+        <div class="flex flex-col gap-1.5">
+          <label for="status" class="font-body text-sm font-medium">Statut</label>
+          <p-select
+            inputId="status"
+            formControlName="status"
+            [options]="statusOptions"
+            optionLabel="label"
+            optionValue="value"
+            class="w-full"
+          />
+          <small class="opacity-70">
+            Un brouillon reste invisible du site public, portfolio compris.
+          </small>
+        </div>
+
+        <div class="flex items-center justify-between gap-3">
+          <label for="featured" class="font-body text-sm font-medium">
+            Mettre en avant sur l'accueil
+          </label>
+          <p-toggleswitch inputId="featured" formControlName="featured" />
+        </div>
+
+        <div class="flex items-center justify-between gap-3">
+          <label for="caseStudy" class="font-body text-sm font-medium">
+            Afficher en étude de cas
+          </label>
+          <p-toggleswitch inputId="caseStudy" formControlName="caseStudy" />
+        </div>
+        <small class="opacity-70">
+          Toute réalisation publiée figure au portfolio. Ces deux options l'ajoutent à l'accueil et
+          à la page des études de cas.
+        </small>
+
+        <div class="flex flex-col gap-1.5">
+          <label for="slug" class="font-body text-sm font-medium">Slug</label>
+          <input pInputText id="slug" formControlName="slug" class="w-full" />
+          <small class="opacity-70">Laissé vide, il est dérivé du titre.</small>
+        </div>
+      </section>
+
+      <!-- ──────────────── Couverture ──────────────── -->
+      <section class="panel flex flex-col gap-3 p-5">
+        <label class="font-body text-sm font-medium">Image de couverture</label>
+
+        @if (form.controls.coverPublicId.value) {
+          <img
+            [src]="preview(form.controls.coverPublicId.value)"
+            alt=""
+            class="aspect-video w-full rounded-md object-cover"
+          />
+          <span class="truncate text-xs opacity-60">{{ form.controls.coverPublicId.value }}</span>
+        } @else {
+          <p class="text-sm opacity-60">Aucune couverture choisie.</p>
+        }
+
+        <div class="flex gap-2">
+          <p-button
+            label="Choisir"
+            icon="pi pi-images"
+            severity="secondary"
+            size="small"
+            (onClick)="openPicker('cover')"
+          />
+          @if (form.controls.coverPublicId.value) {
+            <p-button
+              label="Retirer"
+              severity="danger"
+              [text]="true"
+              size="small"
+              (onClick)="clearCover()"
+            />
+          }
+        </div>
+      </section>
+
+      <!-- ──────────────── Classement ──────────────── -->
+      <section class="panel flex flex-col gap-4 p-5">
+        <div class="flex flex-col gap-1.5">
+          <label for="services" class="font-body text-sm font-medium">Prestations</label>
+          <p-autocomplete
+            inputId="services"
+            formControlName="services"
+            [suggestions]="serviceSuggestions()"
+            (completeMethod)="searchServices($event)"
+            [multiple]="true"
+            [typeahead]="false"
+            [addOnBlur]="true"
+            [unique]="true"
+            separator=","
+            placeholder="Ajouter une prestation"
+            class="w-full"
+            styleClass="w-full"
+          />
+          <small class="opacity-70">Validez chaque prestation par Entrée ou une virgule.</small>
+        </div>
+
+        <div class="flex flex-col gap-1.5">
+          <label for="sector" class="font-body text-sm font-medium">Secteur</label>
+          <input
+            pInputText
+            id="sector"
+            formControlName="sector"
+            placeholder="Restauration"
+            class="w-full"
+          />
+        </div>
+
+        <div class="flex flex-col gap-1.5">
+          <label for="websiteUrl" class="font-body text-sm font-medium">Adresse du site</label>
+          <input
+            pInputText
+            id="websiteUrl"
+            formControlName="websiteUrl"
+            placeholder="https://exemple.com"
+            class="w-full"
+          />
+          <small class="opacity-70"> Laissée vide, le lien « Voir le site » n'apparaît pas. </small>
+        </div>
+
+        <div class="flex flex-col gap-1.5">
+          <label for="icon" class="font-body text-sm font-medium">Icône</label>
+          <div class="flex items-center gap-2">
+            <i [class]="form.controls.icon.value" class="opacity-70"></i>
+            <input pInputText id="icon" formControlName="icon" class="w-full" />
+          </div>
+          <small class="opacity-70">Classe PrimeIcons, par exemple « pi pi-desktop ».</small>
+        </div>
+      </section>
+    </aside>
+  </form>
+
+  <!-- ──────────────── Sélecteur d'images ──────────────── -->
+  <p-dialog
+    [visible]="pickerOpen()"
+    (visibleChange)="pickerOpen.set($event)"
+    header="Choisir une image"
+    [modal]="true"
+    [dismissableMask]="true"
+    [style]="{ width: '60rem', maxWidth: '95vw' }"
+  >
+    @if (pickerOpen()) {
+      <app-media-library [selectionMode]="true" (picked)="onPicked($event)" />
+    }
+  </p-dialog>
+}

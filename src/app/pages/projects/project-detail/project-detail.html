@@ -1,0 +1,159 @@
+<my-header />
+
+<main class="pt-32 pb-20">
+  <my-container>
+    <a
+      routerLink="/portfolio"
+      class="font-body mb-6 inline-flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900"
+    >
+      <i class="pi pi-arrow-left text-xs"></i> Toutes nos réalisations
+    </a>
+
+    @if (loading()) {
+      <div class="flex flex-col gap-4">
+        <div class="h-10 w-2/3 animate-pulse rounded bg-gray-100"></div>
+        <div class="aspect-video w-full animate-pulse rounded-2xl bg-gray-100"></div>
+        @for (line of skeletonLines; track line) {
+          <div class="h-4 w-full animate-pulse rounded bg-gray-100"></div>
+        }
+      </div>
+    } @else if (notFound()) {
+      <div class="py-20 text-center">
+        <h1 class="font-heading text-3xl text-gray-800">Réalisation introuvable</h1>
+        <p class="font-body mt-3 text-gray-600">
+          Cette réalisation n'existe pas, ou n'est plus publiée.
+        </p>
+        <a
+          routerLink="/portfolio"
+          class="font-accent text-primary mt-6 inline-flex items-center gap-1"
+        >
+          Voir toutes nos réalisations
+          <i class="pi pi-arrow-right translate-y-[1.4px] text-xs"></i>
+        </a>
+      </div>
+    } @else if (project(); as projet) {
+      <!-- ──────────────── En-tête ──────────────── -->
+      <header class="flex flex-col gap-3">
+        @if (projet.sector) {
+          <span class="font-accent text-primary">{{ projet.sector }}</span>
+        }
+        <h1 class="font-heading text-3xl text-gray-800 lg:text-4xl">{{ projet.title }}</h1>
+        @if (projet.clientLabel) {
+          <p class="font-body text-lg text-gray-600">{{ projet.clientLabel }}</p>
+        }
+        @if (projet.summary) {
+          <p class="font-body max-w-3xl text-gray-700">{{ projet.summary }}</p>
+        }
+
+        <div class="mt-2 flex flex-wrap items-center gap-3">
+          @if (projet.websiteUrl) {
+            <a
+              [href]="projet.websiteUrl"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="bg-primary font-accent inline-flex items-center gap-2 rounded-full px-5 py-2 text-white transition-opacity hover:opacity-90"
+            >
+              Voir le site en ligne
+              <i class="pi pi-external-link text-xs"></i>
+            </a>
+          }
+          @if (projet.publishedAt) {
+            <span class="font-body text-sm text-gray-500">
+              Mis en ligne le {{ formatDate(projet.publishedAt) }}
+            </span>
+          }
+        </div>
+      </header>
+
+      <!-- ──────────────── Couverture ──────────────── -->
+      @if (cover()) {
+        <img
+          [src]="cover()"
+          [srcset]="coverSrcset()"
+          sizes="(min-width: 1024px) 960px, 100vw"
+          [alt]="'Aperçu du site réalisé pour ' + projet.title"
+          class="mt-8 w-full rounded-2xl object-cover shadow-sm"
+        />
+      }
+
+      <!-- ──────────────── Prestations ──────────────── -->
+      @if (projet.services.length) {
+        <div class="mt-8 flex flex-wrap items-center gap-2">
+          @for (service of projet.services; track service) {
+            <span class="bg-primary/10 text-primary font-body rounded-full px-4 py-2 text-sm">
+              {{ service }}
+            </span>
+          }
+        </div>
+      }
+
+      <!-- ──────────────── Récit ──────────────── -->
+      @if (projet.description) {
+        <section class="font-body project-body mt-8 max-w-3xl text-gray-700">
+          @if (isHtml()) {
+            <div [innerHTML]="projet.description"></div>
+          } @else {
+            @for (paragraph of paragraphs(); track $index) {
+              <p>{{ paragraph }}</p>
+            }
+          }
+        </section>
+      }
+
+      <!-- ──────────────── Galerie ──────────────── -->
+      @if (projet.galleryPublicIds.length) {
+        <section class="mt-12">
+          <h2 class="font-heading mb-4 text-2xl text-gray-800">En images</h2>
+          <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            @for (publicId of projet.galleryPublicIds; track publicId) {
+              <p-image
+                [src]="fullSize(publicId)"
+                [alt]="projet.title"
+                [preview]="true"
+                width="100%"
+              >
+                <ng-template #indicator>
+                  <i class="pi pi-search-plus"></i>
+                </ng-template>
+                <ng-template #image>
+                  <img
+                    [src]="thumbnail(publicId)"
+                    [srcset]="srcsetOf(publicId)"
+                    [sizes]="sizes"
+                    [alt]="projet.title"
+                    loading="lazy"
+                    class="w-full rounded-xl object-cover"
+                  />
+                </ng-template>
+                <ng-template #preview let-style="style" let-previewCallback="previewCallback">
+                  <img
+                    [src]="fullSize(publicId)"
+                    [alt]="projet.title"
+                    [style]="style"
+                    (click)="previewCallback()"
+                  />
+                </ng-template>
+              </p-image>
+            }
+          </div>
+        </section>
+      }
+
+      <!-- ──────────────── Autres réalisations ──────────────── -->
+      @if (related().length) {
+        <section class="mt-16">
+          <separator-design />
+          <h2 class="font-heading mt-6 mb-6 text-2xl text-gray-800">D'autres réalisations</h2>
+          <div class="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3">
+            @for (other of related(); track other.id) {
+              <project-card [project]="other" />
+            }
+          </div>
+        </section>
+      }
+    }
+  </my-container>
+</main>
+
+<my-cta-section></my-cta-section>
+<my-footer />

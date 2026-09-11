@@ -1,5 +1,6 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { SeoService } from '../../services/seo.service';
 import { pageSeo } from '../../config/content/seo-pages';
 import { Header } from '../../components/header/header';
@@ -13,21 +14,14 @@ import { apiErrorMessage, apiFieldErrors } from '../../core/utils/http.util';
 
 @Component({
   selector: 'app-contact',
-  imports: [
-    Header,
-    Footer,
-    HeroSection,
-    Container,
-    SeparatorDesign,
-    MyButton,
-    ReactiveFormsModule,
-  ],
+  imports: [Header, Footer, HeroSection, Container, SeparatorDesign, MyButton, ReactiveFormsModule],
   templateUrl: './contact.html',
   styleUrl: './contact.css',
 })
 export default class Contact implements OnInit {
   private readonly seo = inject(SeoService);
   private readonly contacts = inject(ContactService);
+  private readonly route = inject(ActivatedRoute);
 
   protected readonly sending = signal(false);
   protected readonly sent = signal(false);
@@ -36,9 +30,10 @@ export default class Contact implements OnInit {
   /** Prestations proposées dans le sélecteur ; reprises telles quelles en base. */
   protected readonly services = [
     'Création de site web',
+    'Boutique en ligne',
     'Refonte de site',
     'Référencement (SEO)',
-    'Maintenance',
+    'Hébergement et maintenance',
     'Autre',
   ];
 
@@ -56,6 +51,14 @@ export default class Contact implements OnInit {
 
   ngOnInit(): void {
     this.seo.update(pageSeo.contact);
+
+    // Sujet prérempli depuis une autre page — « Je candidate à l'offre » sur les tarifs, par
+    // exemple. Cela distingue ces demandes des autres dès la liste du back-office, sans que
+    // le visiteur ait à expliquer d'où il vient.
+    const subject = this.route.snapshot.queryParamMap.get('sujet')?.trim();
+    if (subject) {
+      this.form.controls.subject.setValue(subject.slice(0, 200));
+    }
   }
 
   protected submit(): void {

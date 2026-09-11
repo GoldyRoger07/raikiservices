@@ -32,10 +32,15 @@ export function toPageParams(query: PageQuery): HttpParams {
  *
  * Le backend renvoie un corps `ApiError` uniforme ; on retombe sur un message générique
  * quand la requête n'a même pas atteint le serveur (backend éteint, CORS, réseau coupé).
+ *
+ * Les `Error` ordinaires sont acceptées elles aussi : l'envoi d'images vers Cloudinary se
+ * fait hors de `HttpClient` et rapporte ses refus ainsi. Sans cela, ses messages — pourtant
+ * les plus utiles, ceux de la signature ou du plafond de taille — seraient remplacés par le
+ * texte générique.
  */
 export function apiErrorMessage(error: unknown, fallback = 'Une erreur est survenue.'): string {
   if (!(error instanceof HttpErrorResponse)) {
-    return fallback;
+    return error instanceof Error && error.message ? error.message : fallback;
   }
   if (error.status === 0) {
     return "Le serveur est injoignable. Vérifiez que l'API est démarrée.";

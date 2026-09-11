@@ -7,18 +7,21 @@ import { Footer } from "../../components/footer/footer";
 import { Container } from "../../components/container/container";
 import { MyButton } from "../../components/my-button/my-button";
 import { SeparatorDesign } from "../../components/separator-design/separator-design";
-import { Image } from 'primeng/image';
 import { NgxParticlesComponent } from '@omnedia/ngx-particles';
 import { NgxTypewriterComponent } from '@omnedia/ngx-typewriter';
 import { CardData } from '../../models/card-data.model';
 import { AccentTitle } from '../../components/accent-title/accent-title';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
+import { ProjectCard } from '../../components/project-card/project-card';
+import { Project } from '../../core/models/project.model';
+import { ProjectService } from '../../core/services/project.service';
 
 
 
 @Component({
   selector: 'app-home',
-  imports: [Header, Footer, Container, AccentTitle, MyButton, SeparatorDesign, Image, NgxParticlesComponent, NgxTypewriterComponent, CommonModule],
+  imports: [Header, Footer, Container, AccentTitle, MyButton, SeparatorDesign, NgxParticlesComponent, NgxTypewriterComponent, CommonModule, ProjectCard, RouterLink],
   templateUrl: './home.html',
   styleUrl: './home.css',
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
@@ -28,6 +31,10 @@ export default class Home implements OnInit{
   // Particules rendues au navigateur uniquement (canvas incompatible prerender).
   protected readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
   private readonly seo = inject(SeoService);
+  private readonly projects = inject(ProjectService);
+
+  /** Réalisations mises en avant. Vide tant qu'elles ne sont pas chargées. */
+  protected readonly featuredProjects = signal<Project[]>([]);
 
   title1 = "Nous créons des sites web modernes qui rendent votre entreprise plus visible et attirent plus de clients."
   title2 = " plus de visibilité pour votre entreprise."
@@ -63,31 +70,8 @@ export default class Home implements OnInit{
     {
       subtitle: 'Maintenance & Hébergement',
       title: 'Votre site reste rapide, sécurisé et disponible.',
-      desc: 'Nous pouvons prendre en charge l’hébergement, les mises à jour et la maintenance de votre site.'
+      desc: 'Hébergement, nom de domaine, mises à jour et sauvegardes sont compris dans votre abonnement mensuel.'
     }
-  ]
-
-  projectCards: CardData[] = [
-    {
-      title: 'Raf',
-      desc: '',
-      cover: '/img/home/projets/mockup-raf.png'
-    },
-    {
-      title: 'FShop',
-      desc: '',
-      cover: '/img/home/projets/mockup-raf.png'
-    },
-    {
-      title: 'Bowom',
-      desc: '',
-      cover: '/img/home/projets/mockup-raf.png'
-    },
-    {
-      title: 'Michael\'s',
-      desc: '',
-      cover: '/img/home/projets/mockup-raf.png'
-    },
   ]
 
   avantageCards: CardData[] = [
@@ -137,6 +121,7 @@ export default class Home implements OnInit{
 
   ngOnInit(): void {
     this.seo.update(pageSeo.home);
+    this.loadFeaturedProjects();
 
     setTimeout(()=>{
       this.cursorColor1.set("transparent")
@@ -149,5 +134,20 @@ export default class Home implements OnInit{
     },this.title1.length*120)
 
     
+  }
+  /**
+   * Réalisations mises en avant.
+   *
+   * <p>L'accueil est désormais rendu à la demande et non plus figé au build : c'est ce qui
+   * permet à une publication depuis le back-office d'y apparaître aussitôt. En contrepartie
+   * la page dépend d'un appel réseau, d'où le silence en cas d'échec — l'API endormie ou en
+   * erreur laisse simplement la section de côté, elle ne casse pas la page la plus visitée
+   * du site.
+   */
+  private loadFeaturedProjects(): void {
+    this.projects.listFeatured(4).subscribe({
+      next: (page) => this.featuredProjects.set(page.content),
+      error: () => this.featuredProjects.set([]),
+    });
   }
 }
