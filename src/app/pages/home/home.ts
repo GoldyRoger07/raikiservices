@@ -16,12 +16,14 @@ import { RouterLink } from '@angular/router';
 import { ProjectCard } from '../../components/project-card/project-card';
 import { Project } from '../../core/models/project.model';
 import { ProjectService } from '../../core/services/project.service';
+import { FaqSection } from '../../components/faqs/faq-section/faq-section';
+import { homeFaq } from '../../config/content/faq';
 
 
 
 @Component({
   selector: 'app-home',
-  imports: [Header, Footer, Container, AccentTitle, MyButton, SeparatorDesign, NgxParticlesComponent, NgxTypewriterComponent, CommonModule, ProjectCard, RouterLink],
+  imports: [Header, Footer, Container, AccentTitle, MyButton, SeparatorDesign, NgxParticlesComponent, NgxTypewriterComponent, CommonModule, ProjectCard, RouterLink, FaqSection],
   templateUrl: './home.html',
   styleUrl: './home.css',
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
@@ -32,6 +34,9 @@ export default class Home implements OnInit{
   protected readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
   private readonly seo = inject(SeoService);
   private readonly projects = inject(ProjectService);
+
+  /** Questions fréquentes du bas de page. */
+  protected readonly faq = homeFaq;
 
   /** Réalisations mises en avant. Vide tant qu'elles ne sont pas chargées. */
   protected readonly featuredProjects = signal<Project[]>([]);

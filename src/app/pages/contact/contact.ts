@@ -2,6 +2,7 @@ import { Component, OnInit, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { SeoService } from '../../services/seo.service';
+import { contactFaq } from '../../config/content/faq';
 import { pageSeo } from '../../config/content/seo-pages';
 import { Header } from '../../components/header/header';
 import { Footer } from '../../components/footer/footer';
@@ -9,12 +10,22 @@ import { HeroSection } from '../../components/hero-section/hero-section';
 import { Container } from '../../components/container/container';
 import { SeparatorDesign } from '../../components/separator-design/separator-design';
 import { MyButton } from '../../components/my-button/my-button';
+import { FaqSection } from '../../components/faqs/faq-section/faq-section';
 import { ContactService } from '../../core/services/contact.service';
 import { apiErrorMessage, apiFieldErrors } from '../../core/utils/http.util';
 
 @Component({
   selector: 'app-contact',
-  imports: [Header, Footer, HeroSection, Container, SeparatorDesign, MyButton, ReactiveFormsModule],
+  imports: [
+    Header,
+    Footer,
+    HeroSection,
+    Container,
+    SeparatorDesign,
+    MyButton,
+    FaqSection,
+    ReactiveFormsModule,
+  ],
   templateUrl: './contact.html',
   styleUrl: './contact.css',
 })
@@ -26,6 +37,9 @@ export default class Contact implements OnInit {
   protected readonly sending = signal(false);
   protected readonly sent = signal(false);
   protected readonly error = signal('');
+
+  /** Questions fréquentes du bas de page. */
+  protected readonly faq = contactFaq;
 
   /** Prestations proposées dans le sélecteur ; reprises telles quelles en base. */
   protected readonly services = [

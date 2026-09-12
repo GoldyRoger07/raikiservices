@@ -1,0 +1,29 @@
+/*
+ * Reprise à l'identique de l'habillage des questions de la page des tarifs, d'où ces règles
+ * viennent : la FAQ apparaît désormais sur plusieurs pages, et deux accordéons qui ne se
+ * ressemblent pas d'une page à l'autre se remarquent tout de suite.
+ */
+
+.faq-item {
+  overflow: hidden;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.9rem;
+  background-color: #fff;
+}
+
+.faq-question {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  width: 100%;
+  padding: 1.1rem 1.25rem;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  text-align: left;
+}
+
+.faq-question:hover {
+  background-color: #fafafa;
+}

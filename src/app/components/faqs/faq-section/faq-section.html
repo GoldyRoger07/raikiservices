@@ -1,0 +1,16 @@
+<section class="py-14" [class]="background()">
+  <my-container>
+    <div class="mx-auto mb-8 w-full text-center lg:w-[70%]">
+      <separator-design />
+      @if (eyebrow()) {
+        <span class="font-accent text-primary mt-4 block">{{ eyebrow() }}</span>
+      }
+      <h2 class="font-heading mt-1 text-2xl text-gray-800 lg:text-3xl">{{ title() }}</h2>
+      @if (intro()) {
+        <p class="font-body mt-3 text-gray-700">{{ intro() }}</p>
+      }
+    </div>
+
+    <faq-list [faqs]="items()" />
+  </my-container>
+</section>

@@ -10,6 +10,6 @@ export class FaqItem {
   @Input({ required: true }) question!: string;
   @Input({ required: true }) answer!: string;
   @Input() isOpen: boolean = false;
-  
+
   @Output() toggle = new EventEmitter<void>();
 }

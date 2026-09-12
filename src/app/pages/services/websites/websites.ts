@@ -3,10 +3,12 @@ import { RouterLink } from '@angular/router';
 
 import { Container } from '../../../components/container/container';
 import { CtaSection } from '../../../components/cta-section/cta-section';
+import { FaqSection } from '../../../components/faqs/faq-section/faq-section';
 import { Footer } from '../../../components/footer/footer';
 import { Header } from '../../../components/header/header';
 import { HeroSection } from '../../../components/hero-section/hero-section';
 import { SeparatorDesign } from '../../../components/separator-design/separator-design';
+import { websitesFaq } from '../../../config/content/faq';
 import { pageSeo } from '../../../config/content/seo-pages';
 import { servicePricingNote, websiteServices } from '../../../config/content/services';
 import { SeoService } from '../../../services/seo.service';
@@ -20,7 +22,16 @@ import { SeoService } from '../../../services/seo.service';
  */
 @Component({
   selector: 'app-websites',
-  imports: [Header, Footer, HeroSection, Container, SeparatorDesign, CtaSection, RouterLink],
+  imports: [
+    Header,
+    Footer,
+    HeroSection,
+    Container,
+    SeparatorDesign,
+    CtaSection,
+    FaqSection,
+    RouterLink,
+  ],
   templateUrl: './websites.html',
   styleUrl: './websites.css',
 })
@@ -29,6 +40,7 @@ export default class Websites implements OnInit {
 
   protected readonly cards = websiteServices;
   protected readonly pricingNote = servicePricingNote;
+  protected readonly faq = websitesFaq;
 
   ngOnInit(): void {
     this.seo.update(pageSeo.websites);

@@ -10,90 +10,125 @@
      jamais sur une date écrite en dur. -->
 <section class="py-12">
   <my-container>
-    @if (offerRunning()) {
-      <div class="offer-card offer-card--launch">
-        <div class="flex flex-wrap items-center justify-between gap-3">
-          <span class="offer-badge">{{ launch.badge }}</span>
-          <span class="offer-slots">
-            <i class="pi pi-clock text-xs"></i>
-            {{ slotsLabel() }}
-          </span>
+    <!-- La carte et l'illustration sont hissées hors du @if : les deux offres partagent le
+         même cadre, seul le texte change. Les dupliquer dans chaque branche revenait à
+         maintenir deux fois la même colonne d'image. -->
+    <div class="offer-card" [class.offer-card--launch]="offerRunning()">
+      <div class="grid items-end gap-6 lg:grid-cols-[minmax(0,1fr)_20rem]">
+        <div>
+          <span class="offer-badge">{{ offerRunning() ? launch.badge : standard.badge }}</span>
+
+          @if (offerRunning()) {
+            <h2 class="font-heading mt-4 text-3xl text-gray-900 lg:text-4xl">{{ launch.title }}</h2>
+            <p class="font-body mt-3 max-w-2xl text-gray-700">{{ launch.intro }}</p>
+
+            <!-- Le prix barré donne sa valeur au cadeau : sans point de comparaison,
+                 « offert » se lit « sans valeur ». -->
+            <div class="mt-6 flex flex-wrap gap-8">
+              <div>
+                <span class="font-body block text-sm text-gray-600">{{ launch.anchorLabel }}</span>
+                <span class="font-heading text-lg text-gray-400 line-through">
+                  dès {{ launch.anchorFrom }} $
+                </span>
+                <span class="font-heading text-primary ml-2 text-2xl">
+                  {{ launch.anchorReplacement }}
+                </span>
+              </div>
+              <div>
+                <span class="font-body block text-sm text-gray-600">{{ launch.secondLabel }}</span>
+                <span class="font-heading text-primary text-2xl">{{
+                  launch.secondReplacement
+                }}</span>
+              </div>
+            </div>
+
+            <div class="mt-6">
+              <p class="font-body text-sm font-medium text-gray-800">
+                {{ launch.conditionsTitle }}
+              </p>
+              <ul class="font-body mt-2 flex flex-col gap-1.5 text-sm text-gray-700">
+                @for (condition of launch.conditions; track condition) {
+                  <li class="flex items-start gap-2">
+                    <i class="pi pi-check text-primary mt-1 text-xs"></i>
+                    <span>{{ condition }}</span>
+                  </li>
+                }
+              </ul>
+            </div>
+
+            <!-- Le compteur de places accompagne le bouton plutôt que l'en-tête : c'est au
+                 moment de candidater que la rareté pèse, et seul dans le coin de la carte il
+                 flottait au-dessus de l'illustration sans rien rattacher. Sous le bouton
+                 quand la largeur manque, grâce au `flex-wrap`. -->
+            <div class="mt-7 flex flex-wrap items-center gap-x-5 gap-y-3">
+              <a
+                routerLink="/contact"
+                [queryParams]="contactParams(launch.ctaSubject)"
+                class="bg-primary font-accent inline-flex items-center gap-2 rounded-full px-7 py-3 text-white transition-opacity hover:opacity-90"
+              >
+                {{ launch.ctaLabel }}
+                <i class="pi pi-arrow-right text-xs"></i>
+              </a>
+             
+            </div>
+
+            <p class="font-body mt-4 max-w-2xl text-xs text-gray-500">{{ launch.smallPrint }}</p>
+          } @else {
+            <h2 class="font-heading mt-4 text-3xl text-gray-900 lg:text-4xl">
+              {{ standard.title }}
+            </h2>
+            <p class="font-body mt-3 max-w-2xl text-gray-700">{{ standard.intro }}</p>
+
+            <div class="mt-6">
+              <p class="font-body text-sm font-medium text-gray-800">
+                {{ standard.conditionsTitle }}
+              </p>
+              <ul class="font-body mt-2 flex flex-col gap-1.5 text-sm text-gray-700">
+                @for (condition of standard.conditions; track condition) {
+                  <li class="flex items-start gap-2">
+                    <i class="pi pi-check text-primary mt-1 text-xs"></i>
+                    <span>{{ condition }}</span>
+                  </li>
+                }
+              </ul>
+            </div>
+
+            <a
+              routerLink="/contact"
+              [queryParams]="contactParams(standard.ctaSubject)"
+              class="bg-primary font-accent mt-7 inline-flex items-center gap-2 rounded-full px-7 py-3 text-white transition-opacity hover:opacity-90"
+            >
+              {{ standard.ctaLabel }}
+              <i class="pi pi-arrow-right text-xs"></i>
+            </a>
+
+            <p class="font-body mt-4 max-w-2xl text-xs text-gray-500">{{ standard.smallPrint }}</p>
+          }
         </div>
 
-        <h2 class="font-heading mt-4 text-3xl text-gray-900 lg:text-4xl">{{ launch.title }}</h2>
-        <p class="font-body mt-3 max-w-2xl text-gray-700">{{ launch.intro }}</p>
+        <!-- Détourée sur fond transparent, posée au coin bas-droit de la carte. Positionnée
+             en absolu plutôt que calée par des marges négatives : le padding de 2rem de la
+             carte ne la concerne alors plus, et le bas de l'image tombe exactement sur le
+             bas de la carte. Le `-right-4` est un débord volontaire, rogné par la carte
+             (`overflow` sur `.offer-card`) : le fichier porte une bande transparente sur sa
+             droite, sans quoi le personnage resterait décollé du bord. La colonne de 20rem
+             de la grille lui garde sa place, pour que le texte ne passe pas dessous.
+             Masquée sous `lg`, où la colonne de texte prend toute la largeur et où ce poids
+             d'image ne se justifierait pas. -->
+        <img
+          src="img/une-jeune-professionnelle.png"
+          width="927"
+          height="941"
+          class="hidden lg:absolute lg:-right-4 lg:bottom-0 lg:block lg:w-[23rem]"
+          alt="Une jeune professionnelle souriante"
+        />
 
-        <!-- Le prix barré donne sa valeur au cadeau : sans point de comparaison,
-             « offert » se lit « sans valeur ». -->
-        <div class="mt-6 flex flex-wrap gap-8">
-          <div>
-            <span class="font-body block text-sm text-gray-600">{{ launch.anchorLabel }}</span>
-            <span class="font-heading text-lg text-gray-400 line-through">
-              dès {{ launch.anchorFrom }} $
-            </span>
-            <span class="font-heading text-primary ml-2 text-2xl">
-              {{ launch.anchorReplacement }}
-            </span>
-          </div>
-          <div>
-            <span class="font-body block text-sm text-gray-600">{{ launch.secondLabel }}</span>
-            <span class="font-heading text-primary text-2xl">{{ launch.secondReplacement }}</span>
-          </div>
-        </div>
-
-        <div class="mt-6">
-          <p class="font-body text-sm font-medium text-gray-800">{{ launch.conditionsTitle }}</p>
-          <ul class="font-body mt-2 flex flex-col gap-1.5 text-sm text-gray-700">
-            @for (condition of launch.conditions; track condition) {
-              <li class="flex items-start gap-2">
-                <i class="pi pi-check text-primary mt-1 text-xs"></i>
-                <span>{{ condition }}</span>
-              </li>
-            }
-          </ul>
-        </div>
-
-        <a
-          routerLink="/contact"
-          [queryParams]="contactParams(launch.ctaSubject)"
-          class="bg-primary font-accent mt-7 inline-flex items-center gap-2 rounded-full px-7 py-3 text-white transition-opacity hover:opacity-90"
-        >
-          {{ launch.ctaLabel }}
-          <i class="pi pi-arrow-right text-xs"></i>
-        </a>
-
-        <p class="font-body mt-4 max-w-2xl text-xs text-gray-500">{{ launch.smallPrint }}</p>
+         <span class="offer-slots absolute right-8 top-8 block">
+                <i class="pi pi-clock text-xs"></i>
+                {{ slotsLabel() }}
+              </span>
       </div>
-    } @else {
-      <div class="offer-card">
-        <span class="offer-badge">{{ standard.badge }}</span>
-        <h2 class="font-heading mt-4 text-3xl text-gray-900 lg:text-4xl">{{ standard.title }}</h2>
-        <p class="font-body mt-3 max-w-2xl text-gray-700">{{ standard.intro }}</p>
-
-        <div class="mt-6">
-          <p class="font-body text-sm font-medium text-gray-800">{{ standard.conditionsTitle }}</p>
-          <ul class="font-body mt-2 flex flex-col gap-1.5 text-sm text-gray-700">
-            @for (condition of standard.conditions; track condition) {
-              <li class="flex items-start gap-2">
-                <i class="pi pi-check text-primary mt-1 text-xs"></i>
-                <span>{{ condition }}</span>
-              </li>
-            }
-          </ul>
-        </div>
-
-        <a
-          routerLink="/contact"
-          [queryParams]="contactParams(standard.ctaSubject)"
-          class="bg-primary font-accent mt-7 inline-flex items-center gap-2 rounded-full px-7 py-3 text-white transition-opacity hover:opacity-90"
-        >
-          {{ standard.ctaLabel }}
-          <i class="pi pi-arrow-right text-xs"></i>
-        </a>
-
-        <p class="font-body mt-4 max-w-2xl text-xs text-gray-500">{{ standard.smallPrint }}</p>
-      </div>
-    }
+    </div>
   </my-container>
 </section>
 
@@ -193,37 +228,7 @@
 
 <!-- ──────────────── Questions fréquentes ────────────────
      Une page de tarifs se gagne sur les objections, pas sur la liste des fonctionnalités. -->
-<section class="py-14">
-  <my-container>
-    <div class="mx-auto mb-8 w-full text-center lg:w-[70%]">
-      <separator-design />
-      <h2 class="font-heading mt-4 text-2xl text-gray-800 lg:text-3xl">Vos questions</h2>
-    </div>
-
-    <div class="mx-auto flex max-w-3xl flex-col gap-3">
-      @for (item of faq; track item.question; let i = $index) {
-        <div class="faq-item">
-          <button
-            type="button"
-            class="faq-question"
-            (click)="toggleQuestion(i)"
-            [attr.aria-expanded]="openQuestion() === i"
-          >
-            <span class="font-heading text-left text-gray-900">{{ item.question }}</span>
-            <i
-              class="pi text-primary shrink-0 text-sm"
-              [class.pi-chevron-down]="openQuestion() !== i"
-              [class.pi-chevron-up]="openQuestion() === i"
-            ></i>
-          </button>
-          @if (openQuestion() === i) {
-            <p class="font-body px-5 pb-5 text-gray-700">{{ item.answer }}</p>
-          }
-        </div>
-      }
-    </div>
-  </my-container>
-</section>
+<faq-section [items]="faq" eyebrow="" />
 
 <my-cta-section></my-cta-section>
 <my-footer />

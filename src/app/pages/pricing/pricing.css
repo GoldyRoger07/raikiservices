@@ -1,6 +1,10 @@
 /* ──────────────── Bloc d'offre ──────────────── */
 
 .offer-card {
+  /* L'illustration est posée en absolu dans ce cadre et déborde sur le padding pour se
+     coller au coin : c'est la carte qui la rogne, arrondi compris. */
+  position: relative;
+  overflow: hidden;
   padding: 2rem;
   border: 1px solid #e5e7eb;
   border-radius: 1.5rem;
@@ -84,30 +88,4 @@
   color: #fff;
   font-size: 0.75rem;
   font-weight: 600;
-}
-
-/* ──────────────── Questions fréquentes ──────────────── */
-
-.faq-item {
-  overflow: hidden;
-  border: 1px solid #e5e7eb;
-  border-radius: 0.9rem;
-  background-color: #fff;
-}
-
-.faq-question {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  width: 100%;
-  padding: 1.1rem 1.25rem;
-  border: 0;
-  background: none;
-  cursor: pointer;
-  text-align: left;
-}
-
-.faq-question:hover {
-  background-color: #fafafa;
 }

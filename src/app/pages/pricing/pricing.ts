@@ -3,6 +3,7 @@ import { RouterLink } from '@angular/router';
 
 import { Container } from '../../components/container/container';
 import { CtaSection } from '../../components/cta-section/cta-section';
+import { FaqSection } from '../../components/faqs/faq-section/faq-section';
 import { Footer } from '../../components/footer/footer';
 import { Header } from '../../components/header/header';
 import { HeroSection } from '../../components/hero-section/hero-section';
@@ -36,7 +37,16 @@ import { SeoService } from '../../services/seo.service';
  */
 @Component({
   selector: 'app-pricing',
-  imports: [Header, Footer, HeroSection, CtaSection, Container, SeparatorDesign, RouterLink],
+  imports: [
+    Header,
+    Footer,
+    HeroSection,
+    CtaSection,
+    Container,
+    SeparatorDesign,
+    FaqSection,
+    RouterLink,
+  ],
   templateUrl: './pricing.html',
   styleUrl: './pricing.css',
 })
@@ -60,9 +70,6 @@ export default class Pricing implements OnInit {
     return state ? launchOffer.slotsLabel(state.remainingSlots, state.totalSlots) : '';
   });
 
-  /** Question dépliée dans la FAQ ; `null` quand toutes sont fermées. */
-  protected readonly openQuestion = signal<number | null>(0);
-
   ngOnInit(): void {
     this.seo.update(pageSeo.pricing);
 
@@ -70,10 +77,6 @@ export default class Pricing implements OnInit {
       next: (state) => this.offerState.set(state),
       error: () => this.offerState.set(null),
     });
-  }
-
-  protected toggleQuestion(index: number): void {
-    this.openQuestion.update((current) => (current === index ? null : index));
   }
 
   /**
