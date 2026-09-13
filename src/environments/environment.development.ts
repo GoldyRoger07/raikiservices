@@ -3,5 +3,5 @@ export const environment = {
   production: false,
   apiUrl: 'http://localhost:8081',
   /** Même valeur qu'`imagekit.url-endpoint` côté backend. Vide = images désactivées. */
-  imagekitUrlEndpoint: '',
+  imagekitUrlEndpoint: 'https://ik.imagekit.io/jeeef8d2i',
 };

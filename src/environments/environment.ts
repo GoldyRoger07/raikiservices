@@ -13,5 +13,5 @@
 export const environment = {
   production: true,
   apiUrl: 'https://api.raikiservices.com',
-  imagekitUrlEndpoint: '',
+  imagekitUrlEndpoint: 'https://ik.imagekit.io/jeeef8d2i',
 };
