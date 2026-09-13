@@ -18,7 +18,7 @@ import {
   Project,
 } from '../../../core/models/project.model';
 import { ProjectService } from '../../../core/services/project.service';
-import { cloudinaryUrl } from '../../../core/utils/cloudinary';
+import { imagekitUrl } from '../../../core/utils/imagekit';
 import { apiErrorMessage } from '../../../core/utils/http.util';
 
 /**
@@ -61,7 +61,7 @@ export default class Projects {
 
   protected readonly statusLabels = PROJECT_STATUS_LABELS;
   protected readonly statusSeverity = PROJECT_STATUS_SEVERITY;
-  protected readonly thumbnail = (project: Project) => cloudinaryUrl(project.coverPublicId, 400);
+  protected readonly thumbnail = (project: Project) => imagekitUrl(project.coverPublicId, 400);
 
   /** Tri courant ; les flèches n'ont de sens que sur le rang d'affichage. */
   protected readonly sortedByOrder = signal(true);

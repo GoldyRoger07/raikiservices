@@ -14,7 +14,7 @@ import { Subject, debounceTime } from 'rxjs';
 import { HasPermission } from '../../../core/directives/has-permission';
 import { MediaAsset } from '../../../core/models/media.model';
 import { MediaService } from '../../../core/services/media.service';
-import { cloudinaryUrl } from '../../../core/utils/cloudinary';
+import { imagekitUrl } from '../../../core/utils/imagekit';
 import { apiErrorMessage } from '../../../core/utils/http.util';
 import { ACCEPTED_IMAGE_TYPES, formatBytes, prepareImage } from '../../../core/utils/image-file';
 
@@ -35,7 +35,7 @@ const PAGE_SIZE = 24;
  * diverger deux écrans qui doivent montrer exactement le même contenu.
  *
  * <p>Le fichier ne transite pas par le backend : il est réduit ici, téléversé directement
- * chez Cloudinary, puis déclaré. Voir `MediaService.upload`.
+ * chez ImageKit, puis déclaré. Voir `MediaService.upload`.
  */
 @Component({
   selector: 'app-media-library',
@@ -75,7 +75,7 @@ export default class MediaLibrary implements OnInit {
   protected readonly pageSize = PAGE_SIZE;
   protected readonly formatBytes = formatBytes;
   protected readonly thumbnail = (asset: MediaAsset) =>
-    cloudinaryUrl(asset.publicId, 400) || asset.secureUrl;
+    imagekitUrl(asset.publicId, 400) || asset.secureUrl;
 
   protected search = '';
   protected dragging = false;
@@ -152,7 +152,7 @@ export default class MediaLibrary implements OnInit {
    * Envoie les fichiers un par un.
    *
    * <p>Chacun a sa propre ligne de progression et son propre sort : un fichier trop lourd
-   * ou refusé par Cloudinary n'interrompt pas les autres.
+   * ou refusé par ImageKit n'interrompt pas les autres.
    */
   private uploadAll(files: FileList | null): void {
     if (!files?.length) {
@@ -253,7 +253,7 @@ export default class MediaLibrary implements OnInit {
   protected confirmDelete(asset: MediaAsset): void {
     this.confirmation.confirm({
       header: 'Supprimer cette image',
-      message: `« ${asset.originalFilename ?? asset.publicId} » sera définitivement supprimée, ici et chez Cloudinary.`,
+      message: `« ${asset.originalFilename ?? asset.publicId} » sera définitivement supprimée, ici et chez ImageKit.`,
       icon: 'pi pi-exclamation-triangle',
       acceptLabel: 'Supprimer',
       rejectLabel: 'Annuler',

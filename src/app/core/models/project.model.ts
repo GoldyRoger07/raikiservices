@@ -40,8 +40,8 @@ export interface Project {
   icon: string | null;
   websiteUrl: string | null;
   /**
-   * Identifiant Cloudinary de la couverture, pas une adresse : elle se recompose à
-   * l'affichage via `cloudinaryUrl()`, avec ses transformations.
+   * Chemin ImageKit de la couverture, pas une adresse : elle se recompose à l'affichage
+   * via `imagekitUrl()`, avec ses transformations.
    */
   coverPublicId: string | null;
   /** Vide dans les listes allégées. */

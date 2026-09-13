@@ -1,4 +1,4 @@
-import { CLOUDINARY_WIDTHS } from './cloudinary';
+import { IMAGEKIT_WIDTHS } from './imagekit';
 
 /**
  * Préparation des images avant envoi.
@@ -6,7 +6,7 @@ import { CLOUDINARY_WIDTHS } from './cloudinary';
  * <p>C'est ici que se joue l'essentiel de l'économie : une photo d'appareil ou une capture
  * d'écran en pleine résolution pèse plusieurs mégaoctets pour être affichée dans une carte
  * de 400 pixels de large. La réduire dans le navigateur allège d'un coup le transfert, le
- * stockage facturé chez Cloudinary et l'attente de celui qui téléverse — sans rien changer
+ * stockage facturé chez ImageKit et l'attente de celui qui téléverse — sans rien changer
  * à ce que verra le visiteur.
  *
  * <p>Le code touche au `document` et au `canvas` : il ne s'exécute qu'en réponse à une
@@ -14,7 +14,7 @@ import { CLOUDINARY_WIDTHS } from './cloudinary';
  */
 
 /** Largeur maximale conservée : la plus grande que le site sache livrer. */
-const MAX_WIDTH = Math.max(...CLOUDINARY_WIDTHS);
+const MAX_WIDTH = Math.max(...IMAGEKIT_WIDTHS);
 
 /** Compromis poids/qualité du WebP produit. Au-delà, le gain de poids devient marginal. */
 const WEBP_QUALITY = 0.9;

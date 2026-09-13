@@ -22,7 +22,7 @@ import {
   ProjectStatus,
 } from '../../../core/models/project.model';
 import { ProjectService } from '../../../core/services/project.service';
-import { cloudinaryUrl } from '../../../core/utils/cloudinary';
+import { imagekitUrl } from '../../../core/utils/imagekit';
 import { apiErrorMessage, apiFieldErrors } from '../../../core/utils/http.util';
 import MediaLibrary from '../media-library/media-library';
 
@@ -97,7 +97,7 @@ export default class ProjectEditor implements OnInit {
     value: status,
   }));
 
-  protected readonly preview = (publicId: string) => cloudinaryUrl(publicId, 400);
+  protected readonly preview = (publicId: string) => imagekitUrl(publicId, 400);
 
   private projectId: number | null = null;
   private pickerTarget: PickerTarget = 'cover';

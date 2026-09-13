@@ -11,10 +11,10 @@ import { pageSeo } from '../../../config/content/seo-pages';
 import { Project } from '../../../core/models/project.model';
 import { ProjectService } from '../../../core/services/project.service';
 import {
-  CLOUDINARY_CARD_SIZES,
-  cloudinarySrcset,
-  cloudinaryUrl,
-} from '../../../core/utils/cloudinary';
+  IMAGEKIT_CARD_SIZES,
+  imagekitSrcset,
+  imagekitUrl,
+} from '../../../core/utils/imagekit';
 import { SeoService } from '../../../services/seo.service';
 
 /**
@@ -38,9 +38,9 @@ export default class CaseStudies implements OnInit {
   protected readonly loading = signal(true);
   protected readonly failed = signal(false);
 
-  protected readonly sizes = CLOUDINARY_CARD_SIZES;
-  protected readonly cover = (project: Project) => cloudinaryUrl(project.coverPublicId, 800);
-  protected readonly coverSrcset = (project: Project) => cloudinarySrcset(project.coverPublicId);
+  protected readonly sizes = IMAGEKIT_CARD_SIZES;
+  protected readonly cover = (project: Project) => imagekitUrl(project.coverPublicId, 800);
+  protected readonly coverSrcset = (project: Project) => imagekitSrcset(project.coverPublicId);
 
   ngOnInit(): void {
     this.seo.update(pageSeo.caseStudies);

@@ -14,10 +14,10 @@ import { seoConfig } from '../../../config/seo';
 import { Project } from '../../../core/models/project.model';
 import { ProjectService } from '../../../core/services/project.service';
 import {
-  CLOUDINARY_CARD_SIZES,
-  cloudinarySrcset,
-  cloudinaryUrl,
-} from '../../../core/utils/cloudinary';
+  IMAGEKIT_CARD_SIZES,
+  imagekitSrcset,
+  imagekitUrl,
+} from '../../../core/utils/imagekit';
 import { SeoService } from '../../../services/seo.service';
 // Ces trois fonctions n'ont rien de propre au blog : elles traitent un texte saisi dans une
 // zone de saisie libre, exactement comme la description d'une réalisation.
@@ -61,12 +61,12 @@ export default class ProjectDetail implements OnInit, OnDestroy {
   /** Autres réalisations ; silencieusement vides si l'appel échoue. */
   protected readonly related = signal<Project[]>([]);
 
-  protected readonly sizes = CLOUDINARY_CARD_SIZES;
+  protected readonly sizes = IMAGEKIT_CARD_SIZES;
   protected readonly formatDate = formatFrenchDate;
   protected readonly skeletonLines = [1, 2, 3, 4, 5, 6];
 
-  protected readonly cover = computed(() => cloudinaryUrl(this.project()?.coverPublicId, 1600));
-  protected readonly coverSrcset = computed(() => cloudinarySrcset(this.project()?.coverPublicId));
+  protected readonly cover = computed(() => imagekitUrl(this.project()?.coverPublicId, 1600));
+  protected readonly coverSrcset = computed(() => imagekitSrcset(this.project()?.coverPublicId));
 
   /**
    * La description est enregistrée telle quelle par le back-office : du HTML est injecté via
@@ -78,9 +78,9 @@ export default class ProjectDetail implements OnInit, OnDestroy {
     this.isHtml() ? [] : toParagraphs(this.project()?.description),
   );
 
-  protected readonly thumbnail = (publicId: string) => cloudinaryUrl(publicId, 800);
-  protected readonly fullSize = (publicId: string) => cloudinaryUrl(publicId, 1600);
-  protected readonly srcsetOf = (publicId: string) => cloudinarySrcset(publicId);
+  protected readonly thumbnail = (publicId: string) => imagekitUrl(publicId, 800);
+  protected readonly fullSize = (publicId: string) => imagekitUrl(publicId, 1600);
+  protected readonly srcsetOf = (publicId: string) => imagekitSrcset(publicId);
 
   ngOnInit(): void {
     this.route.paramMap.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((params) => {
@@ -148,8 +148,8 @@ export default class ProjectDetail implements OnInit, OnDestroy {
       title: `${project.title} | Réalisations RaikiServices`,
       description,
       path: `/portfolio/${project.slug}`,
-      // Une adresse Cloudinary est déjà absolue : `SeoService` la laisse passer telle quelle.
-      image: cloudinaryUrl(project.coverPublicId, 1600) || undefined,
+      // Une adresse ImageKit est déjà absolue : `SeoService` la laisse passer telle quelle.
+      image: imagekitUrl(project.coverPublicId, 1600) || undefined,
       type: 'article',
     });
 
@@ -166,7 +166,7 @@ export default class ProjectDetail implements OnInit, OnDestroy {
    */
   private setJsonLd(project: Project, description: string): void {
     const base = seoConfig.baseUrl.replace(/\/$/, '');
-    const image = cloudinaryUrl(project.coverPublicId, 1600);
+    const image = imagekitUrl(project.coverPublicId, 1600);
 
     const payload = {
       '@context': 'https://schema.org',

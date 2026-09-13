@@ -3,10 +3,10 @@ import { RouterLink } from '@angular/router';
 
 import { Project } from '../../core/models/project.model';
 import {
-  CLOUDINARY_CARD_SIZES,
-  cloudinarySrcset,
-  cloudinaryUrl,
-} from '../../core/utils/cloudinary';
+  IMAGEKIT_CARD_SIZES,
+  imagekitSrcset,
+  imagekitUrl,
+} from '../../core/utils/imagekit';
 
 /**
  * Carte d'une réalisation : visuel, titre, lien vers le site livré.
@@ -32,12 +32,12 @@ import {
 export class ProjectCard {
   readonly project = input.required<Project>();
 
-  protected readonly sizes = CLOUDINARY_CARD_SIZES;
+  protected readonly sizes = IMAGEKIT_CARD_SIZES;
 
   /** Version affichée dans la grille. */
-  protected readonly thumbnail = computed(() => cloudinaryUrl(this.project().coverPublicId, 800));
+  protected readonly thumbnail = computed(() => imagekitUrl(this.project().coverPublicId, 800));
 
-  protected readonly srcset = computed(() => cloudinarySrcset(this.project().coverPublicId));
+  protected readonly srcset = computed(() => imagekitSrcset(this.project().coverPublicId));
 
   /**
    * Texte alternatif : ce que l'image montre, pas son nom de fichier. Le titre seul dirait

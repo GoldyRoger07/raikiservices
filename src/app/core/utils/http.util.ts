@@ -33,7 +33,7 @@ export function toPageParams(query: PageQuery): HttpParams {
  * Le backend renvoie un corps `ApiError` uniforme ; on retombe sur un message générique
  * quand la requête n'a même pas atteint le serveur (backend éteint, CORS, réseau coupé).
  *
- * Les `Error` ordinaires sont acceptées elles aussi : l'envoi d'images vers Cloudinary se
+ * Les `Error` ordinaires sont acceptées elles aussi : l'envoi d'images vers ImageKit se
  * fait hors de `HttpClient` et rapporte ses refus ainsi. Sans cela, ses messages — pourtant
  * les plus utiles, ceux de la signature ou du plafond de taille — seraient remplacés par le
  * texte générique.

@@ -6,7 +6,7 @@ import { concatMap, map, switchMap } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { PageQuery, PageResponse } from '../models/api.model';
 import {
-  CloudinaryUploadResult,
+  ImageKitUploadResult,
   MediaAsset,
   MediaRegisterRequest,
   MediaUpdateRequest,
@@ -23,14 +23,14 @@ export interface MediaQuery extends PageQuery {
 
 /** Étapes internes de l'envoi, avant que la fiche ne soit enregistrée côté backend. */
 type TransferEvent =
-  { kind: 'progress'; percent: number } | { kind: 'uploaded'; result: CloudinaryUploadResult };
+  { kind: 'progress'; percent: number } | { kind: 'uploaded'; result: ImageKitUploadResult };
 
 /**
  * Bibliothèque d'images du back-office.
  *
- * <p>Le fichier ne transite pas par le backend : celui-ci signe une autorisation, le
- * navigateur téléverse en direct chez Cloudinary, puis vient déclarer le résultat. C'est
- * ce qu'enchaîne {@link upload}.
+ * <p>Le fichier ne transite pas par le backend : celui-ci délivre une autorisation, le
+ * navigateur téléverse en direct chez ImageKit, puis vient déclarer le résultat. C'est ce
+ * qu'enchaîne {@link upload}.
  *
  * <p>Champs acceptés au tri : `publicId`, `originalFilename`, `format`, `bytes`, `folder`,
  * `uploadedAt` (défaut).
@@ -61,7 +61,7 @@ export class MediaService extends CrudApi<MediaAsset, MediaRegisterRequest, Medi
    * fiche enregistrée. Se désabonner interrompt le transfert en cours.
    *
    * <p>Le plafond est vérifié avant d'ouvrir la connexion : refuser ici épargne au visiteur
-   * l'envoi complet d'un fichier que Cloudinary rejetterait à l'arrivée.
+   * l'envoi complet d'un fichier qu'ImageKit rejetterait à l'arrivée.
    */
   upload(file: File, folder = '', alt: string | null = null): Observable<UploadEvent> {
     return this.signature(folder).pipe(
@@ -85,17 +85,18 @@ export class MediaService extends CrudApi<MediaAsset, MediaRegisterRequest, Medi
     );
   }
 
-  /** Déclare au backend une image déjà déposée chez Cloudinary. */
-  register(result: CloudinaryUploadResult, alt: string | null = null): Observable<MediaAsset> {
+  /** Déclare au backend une image déjà déposée chez ImageKit. */
+  register(result: ImageKitUploadResult, alt: string | null = null): Observable<MediaAsset> {
     return this.create({
-      publicId: result.public_id,
-      secureUrl: result.secure_url,
-      format: result.format,
+      fileId: result.fileId,
+      publicId: result.filePath,
+      secureUrl: result.url,
+      format: formatOf(result.name),
       width: result.width,
       height: result.height,
-      bytes: result.bytes,
-      folder: folderOf(result.public_id),
-      originalFilename: result.original_filename,
+      bytes: result.size,
+      folder: folderOf(result.filePath),
+      originalFilename: result.name,
       alt,
     });
   }
@@ -103,13 +104,13 @@ export class MediaService extends CrudApi<MediaAsset, MediaRegisterRequest, Medi
   // ──────────────── Interne ────────────────
 
   /**
-   * Téléversement direct vers Cloudinary.
+   * Téléversement direct vers ImageKit.
    *
    * <p>En `XMLHttpRequest` et non via `HttpClient` : l'application est configurée avec
    * `withFetch()`, dont l'implémentation ne rapporte que la progression de réception, pas
    * celle de l'envoi. Sans cela, une barre de progression resterait figée à zéro pendant
    * toute la montée du fichier. L'appel sort d'ailleurs du domaine de l'API, donc hors de
-   * portée de l'intercepteur d'authentification : aucun jeton ne part chez Cloudinary.
+   * portée de l'intercepteur d'authentification : aucun jeton ne part chez ImageKit.
    */
   private transfer(file: File, signature: UploadSignature): Observable<TransferEvent> {
     return new Observable<TransferEvent>((subscriber) => {
@@ -119,14 +120,17 @@ export class MediaService extends CrudApi<MediaAsset, MediaRegisterRequest, Medi
         return () => undefined;
       }
 
-      // Exactement les champs couverts par la signature, plus le fichier et la clé publique :
-      // Cloudinary recalcule l'empreinte sur ce qu'il reçoit et refuse au moindre écart.
+      // Les champs attendus par l'API d'envoi d'ImageKit. `fileName` est obligatoire — sans
+      // lui l'envoi est refusé — et `useUniqueFileName` (actif par défaut) fait qu'un même
+      // nom déposé deux fois ne s'écrase pas mais reçoit un suffixe.
       const form = new FormData();
       form.append('file', file);
-      form.append('api_key', signature.apiKey);
-      form.append('timestamp', String(signature.timestamp));
-      form.append('folder', signature.folder);
+      form.append('fileName', file.name);
+      form.append('publicKey', signature.publicKey);
+      form.append('token', signature.token);
+      form.append('expire', String(signature.expire));
       form.append('signature', signature.signature);
+      form.append('folder', signature.folder);
 
       const request = new XMLHttpRequest();
       request.open('POST', signature.uploadUrl, true);
@@ -145,12 +149,12 @@ export class MediaService extends CrudApi<MediaAsset, MediaRegisterRequest, Medi
           subscriber.next({ kind: 'uploaded', result: JSON.parse(request.responseText) });
           subscriber.complete();
         } else {
-          subscriber.error(new Error(cloudinaryError(request)));
+          subscriber.error(new Error(imagekitError(request)));
         }
       };
 
       request.onerror = () =>
-        subscriber.error(new Error('Cloudinary est injoignable. Vérifiez votre connexion.'));
+        subscriber.error(new Error('ImageKit est injoignable. Vérifiez votre connexion.'));
 
       request.send(form);
 
@@ -159,21 +163,33 @@ export class MediaService extends CrudApi<MediaAsset, MediaRegisterRequest, Medi
   }
 }
 
-/** « raiki/projets/abc123 » donne « raiki/projets ». */
-function folderOf(publicId: string): string {
-  const lastSlash = publicId.lastIndexOf('/');
-  return lastSlash <= 0 ? '' : publicId.slice(0, lastSlash);
+/** « /raiki/projets/abc123.jpg » donne « /raiki/projets ». */
+function folderOf(filePath: string): string {
+  const lastSlash = filePath.lastIndexOf('/');
+  return lastSlash <= 0 ? '' : filePath.slice(0, lastSlash);
 }
 
-/** Cloudinary loge ses erreurs dans `{ error: { message } }`. */
-function cloudinaryError(request: XMLHttpRequest): string {
+/**
+ * « photo_abc123.webp » donne « webp ».
+ *
+ * <p>Tiré du nom et non du champ `fileType` de la réponse : celui-ci vaut « image » ou
+ * « non-image », une catégorie sans rapport avec l'extension que Cloudinary fournissait.
+ * La bibliothèque affiche ce suffixe, et c'est aussi sur lui que porte le tri par `format`.
+ */
+function formatOf(name: string | null | undefined): string | null {
+  const dot = name?.lastIndexOf('.') ?? -1;
+  return dot > 0 ? name!.slice(dot + 1).toLowerCase() : null;
+}
+
+/** ImageKit loge ses erreurs à plat, dans `{ message, help }`. */
+function imagekitError(request: XMLHttpRequest): string {
   try {
-    const body = JSON.parse(request.responseText) as { error?: { message?: string } };
-    if (body.error?.message) {
-      return body.error.message;
+    const body = JSON.parse(request.responseText) as { message?: string };
+    if (body.message) {
+      return body.message;
     }
   } catch {
     // Réponse illisible : le statut HTTP reste la seule information exploitable.
   }
-  return `Cloudinary a refusé l'envoi (erreur ${request.status}).`;
+  return `ImageKit a refusé l'envoi (erreur ${request.status}).`;
 }
