@@ -58,7 +58,7 @@
 
   @if (uploads().length) {
     <ul class="flex flex-col gap-2">
-      @for (upload of uploads(); track upload.name) {
+      @for (upload of uploads(); track upload.id) {
         <li class="flex items-center gap-3 text-sm">
           <span class="w-48 truncate opacity-80">{{ upload.name }}</span>
           <p-progressbar [value]="upload.percent" class="flex-1" [style]="{ height: '0.5rem' }" />

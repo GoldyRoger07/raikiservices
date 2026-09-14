@@ -16,8 +16,11 @@
     <div class="offer-card" [class.offer-card--launch]="offerRunning()">
       <div class="grid items-end gap-6 lg:grid-cols-[minmax(0,1fr)_20rem]">
         <div>
-          <span class="offer-badge">{{ offerRunning() ? launch.badge : standard.badge }}</span>
-
+          <span class="offer-badge mb-2">{{ offerRunning() ? launch.badge : standard.badge }}</span>
+          <span class="offer-slots min-[434px]:absolute min-[434px]:right-8 min-[434px]:top-8 min-[434px]:block">
+                <i class="pi pi-clock text-xs"></i>
+                {{ slotsLabel() }}
+              </span>
           @if (offerRunning()) {
             <h2 class="font-heading mt-4 text-3xl text-gray-900 lg:text-4xl">{{ launch.title }}</h2>
             <p class="font-body mt-3 max-w-2xl text-gray-700">{{ launch.intro }}</p>
@@ -123,10 +126,7 @@
           alt="Une jeune professionnelle souriante"
         />
 
-         <span class="offer-slots absolute right-8 top-8 block">
-                <i class="pi pi-clock text-xs"></i>
-                {{ slotsLabel() }}
-              </span>
+         
       </div>
     </div>
   </my-container>

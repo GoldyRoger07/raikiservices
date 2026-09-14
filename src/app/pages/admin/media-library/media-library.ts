@@ -20,6 +20,11 @@ import { ACCEPTED_IMAGE_TYPES, formatBytes, prepareImage } from '../../../core/u
 
 /** Un fichier en cours d'envoi, le temps qu'il rejoigne la grille. */
 interface PendingUpload {
+  /**
+   * Clé stable de la ligne. Ni le nom — deux fichiers peuvent le partager — ni l'objet
+   * lui-même, remplacé par une copie à chaque progression.
+   */
+  id: number;
   name: string;
   percent: number;
 }
@@ -81,6 +86,7 @@ export default class MediaLibrary implements OnInit {
   protected dragging = false;
 
   private readonly searchInput = new Subject<void>();
+  private nextUploadId = 0;
 
   constructor() {
     this.searchInput.pipe(debounceTime(350)).subscribe(() => this.load(0));
@@ -164,7 +170,7 @@ export default class MediaLibrary implements OnInit {
   }
 
   private async uploadOne(file: File): Promise<void> {
-    const pending: PendingUpload = { name: file.name, percent: 0 };
+    const pending: PendingUpload = { id: this.nextUploadId++, name: file.name, percent: 0 };
     this.uploads.update((current) => [...current, pending]);
 
     let prepared: File;
@@ -204,12 +210,12 @@ export default class MediaLibrary implements OnInit {
 
   private updateProgress(pending: PendingUpload, percent: number): void {
     this.uploads.update((current) =>
-      current.map((item) => (item === pending ? { ...item, percent } : item)),
+      current.map((item) => (item.id === pending.id ? { ...item, percent } : item)),
     );
   }
 
   private finishUpload(pending: PendingUpload): void {
-    this.uploads.update((current) => current.filter((item) => item.name !== pending.name));
+    this.uploads.update((current) => current.filter((item) => item.id !== pending.id));
   }
 
   // ──────────────── Actions ────────────────
