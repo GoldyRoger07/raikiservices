@@ -13,6 +13,7 @@ import { pageSeo } from '../../../config/content/seo-pages';
 import { BlogPost } from '../../../core/models/blog.model';
 import { BlogService } from '../../../core/services/blog.service';
 import { apiErrorMessage } from '../../../core/utils/http.util';
+import { IMAGEKIT_CARD_SIZES, imagekitSrcset, imagekitUrl } from '../../../core/utils/imagekit';
 import { SeoService } from '../../../services/seo.service';
 import { formatFrenchDate } from '../blog-content';
 
@@ -59,6 +60,11 @@ export default class BlogList implements OnInit {
 
   protected readonly posts = signal<BlogPost[]>([]);
   protected readonly loading = signal(true);
+
+  /** Couvertures : chemin ImageKit, ou adresse historique laissée telle quelle. */
+  protected readonly coverUrl = (source: string | null, width: number) => imagekitUrl(source, width);
+  protected readonly srcsetOf = (source: string | null) => imagekitSrcset(source);
+  protected readonly cardSizes = IMAGEKIT_CARD_SIZES;
   protected readonly error = signal('');
 
   /** Page courante, comptée à partir de 0 comme côté backend. */

@@ -141,9 +141,11 @@
           class="group mb-10 grid grid-cols-1 items-center gap-6 rounded-3xl p-5 transition-shadow duration-200 hover:shadow-2xl md:grid-cols-2 md:gap-10 md:p-10"
         >
           <div class="overflow-hidden rounded-2xl bg-gray-100">
-            @if (post.coverImage) {
+            @if (coverUrl(post.coverImage, 1600)) {
               <img
-                [src]="post.coverImage"
+                [src]="coverUrl(post.coverImage, 1600)"
+                [srcset]="srcsetOf(post.coverImage)"
+                sizes="(min-width: 768px) 50vw, 100vw"
                 [alt]="post.title"
                 class="h-64 w-full object-cover transition-transform duration-300 group-hover:scale-105 md:h-80"
               />
@@ -196,9 +198,11 @@
             class="group flex flex-col overflow-hidden rounded-3xl border border-gray-200 transition-shadow duration-200 hover:shadow-2xl"
           >
             <div class="overflow-hidden bg-gray-100">
-              @if (post.coverImage) {
+              @if (coverUrl(post.coverImage, 800)) {
                 <img
-                  [src]="post.coverImage"
+                  [src]="coverUrl(post.coverImage, 800)"
+                  [srcset]="srcsetOf(post.coverImage)"
+                  [sizes]="cardSizes"
                   [alt]="post.title"
                   loading="lazy"
                   class="h-48 w-full object-cover transition-transform duration-300 group-hover:scale-105"

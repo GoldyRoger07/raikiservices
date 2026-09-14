@@ -160,24 +160,61 @@
           <small class="opacity-70">Validez chaque étiquette par Entrée ou une virgule.</small>
         </div>
 
-        <div class="flex flex-col gap-1.5">
-          <label for="coverImage" class="font-body text-sm font-medium">Image de couverture</label>
-          <input
-            pInputText
-            id="coverImage"
-            formControlName="coverImage"
-            placeholder="/img/blog/mon-article.webp"
-            class="w-full"
+      </section>
+
+      <!-- ──────────────── Couverture ──────────────── -->
+      <section class="panel flex flex-col gap-3 p-5">
+        <label class="font-body text-sm font-medium">Image de couverture</label>
+
+        @if (form.controls.coverImage.value) {
+          <img
+            [src]="preview(form.controls.coverImage.value)"
+            alt=""
+            class="aspect-video w-full rounded-md object-cover"
           />
+          <span class="truncate text-xs opacity-60">{{ form.controls.coverImage.value }}</span>
+        } @else {
+          <p class="text-sm opacity-60">Aucune couverture choisie.</p>
+        }
+
+        <div class="flex gap-2">
+          @if (canPickCover()) {
+            <p-button
+              label="Choisir"
+              icon="pi pi-images"
+              severity="secondary"
+              size="small"
+              (onClick)="pickerOpen.set(true)"
+            />
+          }
           @if (form.controls.coverImage.value) {
-            <img
-              [src]="form.controls.coverImage.value"
-              alt=""
-              class="mt-1 aspect-video w-full rounded-md object-cover"
+            <p-button
+              label="Retirer"
+              severity="danger"
+              [text]="true"
+              size="small"
+              (onClick)="clearCover()"
             />
           }
         </div>
+        <small class="opacity-70">
+          Choisissez une image de la bibliothèque, ou envoyez-en une nouvelle depuis la fenêtre.
+        </small>
       </section>
     </aside>
   </form>
+
+  <!-- ──────────────── Sélecteur d'images ──────────────── -->
+  <p-dialog
+    [visible]="pickerOpen()"
+    (visibleChange)="pickerOpen.set($event)"
+    header="Choisir une image de couverture"
+    [modal]="true"
+    [dismissableMask]="true"
+    [style]="{ width: '60rem', maxWidth: '95vw' }"
+  >
+    @if (pickerOpen()) {
+      <app-media-library [selectionMode]="true" (picked)="onPicked($event)" />
+    }
+  </p-dialog>
 }

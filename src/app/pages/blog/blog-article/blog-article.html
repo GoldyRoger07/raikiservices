@@ -80,9 +80,11 @@
           <span>{{ readingMinutes() }} min de lecture</span>
         </div>
 
-        @if (article.coverImage) {
+        @if (cover()) {
           <img
-            [src]="article.coverImage"
+            [src]="cover()"
+            [srcset]="coverSrcset()"
+            sizes="(min-width: 1024px) 960px, 100vw"
             [alt]="article.title"
             class="mt-8 max-h-[28rem] w-full rounded-3xl object-cover"
           />
@@ -129,9 +131,11 @@
                 class="group flex flex-col overflow-hidden rounded-3xl border border-gray-200 transition-shadow duration-200 hover:shadow-2xl"
               >
                 <div class="overflow-hidden bg-gray-100">
-                  @if (other.coverImage) {
+                  @if (thumbnail(other.coverImage)) {
                     <img
-                      [src]="other.coverImage"
+                      [src]="thumbnail(other.coverImage)"
+                      [srcset]="srcsetOf(other.coverImage)"
+                      [sizes]="cardSizes"
                       [alt]="other.title"
                       loading="lazy"
                       class="h-40 w-full object-cover transition-transform duration-300 group-hover:scale-105"

@@ -5,6 +5,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { ButtonModule } from 'primeng/button';
+import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { SelectModule } from 'primeng/select';
 import { SkeletonModule } from 'primeng/skeleton';
@@ -18,10 +19,13 @@ import {
   BlogPost,
   BlogStatus,
 } from '../../../core/models/blog.model';
+import { MediaAsset } from '../../../core/models/media.model';
 import { AuthService } from '../../../core/services/auth.service';
 import { BlogService } from '../../../core/services/blog.service';
 import { UserService } from '../../../core/services/user.service';
+import { imagekitUrl } from '../../../core/utils/imagekit';
 import { apiErrorMessage, apiFieldErrors } from '../../../core/utils/http.util';
+import MediaLibrary from '../media-library/media-library';
 
 /** Choix du sélecteur d'auteur : l'identifiant du compte et son nom affichable. */
 interface AuthorOption {
@@ -52,8 +56,10 @@ interface AuthorOption {
     TextareaModule,
     SelectModule,
     AutoCompleteModule,
+    DialogModule,
     TagModule,
     SkeletonModule,
+    MediaLibrary,
   ],
   templateUrl: './blog-editor.html',
 })
@@ -86,6 +92,17 @@ export default class BlogEditor implements OnInit {
 
   /** Le sélecteur d'auteur n'a de sens que si la liste des comptes est accessible. */
   protected readonly canPickAuthor = computed(() => this.auth.has('READ_USER'));
+
+  /** Le sélecteur de couverture liste la bibliothèque : sans cette permission, il resterait vide. */
+  protected readonly canPickCover = computed(() => this.auth.has('READ_MEDIA'));
+
+  protected readonly pickerOpen = signal(false);
+
+  /**
+   * Aperçu de la couverture. Passe par `imagekitUrl`, qui laisse intactes les adresses
+   * historiques (`/img/…`, URL complètes) saisies avant la bibliothèque d'images.
+   */
+  protected readonly preview = (source: string) => imagekitUrl(source, 800);
 
   private postId: number | null = null;
 
@@ -160,6 +177,20 @@ export default class BlogEditor implements OnInit {
     const query = event.query.toLowerCase();
     const known = this.post()?.tags ?? [];
     this.tagSuggestions.set(known.filter((tag) => tag.toLowerCase().includes(query)));
+  }
+
+  // ──────────────── Couverture ────────────────
+
+  /** Retient le chemin ImageKit, comme les réalisations : l'adresse se recompose à l'affichage. */
+  protected onPicked(asset: MediaAsset): void {
+    this.form.controls.coverImage.setValue(asset.publicId);
+    this.form.markAsDirty();
+    this.pickerOpen.set(false);
+  }
+
+  protected clearCover(): void {
+    this.form.controls.coverImage.setValue('');
+    this.form.markAsDirty();
   }
 
   // ──────────────── Enregistrement ────────────────

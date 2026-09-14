@@ -11,6 +11,7 @@ import { SeparatorDesign } from '../../../components/separator-design/separator-
 import { seoConfig } from '../../../config/seo';
 import { BlogPost } from '../../../core/models/blog.model';
 import { BlogService } from '../../../core/services/blog.service';
+import { IMAGEKIT_CARD_SIZES, imagekitSrcset, imagekitUrl } from '../../../core/utils/imagekit';
 import { SeoService } from '../../../services/seo.service';
 import { formatFrenchDate, looksLikeHtml, readingTime, toParagraphs } from '../blog-content';
 
@@ -64,6 +65,17 @@ export default class BlogArticle implements OnInit, OnDestroy {
   protected readonly readingMinutes = computed(() => readingTime(this.post()?.content));
 
   protected readonly formatDate = formatFrenchDate;
+
+  /**
+   * La couverture est un chemin ImageKit, ou une adresse historique (`/img/…`) que
+   * `imagekitUrl` laisse passer telle quelle.
+   */
+  protected readonly cover = computed(() => imagekitUrl(this.post()?.coverImage, 1600));
+  protected readonly coverSrcset = computed(() => imagekitSrcset(this.post()?.coverImage));
+
+  protected readonly thumbnail = (source: string | null) => imagekitUrl(source, 800);
+  protected readonly srcsetOf = (source: string | null) => imagekitSrcset(source);
+  protected readonly cardSizes = IMAGEKIT_CARD_SIZES;
 
   /** Lignes grises affichées le temps du chargement, pour ne pas faire sauter la mise en page. */
   protected readonly skeletonLines = [1, 2, 3, 4, 5, 6, 7, 8];
@@ -134,7 +146,7 @@ export default class BlogArticle implements OnInit, OnDestroy {
       title: `${post.title} | Blog RaikiServices`,
       description,
       path: `/blog/${post.slug}`,
-      image: post.coverImage ?? undefined,
+      image: imagekitUrl(post.coverImage, 1600) || undefined,
       type: 'article',
     });
 
@@ -151,12 +163,13 @@ export default class BlogArticle implements OnInit, OnDestroy {
    */
   private setJsonLd(post: BlogPost, description: string): void {
     const base = seoConfig.baseUrl.replace(/\/$/, '');
+    const image = imagekitUrl(post.coverImage, 1600);
     const payload = {
       '@context': 'https://schema.org',
       '@type': 'BlogPosting',
       headline: post.title,
       description,
-      image: post.coverImage ? [absolute(post.coverImage, base)] : undefined,
+      image: image ? [absolute(image, base)] : undefined,
       datePublished: post.publishedAt ?? post.createdAt,
       dateModified: post.updatedAt,
       author: post.authorName
