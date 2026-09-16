@@ -70,6 +70,12 @@ export const serverRoutes: ServerRoute[] = [
     path: 'etudes-de-cas',
     renderMode: RenderMode.Server,
   },
+  // Témoignages : même raison — un avis publié depuis le back-office doit apparaître sans
+  // redéployer. L'accueil, qui en affiche une sélection, est déjà rendu à la demande.
+  {
+    path: 'temoignages',
+    renderMode: RenderMode.Server,
+  },
   // Tarifs : le compteur de l'offre de lancement vit en base et se règle depuis le
   // back-office. Pré-rendre la page figerait « il reste 10 places » jusqu'au déploiement
   // suivant, et laisserait une offre épuisée s'afficher encore.

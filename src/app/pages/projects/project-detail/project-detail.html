@@ -139,6 +139,18 @@
         </section>
       }
 
+      <!-- ──────────────── Avis du client ──────────────── -->
+      @if (clientTestimonials().length) {
+        <section class="mt-12">
+          <h2 class="font-heading mb-4 text-2xl text-gray-800">L'avis du client</h2>
+          <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+            @for (testimonial of clientTestimonials(); track testimonial.id) {
+              <testimonial-card [testimonial]="testimonial" [showProjectLink]="false" />
+            }
+          </div>
+        </section>
+      }
+
       <!-- ──────────────── Autres réalisations ──────────────── -->
       @if (related().length) {
         <section class="mt-16">

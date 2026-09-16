@@ -10,9 +10,12 @@ import { Footer } from '../../../components/footer/footer';
 import { Header } from '../../../components/header/header';
 import { ProjectCard } from '../../../components/project-card/project-card';
 import { SeparatorDesign } from '../../../components/separator-design/separator-design';
+import { TestimonialCard } from '../../../components/testimonial-card/testimonial-card';
 import { seoConfig } from '../../../config/seo';
 import { Project } from '../../../core/models/project.model';
 import { ProjectService } from '../../../core/services/project.service';
+import { Testimonial } from '../../../core/models/testimonial.model';
+import { TestimonialService } from '../../../core/services/testimonial.service';
 import {
   IMAGEKIT_CARD_SIZES,
   imagekitSrcset,
@@ -42,12 +45,13 @@ const JSON_LD_ID = 'project-jsonld';
  */
 @Component({
   selector: 'app-project-detail',
-  imports: [Header, Footer, CtaSection, Container, SeparatorDesign, ProjectCard, RouterLink, Image],
+  imports: [Header, Footer, CtaSection, Container, SeparatorDesign, ProjectCard, RouterLink, Image, TestimonialCard],
   templateUrl: './project-detail.html',
   styleUrl: './project-detail.css',
 })
 export default class ProjectDetail implements OnInit, OnDestroy {
   private readonly projects = inject(ProjectService);
+  private readonly testimonials = inject(TestimonialService);
   private readonly seo = inject(SeoService);
   private readonly route = inject(ActivatedRoute);
   private readonly document = inject(DOCUMENT);
@@ -60,6 +64,9 @@ export default class ProjectDetail implements OnInit, OnDestroy {
 
   /** Autres réalisations ; silencieusement vides si l'appel échoue. */
   protected readonly related = signal<Project[]>([]);
+
+  /** Avis du client sur cette réalisation ; silencieusement vides si l'appel échoue. */
+  protected readonly clientTestimonials = signal<Testimonial[]>([]);
 
   protected readonly sizes = IMAGEKIT_CARD_SIZES;
   protected readonly formatDate = formatFrenchDate;
@@ -97,6 +104,7 @@ export default class ProjectDetail implements OnInit, OnDestroy {
     this.notFound.set(false);
     this.project.set(null);
     this.related.set([]);
+    this.clientTestimonials.set([]);
     this.removeJsonLd();
 
     this.projects.getPublishedBySlug(slug).subscribe({
@@ -105,6 +113,7 @@ export default class ProjectDetail implements OnInit, OnDestroy {
         this.loading.set(false);
         this.applySeo(project);
         this.loadRelated(project);
+        this.loadTestimonials(project);
       },
       error: () => {
         this.loading.set(false);
@@ -133,6 +142,13 @@ export default class ProjectDetail implements OnInit, OnDestroy {
           page.content.filter((other) => other.id !== project.id).slice(0, RELATED_COUNT),
         ),
       error: () => this.related.set([]),
+    });
+  }
+
+  private loadTestimonials(project: Project): void {
+    this.testimonials.listByProject(project.slug).subscribe({
+      next: (items) => this.clientTestimonials.set(items),
+      error: () => this.clientTestimonials.set([]),
     });
   }
 

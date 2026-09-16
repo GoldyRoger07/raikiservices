@@ -1,0 +1,10 @@
+:host {
+  display: block;
+  height: 100%;
+}
+
+/* Les sauts de ligne saisis au back-office sont conservés : un avis en deux paragraphes
+   ne doit pas s'afficher d'un bloc. */
+.testimonial-quote {
+  white-space: pre-line;
+}

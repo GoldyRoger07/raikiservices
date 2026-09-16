@@ -90,6 +90,12 @@ export default class AdminLayout implements OnInit, OnDestroy {
       route: '/admin/projets',
       permissions: ['READ_PROJECT'],
     },
+    {
+      label: 'Témoignages',
+      icon: 'pi pi-comments',
+      route: '/admin/temoignages',
+      permissions: ['READ_TESTIMONIAL'],
+    },
     { label: 'Images', icon: 'pi pi-images', route: '/admin/medias', permissions: ['READ_MEDIA'] },
     {
       label: 'Offre de lancement',

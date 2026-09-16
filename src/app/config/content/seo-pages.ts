@@ -47,6 +47,13 @@ export const pageSeo = {
     path: '/portfolio',
   },
 
+  testimonials: {
+    title: 'Avis & témoignages clients | RaikiServices',
+    description:
+      'Ce que nos clients disent de leur site web et de notre accompagnement. Des avis vérifiables, liés aux projets que nous avons réalisés.',
+    path: '/temoignages',
+  },
+
   about: {
     title: 'À propos de RaikiServices | Agence web',
     description:

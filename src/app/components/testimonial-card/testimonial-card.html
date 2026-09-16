@@ -1,0 +1,59 @@
+@let item = testimonial();
+
+<figure
+  class="testimonial-card flex h-full flex-col gap-4 rounded-2xl border border-gray-200 bg-white p-6 shadow-sm transition-shadow duration-300 hover:shadow-lg"
+>
+  <div class="flex items-center justify-between">
+    @if (item.rating) {
+      <div class="flex gap-0.5 text-amber-500" role="img" [attr.aria-label]="item.rating + ' sur 5'">
+        @for (star of stars; track star) {
+          <i
+            [class]="star <= item.rating ? 'pi pi-star-fill' : 'pi pi-star'"
+            aria-hidden="true"
+          ></i>
+        }
+      </div>
+    } @else {
+      <span></span>
+    }
+    <i class="pi pi-comment text-primary/30 text-3xl" aria-hidden="true"></i>
+  </div>
+
+  <blockquote class="font-body grow text-gray-700">
+    <p class="testimonial-quote">« {{ item.content }} »</p>
+  </blockquote>
+
+  <figcaption class="flex items-center gap-3 border-t border-gray-100 pt-4">
+    @if (photo()) {
+      <img
+        [src]="photo()"
+        [alt]="'Photo de ' + item.authorName"
+        class="size-12 shrink-0 rounded-full object-cover"
+        loading="lazy"
+      />
+    } @else {
+      <span
+        class="bg-primary/10 text-primary flex size-12 shrink-0 items-center justify-center rounded-full font-bold"
+        aria-hidden="true"
+      >
+        {{ initials() }}
+      </span>
+    }
+
+    <div class="min-w-0">
+      <cite class="block font-bold text-gray-800 not-italic">{{ item.authorName }}</cite>
+      @if (byline()) {
+        <span class="block text-sm text-gray-600">{{ byline() }}</span>
+      }
+      @if (showProjectLink() && item.projectSlug) {
+        <a
+          [routerLink]="['/portfolio', item.projectSlug]"
+          class="text-primary font-accent mt-1 inline-flex items-center gap-1 text-sm hover:underline"
+        >
+          Voir le projet {{ item.projectTitle }}
+          <i class="pi pi-arrow-right text-xs" aria-hidden="true"></i>
+        </a>
+      }
+    </div>
+  </figcaption>
+</figure>

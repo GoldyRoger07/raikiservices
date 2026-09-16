@@ -18,6 +18,7 @@ export const routes: Routes = [
     path: 'portfolio/:slug',
     loadComponent: () => import('./pages/projects/project-detail/project-detail'),
   },
+  { path: 'temoignages', loadComponent: () => import('./pages/testimonials/testimonials') },
   { path: 'tarifs', loadComponent: () => import('./pages/pricing/pricing') },
   { path: 'a-propos', loadComponent: () => import('./pages/about-us/about-us') },
   { path: 'seo', loadComponent: () => import('./pages/services/seo/seo') },
@@ -125,6 +126,11 @@ export const routes: Routes = [
         path: 'projets/:id',
         canActivate: [hasPermission('UPDATE_PROJECT')],
         loadComponent: () => import('./pages/admin/project-editor/project-editor'),
+      },
+      {
+        path: 'temoignages',
+        canActivate: [hasPermission('READ_TESTIMONIAL')],
+        loadComponent: () => import('./pages/admin/testimonials/testimonials'),
       },
       {
         path: 'medias',

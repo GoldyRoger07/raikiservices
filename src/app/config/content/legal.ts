@@ -212,6 +212,10 @@ export const politiqueConfidentialite: LegalDocument = {
         },
         {
           kind: 'p',
+          text: "Témoignages clients — lorsqu'un client accepte de témoigner, nous publions sur le site son nom, et s'il nous les communique sa fonction, le nom de son entreprise, sa photo ou son logo, sa note et son avis, éventuellement rattachés au projet que nous avons réalisé pour lui. Un témoignage n'est mis en ligne qu'avec son accord.",
+        },
+        {
+          kind: 'p',
           text: "Comptes d'administration — les membres de notre équipe disposent d'un compte pour accéder à l'espace d'administration du site. Y sont enregistrés leur nom d'utilisateur, leur adresse électronique, leur mot de passe sous forme chiffrée, et le cas échéant leur nom, téléphone, fonction, photo et biographie. Ces comptes ne sont pas ouverts aux visiteurs du site.",
         },
         {
@@ -232,6 +236,7 @@ export const politiqueConfidentialite: LegalDocument = {
           items: [
             "Répondre à votre demande et établir un devis : c'est la finalité principale du formulaire de contact. Le traitement repose sur votre demande, préalable à la conclusion d'un éventuel contrat.",
             "Assurer le suivi commercial de votre projet et conserver l'historique de nos échanges : ce traitement repose sur notre intérêt légitime à gérer notre activité.",
+            "Publier les témoignages de nos clients : sur la base de leur consentement, qu'ils peuvent retirer à tout moment en nous écrivant — le témoignage est alors retiré du site.",
             'Vous envoyer nos actualités : uniquement si vous avez coché la case correspondante, et donc sur la base de votre consentement, que vous pouvez retirer à tout moment.',
             "Sécuriser l'accès à l'espace d'administration et détecter les tentatives d'intrusion : ce traitement repose sur notre intérêt légitime à protéger le site et les données qui y sont stockées.",
             "Respecter nos obligations légales, notamment comptables, lorsqu'une relation contractuelle est engagée.",
@@ -282,6 +287,7 @@ export const politiqueConfidentialite: LegalDocument = {
             'Messages du formulaire de contact restés sans suite : [À COMPLÉTER : durée retenue, par exemple 3 ans à compter du dernier échange].',
             'Dossiers ayant donné lieu à une relation contractuelle : pendant la durée de la relation, puis pendant la durée de prescription applicable et les délais légaux de conservation comptable.',
             "Coordonnées utilisées pour l'envoi de nos actualités : jusqu'à votre désinscription.",
+            "Témoignages clients : tant qu'ils sont publiés, et jusqu'au retrait du consentement de leur auteur.",
             "Comptes d'administration : pendant la durée des fonctions de leur titulaire au sein de l'équipe.",
             "Journaux de connexion et sessions : les sessions expirent automatiquement et sont supprimées ; l'historique des connexions est conservé [À COMPLÉTER : durée retenue, par exemple 12 mois] à des fins de sécurité.",
           ],

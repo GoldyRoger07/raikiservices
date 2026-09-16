@@ -16,6 +16,9 @@ import { RouterLink } from '@angular/router';
 import { ProjectCard } from '../../components/project-card/project-card';
 import { Project } from '../../core/models/project.model';
 import { ProjectService } from '../../core/services/project.service';
+import { TestimonialCard } from '../../components/testimonial-card/testimonial-card';
+import { Testimonial } from '../../core/models/testimonial.model';
+import { TestimonialService } from '../../core/services/testimonial.service';
 import { FaqSection } from '../../components/faqs/faq-section/faq-section';
 import { homeFaq } from '../../config/content/faq';
 
@@ -23,7 +26,7 @@ import { homeFaq } from '../../config/content/faq';
 
 @Component({
   selector: 'app-home',
-  imports: [Header, Footer, Container, AccentTitle, MyButton, SeparatorDesign, NgxParticlesComponent, NgxTypewriterComponent, CommonModule, ProjectCard, RouterLink, FaqSection],
+  imports: [Header, Footer, Container, AccentTitle, MyButton, SeparatorDesign, NgxParticlesComponent, NgxTypewriterComponent, CommonModule, ProjectCard, RouterLink, FaqSection, TestimonialCard],
   templateUrl: './home.html',
   styleUrl: './home.css',
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
@@ -34,12 +37,16 @@ export default class Home implements OnInit{
   protected readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
   private readonly seo = inject(SeoService);
   private readonly projects = inject(ProjectService);
+  private readonly testimonials = inject(TestimonialService);
 
   /** Questions fréquentes du bas de page. */
   protected readonly faq = homeFaq;
 
   /** Réalisations mises en avant. Vide tant qu'elles ne sont pas chargées. */
   protected readonly featuredProjects = signal<Project[]>([]);
+
+  /** Témoignages mis en avant. Vide tant qu'ils ne sont pas chargés. */
+  protected readonly featuredTestimonials = signal<Testimonial[]>([]);
 
   title1 = "Nous créons des sites web modernes qui rendent votre entreprise plus visible et attirent plus de clients."
   title2 = " plus de visibilité pour votre entreprise."
@@ -127,6 +134,7 @@ export default class Home implements OnInit{
   ngOnInit(): void {
     this.seo.update(pageSeo.home);
     this.loadFeaturedProjects();
+    this.loadFeaturedTestimonials();
 
     setTimeout(()=>{
       this.cursorColor1.set("transparent")
@@ -153,6 +161,14 @@ export default class Home implements OnInit{
     this.projects.listFeatured(4).subscribe({
       next: (page) => this.featuredProjects.set(page.content),
       error: () => this.featuredProjects.set([]),
+    });
+  }
+
+  /** Témoignages mis en avant ; même silence en cas d'échec que pour les réalisations. */
+  private loadFeaturedTestimonials(): void {
+    this.testimonials.listFeatured(3).subscribe({
+      next: (page) => this.featuredTestimonials.set(page.content),
+      error: () => this.featuredTestimonials.set([]),
     });
   }
 }

@@ -70,6 +70,12 @@ export class Header {
           url: '/portfolio',
           icon: 'pi pi-th-large',
         },
+        {
+          label: 'Témoignages',
+          subtitle: 'Ce que nos clients disent de leur collaboration avec nous.',
+          url: '/temoignages',
+          icon: 'pi pi-comments',
+        },
       ],
     },
     { label: 'Blog', link: '/blog' },

@@ -309,6 +309,33 @@
 }
 
 
+<!-- Témoignages mis en avant, juste après les réalisations : le visiteur vient de voir ce que
+     nous livrons, il lit ce qu'en pensent ceux qui l'ont reçu. Masquée sans témoignage,
+     pour la même raison que la section des projets. -->
+@if (featuredTestimonials().length) {
+  <section class="bg-gray-50 py-16">
+    <my-container>
+      <div class="flex w-full flex-col items-center">
+        <separator-design></separator-design>
+        <div class="w-full py-5 text-center lg:w-[70%]">
+          <span class="font-accent text-primary text-xl">Témoignages</span>
+          <h2 class="text-3xl font-bold text-gray-800">Ils nous font confiance</h2>
+          <p class="font-body text-gray-700">
+            Ce que nos clients disent de leur site et de notre accompagnement.
+          </p>
+        </div>
+
+        <div class="grid w-full grid-cols-1 gap-4 py-10 md:grid-cols-2 lg:grid-cols-3">
+          @for (testimonial of featuredTestimonials(); track testimonial.id) {
+            <testimonial-card [testimonial]="testimonial" />
+          }
+        </div>
+
+        <a routerLink="/temoignages"><my-button>Lire tous les témoignages</my-button></a>
+      </div>
+    </my-container>
+  </section>
+}
 
 <!-- ──────────────── Questions fréquentes ────────────────
      Posées juste avant l'appel à l'action : ce sont elles qui lèvent les dernières

@@ -1,0 +1,357 @@
+<header class="page-header">
+  <div>
+    <h1 class="page-title">Témoignages</h1>
+    <p class="page-subtitle">
+      Les avis clients affichés sur le site, brouillons compris.
+    </p>
+  </div>
+  <p-button
+    *appHasPermission="'CREATE_TESTIMONIAL'"
+    label="Nouveau témoignage"
+    icon="pi pi-plus"
+    (onClick)="openCreate()"
+  />
+</header>
+
+<section class="panel">
+  <div class="table-toolbar">
+    <p-iconfield iconPosition="left">
+      <p-inputicon class="pi pi-search" />
+      <input
+        pInputText
+        type="search"
+        [(ngModel)]="search"
+        (ngModelChange)="onSearchChange()"
+        placeholder="Auteur, entreprise, texte…"
+        class="w-full sm:w-72"
+        aria-label="Rechercher un témoignage"
+      />
+    </p-iconfield>
+  </div>
+
+  <div class="table-scroll">
+    <p-table
+      [value]="items()"
+      [lazy]="true"
+      (onLazyLoad)="load($event)"
+      [loading]="loading()"
+      [paginator]="true"
+      [rows]="10"
+      [totalRecords]="total()"
+      [rowsPerPageOptions]="[10, 25, 50]"
+      [rowHover]="true"
+      dataKey="id"
+      sortField="displayOrder"
+      [sortOrder]="1"
+      currentPageReportTemplate="{first} à {last} sur {totalRecords} témoignages"
+      [showCurrentPageReport]="true"
+      class="p-datatable-sm"
+    >
+      <ng-template #header>
+        <tr>
+          <th class="w-24" pSortableColumn="displayOrder">
+            Ordre <p-sortIcon field="displayOrder" />
+          </th>
+          <th pSortableColumn="authorName">Auteur <p-sortIcon field="authorName" /></th>
+          <th>Témoignage</th>
+          <th pSortableColumn="rating">Note <p-sortIcon field="rating" /></th>
+          <th>Réalisation</th>
+          <th pSortableColumn="status">Statut <p-sortIcon field="status" /></th>
+          <th class="w-24 text-right">Actions</th>
+        </tr>
+      </ng-template>
+
+      <ng-template #body let-item let-index="rowIndex">
+        <tr>
+          <td class="whitespace-nowrap">
+            <p-button
+              icon="pi pi-chevron-up"
+              severity="secondary"
+              [text]="true"
+              [rounded]="true"
+              [disabled]="!canReorder() || index === 0"
+              pTooltip="Monter"
+              (onClick)="move(index, -1)"
+            />
+            <p-button
+              icon="pi pi-chevron-down"
+              severity="secondary"
+              [text]="true"
+              [rounded]="true"
+              [disabled]="!canReorder() || index === items().length - 1"
+              pTooltip="Descendre"
+              (onClick)="move(index, 1)"
+            />
+          </td>
+          <td>
+            <div class="flex items-center gap-2">
+              @if (photo(item.photoPublicId)) {
+                <img
+                  [src]="photo(item.photoPublicId)"
+                  alt=""
+                  class="size-9 rounded-full object-cover"
+                  loading="lazy"
+                />
+              } @else {
+                <span class="flex size-9 items-center justify-center rounded-full bg-gray-100">
+                  <i class="pi pi-user text-sm opacity-50"></i>
+                </span>
+              }
+              <div>
+                <span class="block text-sm font-medium">{{ item.authorName }}</span>
+                <span class="block text-xs opacity-70">
+                  {{ byline(item) || '—' }}
+                </span>
+              </div>
+            </div>
+          </td>
+          <td class="max-w-xs">
+            <span class="line-clamp-2 text-sm">{{ item.content }}</span>
+          </td>
+          <td class="text-sm whitespace-nowrap">
+            @if (item.rating) {
+              {{ item.rating }} <i class="pi pi-star-fill text-xs text-amber-500"></i>
+            } @else {
+              —
+            }
+          </td>
+          <td class="text-sm">{{ item.projectTitle || '—' }}</td>
+          <td class="whitespace-nowrap">
+            <p-tag [value]="statusLabels[item.status]" [severity]="statusSeverity[item.status]" />
+            @if (item.featured) {
+              <p-tag value="Accueil" severity="info" class="ml-1" />
+            }
+            @if (!item.consentObtained) {
+              <i
+                class="pi pi-exclamation-circle ml-1 text-amber-500"
+                pTooltip="Consentement du client non confirmé"
+              ></i>
+            }
+          </td>
+          <td class="text-right whitespace-nowrap">
+            <p-button
+              *appHasPermission="'UPDATE_TESTIMONIAL'"
+              icon="pi pi-pencil"
+              severity="secondary"
+              [text]="true"
+              [rounded]="true"
+              pTooltip="Modifier"
+              (onClick)="openEdit(item)"
+            />
+            <p-button
+              *appHasPermission="'DELETE_TESTIMONIAL'"
+              icon="pi pi-trash"
+              severity="danger"
+              [text]="true"
+              [rounded]="true"
+              pTooltip="Supprimer"
+              (onClick)="confirmDelete(item)"
+            />
+          </td>
+        </tr>
+      </ng-template>
+
+      <ng-template #emptymessage>
+        <tr>
+          <td colspan="7" class="empty-state">
+            Aucun témoignage ne correspond à cette recherche.
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+
+  @if (!sortedByOrder()) {
+    <p class="px-4 pb-3 text-xs opacity-70">
+      Les flèches d'ordre ne sont actives que sur le tri « Ordre ».
+    </p>
+  }
+</section>
+
+<!-- ──────────────── Formulaire ──────────────── -->
+<p-dialog
+  [visible]="dialogOpen()"
+  (visibleChange)="dialogOpen.set($event)"
+  [modal]="true"
+  [draggable]="false"
+  [style]="{ width: '46rem' }"
+  [breakpoints]="{ '960px': '95vw' }"
+  [header]="editing() ? 'Modifier le témoignage' : 'Nouveau témoignage'"
+>
+  <form [formGroup]="form" (ngSubmit)="save()" class="grid gap-4 sm:grid-cols-2">
+    @if (formError()) {
+      <p class="rounded-md bg-red-50 px-3 py-2 text-sm text-red-700 sm:col-span-2">
+        {{ formError() }}
+      </p>
+    }
+
+    <div class="flex flex-col gap-1.5">
+      <label for="authorName" class="font-body text-sm font-medium">Nom de l'auteur *</label>
+      <input
+        pInputText
+        id="authorName"
+        formControlName="authorName"
+        placeholder="Marie Joseph"
+        class="w-full"
+      />
+      @if (form.controls.authorName.touched && form.controls.authorName.invalid) {
+        <small class="text-danger">Nom obligatoire, 255 caractères au plus.</small>
+      }
+    </div>
+
+    <div class="flex flex-col gap-1.5">
+      <label for="authorRole" class="font-body text-sm font-medium">Fonction</label>
+      <input
+        pInputText
+        id="authorRole"
+        formControlName="authorRole"
+        placeholder="Gérante"
+        class="w-full"
+      />
+    </div>
+
+    <div class="flex flex-col gap-1.5">
+      <label for="company" class="font-body text-sm font-medium">Entreprise</label>
+      <input
+        pInputText
+        id="company"
+        formControlName="company"
+        placeholder="Restaurant Le Michael's"
+        class="w-full"
+      />
+    </div>
+
+    <div class="flex flex-col gap-1.5">
+      <label for="projectId" class="font-body text-sm font-medium">Réalisation concernée</label>
+      <p-select
+        inputId="projectId"
+        formControlName="projectId"
+        [options]="projectOptions()"
+        optionLabel="label"
+        optionValue="value"
+        [filter]="true"
+        [showClear]="true"
+        placeholder="Aucune"
+        emptyMessage="Aucune réalisation"
+        class="w-full"
+        appendTo="body"
+      />
+      <small class="opacity-70">Ajoute le lien « Voir le projet » une fois celui-ci publié.</small>
+    </div>
+
+    <div class="flex flex-col gap-1.5 sm:col-span-2">
+      <label for="content" class="font-body text-sm font-medium">Témoignage *</label>
+      <textarea
+        pTextarea
+        id="content"
+        formControlName="content"
+        rows="5"
+        class="w-full"
+        placeholder="Les mots du client, sans les reformuler."
+      ></textarea>
+      <div class="flex justify-between gap-2">
+        @if (form.controls.content.touched && form.controls.content.invalid) {
+          <small class="text-danger">Texte obligatoire, {{ contentMax }} caractères au plus.</small>
+        } @else {
+          <small class="opacity-70">Les sauts de ligne sont conservés.</small>
+        }
+        <small class="opacity-70">{{ form.controls.content.value.length }} / {{ contentMax }}</small>
+      </div>
+    </div>
+
+    <div class="flex flex-col gap-1.5">
+      <span class="font-body text-sm font-medium">Note</span>
+      <p-rating formControlName="rating" [stars]="5" />
+      <small class="opacity-70">Recliquez sur l'étoile choisie pour retirer la note.</small>
+    </div>
+
+    <div class="flex flex-col gap-1.5">
+      <span class="font-body text-sm font-medium">Photo ou logo</span>
+      <div class="flex items-center gap-3">
+        @if (form.controls.photoPublicId.value) {
+          <img
+            [src]="photo(form.controls.photoPublicId.value)"
+            alt=""
+            class="size-12 rounded-full object-cover"
+          />
+        } @else {
+          <span class="flex size-12 items-center justify-center rounded-full bg-gray-100">
+            <i class="pi pi-user opacity-50"></i>
+          </span>
+        }
+        <p-button
+          label="Choisir"
+          icon="pi pi-images"
+          severity="secondary"
+          size="small"
+          (onClick)="pickerOpen.set(true)"
+        />
+        @if (form.controls.photoPublicId.value) {
+          <p-button
+            label="Retirer"
+            severity="danger"
+            [text]="true"
+            size="small"
+            (onClick)="clearPhoto()"
+          />
+        }
+      </div>
+      <small class="opacity-70">Sans photo, les initiales de l'auteur sont affichées.</small>
+    </div>
+
+    <div class="flex flex-col gap-1.5">
+      <label for="status" class="font-body text-sm font-medium">Statut</label>
+      <p-select
+        inputId="status"
+        formControlName="status"
+        [options]="statusOptions"
+        optionLabel="label"
+        optionValue="value"
+        class="w-full"
+        appendTo="body"
+      />
+    </div>
+
+    <div class="flex items-center gap-3 pt-6">
+      <p-toggleswitch inputId="featured" formControlName="featured" />
+      <label for="featured" class="font-body text-sm font-medium">
+        Mettre en avant sur l'accueil
+      </label>
+    </div>
+
+    <div
+      class="flex items-start gap-3 rounded-md border border-amber-200 bg-amber-50 p-3 text-amber-900 sm:col-span-2"
+    >
+      <p-checkbox inputId="consentObtained" formControlName="consentObtained" [binary]="true" />
+      <label for="consentObtained" class="text-sm">
+        <strong>Consentement obtenu.</strong> Le client a accepté que son nom, sa photo et son avis
+        soient publiés sur le site. Obligatoire pour publier — gardez une trace de cet accord
+        (email, message).
+      </label>
+    </div>
+  </form>
+
+  <ng-template #footer>
+    <p-button
+      label="Annuler"
+      severity="secondary"
+      [text]="true"
+      (onClick)="dialogOpen.set(false)"
+    />
+    <p-button label="Enregistrer" icon="pi pi-check" [loading]="saving()" (onClick)="save()" />
+  </ng-template>
+</p-dialog>
+
+<!-- ──────────────── Sélecteur d'images ──────────────── -->
+<p-dialog
+  [visible]="pickerOpen()"
+  (visibleChange)="pickerOpen.set($event)"
+  header="Choisir une photo"
+  [modal]="true"
+  [dismissableMask]="true"
+  [style]="{ width: '60rem', maxWidth: '95vw' }"
+>
+  @if (pickerOpen()) {
+    <app-media-library [selectionMode]="true" (picked)="onPicked($event)" />
+  }
+</p-dialog>

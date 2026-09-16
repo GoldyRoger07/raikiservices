@@ -1,0 +1,54 @@
+<my-header />
+<my-hero-section
+  title="Ce que nos clients disent de nous"
+  desc="Restaurants, commerces, indépendants : ils nous ont confié leur site web. Voici, dans leurs mots, ce que cette collaboration leur a apporté."
+/>
+
+<section>
+  <my-container>
+    <div class="flex w-full flex-col items-center py-10">
+      <separator-design />
+      <div class="w-full py-5 text-center lg:w-[70%]">
+        <span class="font-accent text-primary text-xl">Témoignages</span>
+        <h2 class="text-3xl font-bold text-gray-800">Ils nous font confiance</h2>
+
+        @if (summary(); as stats) {
+          @if (stats.averageRating !== null && stats.ratedCount > 0) {
+            <p class="font-body mt-3 inline-flex items-center gap-2 text-gray-700">
+              <i class="pi pi-star-fill text-amber-500" aria-hidden="true"></i>
+              <strong class="text-gray-800">{{ formatRating(stats.averageRating) }} / 5</strong>
+              <span>
+                sur {{ stats.ratedCount }} avis {{ stats.ratedCount > 1 ? 'notés' : 'noté' }}
+              </span>
+            </p>
+          }
+        }
+      </div>
+
+      @if (loading()) {
+        <div class="grid w-full grid-cols-1 gap-4 py-10 md:grid-cols-2 lg:grid-cols-3">
+          @for (placeholder of [1, 2, 3]; track placeholder) {
+            <div class="h-64 w-full animate-pulse rounded-2xl border border-gray-200 bg-gray-100"></div>
+          }
+        </div>
+      } @else if (items().length) {
+        <div class="grid w-full grid-cols-1 gap-4 py-10 md:grid-cols-2 lg:grid-cols-3">
+          @for (item of items(); track item.id) {
+            <testimonial-card [testimonial]="item" />
+          }
+        </div>
+      } @else {
+        <p class="font-body py-10 text-center text-gray-600">
+          @if (failed()) {
+            Les témoignages sont momentanément indisponibles. Réessayez dans un instant.
+          } @else {
+            Les premiers témoignages de nos clients arrivent très bientôt.
+          }
+        </p>
+      }
+    </div>
+  </my-container>
+</section>
+
+<my-cta-section></my-cta-section>
+<my-footer />

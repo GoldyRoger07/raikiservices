@@ -36,6 +36,12 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://www.raikiservices.com/temoignages</loc>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://www.raikiservices.com/portfolio</loc>
     <lastmod>2026-09-02</lastmod>
     <changefreq>monthly</changefreq>
