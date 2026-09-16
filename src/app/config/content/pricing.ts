@@ -40,7 +40,7 @@ export const pricingPlans: PricingPlan[] = [
     id: 'essentiel',
     name: 'Essentiel',
     audience: 'Pour le commerce, le cabinet ou l’artisan qui doit être trouvé et contacté.',
-    setupPrice: 390,
+    setupPrice: 249,
     monthlyPrice: 25,
     highlighted: false,
     features: [
@@ -58,7 +58,7 @@ export const pricingPlans: PricingPlan[] = [
     id: 'professionnel',
     name: 'Professionnel',
     audience: 'Pour l’entreprise qui veut sortir dans les recherches et convertir.',
-    setupPrice: 790,
+    setupPrice: 449,
     monthlyPrice: 45,
     highlighted: true,
     features: [
