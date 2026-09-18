@@ -45,14 +45,10 @@
       @if (byline()) {
         <span class="block text-sm text-gray-600">{{ byline() }}</span>
       }
-      @if (showProjectLink() && item.projectSlug) {
-        <a
-          [routerLink]="['/portfolio', item.projectSlug]"
-          class="text-primary font-accent mt-1 inline-flex items-center gap-1 text-sm hover:underline"
-        >
-          Voir le projet {{ item.projectTitle }}
-          <i class="pi pi-arrow-right text-xs" aria-hidden="true"></i>
-        </a>
+      @if (item.projectTitle) {
+        <span class="text-primary font-accent mt-1 block text-sm">
+          Projet {{ item.projectTitle }}
+        </span>
       }
     </div>
   </figcaption>

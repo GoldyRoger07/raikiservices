@@ -67,13 +67,6 @@
               }
 
               <div class="flex flex-wrap items-center gap-4">
-                <a
-                  [routerLink]="['/portfolio', projet.slug]"
-                  class="font-accent text-primary flex items-center gap-1"
-                >
-                  Voir l'étude complète
-                  <i class="pi pi-arrow-right translate-y-[1.4px] text-xs"></i>
-                </a>
                 @if (projet.websiteUrl) {
                   <a
                     [href]="projet.websiteUrl"

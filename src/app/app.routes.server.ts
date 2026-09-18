@@ -63,10 +63,6 @@ export const serverRoutes: ServerRoute[] = [
     renderMode: RenderMode.Server,
   },
   {
-    path: 'portfolio/:slug',
-    renderMode: RenderMode.Server,
-  },
-  {
     path: 'etudes-de-cas',
     renderMode: RenderMode.Server,
   },

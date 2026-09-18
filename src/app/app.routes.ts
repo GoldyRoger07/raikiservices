@@ -12,12 +12,6 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/projects/case-studies/case-studies'),
   },
   { path: 'portfolio', loadComponent: () => import('./pages/projects/portfolio/portfolio') },
-  // `:slug` et non `:id`, comme pour le blog : l'adresse publique d'une réalisation est le
-  // slug posé par le backend, et c'est lui que `/public/v1/projects/:slug` attend.
-  {
-    path: 'portfolio/:slug',
-    loadComponent: () => import('./pages/projects/project-detail/project-detail'),
-  },
   { path: 'temoignages', loadComponent: () => import('./pages/testimonials/testimonials') },
   { path: 'tarifs', loadComponent: () => import('./pages/pricing/pricing') },
   { path: 'a-propos', loadComponent: () => import('./pages/about-us/about-us') },

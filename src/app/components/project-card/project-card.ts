@@ -1,5 +1,5 @@
 import { Component, computed, input } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Image } from 'primeng/image';
 
 import { Project } from '../../core/models/project.model';
 import {
@@ -18,14 +18,12 @@ import {
  * <p>Le visuel part en `srcset` : le navigateur choisit la largeur qui correspond à la
  * place dont il dispose, et un téléphone ne télécharge pas l'image de 1600 pixels.
  *
- * <p>Le visuel et le titre mènent à la page de la réalisation, le lien de droite au site
- * livré. L'agrandissement de l'image qu'offrait la carte a disparu avec l'arrivée de cette
- * page : deux actions concurrentes sur la même vignette rendaient le clic ambigu, et le
- * détail montre de toute façon la même image en grand.
+ * <p>Un clic sur le visuel ouvre la couverture en grand, par-dessus la page : il n'y a pas
+ * de page de détail par réalisation. Le lien de droite mène au site livré.
  */
 @Component({
   selector: 'project-card',
-  imports: [RouterLink],
+  imports: [Image],
   templateUrl: './project-card.html',
   styleUrl: './project-card.css',
 })
@@ -36,6 +34,9 @@ export class ProjectCard {
 
   /** Version affichée dans la grille. */
   protected readonly thumbnail = computed(() => imagekitUrl(this.project().coverPublicId, 800));
+
+  /** Version affichée dans l'agrandissement, chargée seulement à l'ouverture. */
+  protected readonly fullSize = computed(() => imagekitUrl(this.project().coverPublicId, 1600));
 
   protected readonly srcset = computed(() => imagekitSrcset(this.project().coverPublicId));
 

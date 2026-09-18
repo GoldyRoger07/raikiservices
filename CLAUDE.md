@@ -128,7 +128,7 @@ Formatting is Prettier (`.prettierrc`): 100 col, single quotes, `angular` parser
   (`pages/blog/blog-content.ts`).
 - Testimonials follow the projects model (public + admin faces, `displayOrder` + reorder,
   `featured` for the home page). Admin is a dialog (`pages/admin/testimonials`), public page is
-  `/temoignages` (`RenderMode.Server`), shown also on the home page and on `/portfolio/:slug`
+  `/temoignages` (`RenderMode.Server`), shown also on the home page
   via `components/testimonial-card`. The backend refuses to publish one without
   `consentObtained`; deleting a project detaches its testimonials rather than deleting them.
 - Lists are server-driven: `p-table` in `[lazy]` mode maps `first`/`rows`/`sortField`/

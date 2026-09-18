@@ -1,5 +1,4 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
-import { RouterLink } from '@angular/router';
 
 import { Container } from '../../../components/container/container';
 import { CtaSection } from '../../../components/cta-section/cta-section';
@@ -26,7 +25,7 @@ import { SeoService } from '../../../services/seo.service';
  */
 @Component({
   selector: 'app-case-studies',
-  imports: [Header, Footer, HeroSection, CtaSection, Container, SeparatorDesign, RouterLink],
+  imports: [Header, Footer, HeroSection, CtaSection, Container, SeparatorDesign],
   templateUrl: './case-studies.html',
   styleUrl: './case-studies.css',
 })
