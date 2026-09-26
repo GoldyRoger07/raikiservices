@@ -40,8 +40,8 @@ export const pricingPlans: PricingPlan[] = [
     id: 'essentiel',
     name: 'Essentiel',
     audience: 'Pour le commerce, le cabinet ou l’artisan qui doit être trouvé et contacté.',
-    setupPrice: 249,
-    monthlyPrice: 25,
+    setupPrice: 250,
+    monthlyPrice: 20,
     highlighted: false,
     features: [
       'Site sur mesure de 4 à 5 pages',
@@ -58,8 +58,8 @@ export const pricingPlans: PricingPlan[] = [
     id: 'professionnel',
     name: 'Professionnel',
     audience: 'Pour l’entreprise qui veut sortir dans les recherches et convertir.',
-    setupPrice: 449,
-    monthlyPrice: 45,
+    setupPrice: 450,
+    monthlyPrice: 50,
     highlighted: true,
     features: [
       'Tout ce que comprend Essentiel',
