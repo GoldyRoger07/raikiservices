@@ -1,5 +1,5 @@
+import { MyButton } from '../../components/my-button/my-button';
 import { Component, OnInit, computed, inject, signal } from '@angular/core';
-import { RouterLink } from '@angular/router';
 
 import { Container } from '../../components/container/container';
 import { CtaSection } from '../../components/cta-section/cta-section';
@@ -37,7 +37,7 @@ import { SeoService } from '../../services/seo.service';
  */
 @Component({
   selector: 'app-pricing',
-  imports: [
+  imports: [MyButton, 
     Header,
     Footer,
     HeroSection,
@@ -45,7 +45,6 @@ import { SeoService } from '../../services/seo.service';
     Container,
     SeparatorDesign,
     FaqSection,
-    RouterLink,
   ],
   templateUrl: './pricing.html',
   styleUrl: './pricing.css',

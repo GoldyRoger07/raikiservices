@@ -1,3 +1,4 @@
+import { MyButton } from '../../../components/my-button/my-button';
 import { Component, DestroyRef, OnInit, computed, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
@@ -37,7 +38,7 @@ const ARTICLES_ANCHOR = 'articles';
  */
 @Component({
   selector: 'app-blog-list',
-  imports: [
+  imports: [MyButton, 
     Header,
     Footer,
     HeroSection,

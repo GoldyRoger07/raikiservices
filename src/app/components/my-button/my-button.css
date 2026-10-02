@@ -12,10 +12,10 @@
     transition: opacity 300ms ease-in-out;
 }
 
-button:hover .btn-content i{
+.btn:hover .btn-content i{
     opacity: 1;
 }
 
-button:hover .btn-content{
+.btn:hover .btn-content{
     transform: translateX(0px);
 }

@@ -26,15 +26,8 @@
         </p>
 
         <div class="mt-8 flex flex-wrap justify-center gap-3">
-          <a routerLink="/blog" class="bg-primary font-body rounded-full px-6 py-3 text-white">
-            Voir tous les articles
-          </a>
-          <a
-            routerLink="/contact"
-            class="font-body hover:border-primary hover:text-primary rounded-full border border-gray-300 px-6 py-3 text-gray-700 transition-colors"
-          >
-            Nous écrire
-          </a>
+          <my-button link="/blog" variant="outline">Voir tous les articles</my-button>
+          <my-button link="/contact">Nous écrire</my-button>
         </div>
       </div>
     } @else if (post(); as article) {

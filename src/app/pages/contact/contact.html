@@ -119,7 +119,7 @@
                     </div>
 
                     <div class="col-span-2">
-                        <my-button [attr.aria-busy]="sending()">
+                        <my-button type="submit" [attr.aria-busy]="sending()">
                            <span>{{ sending() ? 'Envoi en cours…' : 'Envoyer' }}</span>
                         </my-button>
                     </div>

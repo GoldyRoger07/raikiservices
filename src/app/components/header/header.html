@@ -40,10 +40,7 @@
       <!-- Actions (desktop) -->
       <div class="hidden items-center gap-3 lg:flex">
         <!-- <button class="rounded-full bg-primary/15 p-3 border border-primary flex items-center gap-3"> -->
-        <my-button>
-          <i class="pi pi-phone" style="font-size: large"></i>
-          Appelez ou Ecrivez: 509 34 97 7530
-        </my-button>
+        <my-button link="/contact">Demander un devis</my-button>
         <!-- </button> -->
         <!-- Bascule de thème -->
         <!-- <button
@@ -173,6 +170,7 @@
         }
       </ul>
       <div class="flex flex-col gap-2 border-t border-gray-200 px-4 py-4 dark:border-gray-800">
+        <my-button link="/contact" [fluid]="true" (click)="closeMenu()">Demander un devis</my-button>
         <!-- <app-button (click)="closeMenu()">Se Connecter</app-button>
         <app-button (click)="closeMenu()">S'Inscrire</app-button> -->
         <!-- <my-3d-button (click)="closeMenu()" size="medium" backBgColor="bg-[#ce7c00]" frontBgColor="bg-(--p-primary-color)">

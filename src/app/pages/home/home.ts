@@ -12,7 +12,6 @@ import { NgxTypewriterComponent } from '@omnedia/ngx-typewriter';
 import { CardData } from '../../models/card-data.model';
 import { AccentTitle } from '../../components/accent-title/accent-title';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
 import { ProjectCard } from '../../components/project-card/project-card';
 import { Project } from '../../core/models/project.model';
 import { ProjectService } from '../../core/services/project.service';
@@ -26,7 +25,7 @@ import { homeFaq } from '../../config/content/faq';
 
 @Component({
   selector: 'app-home',
-  imports: [Header, Footer, Container, AccentTitle, MyButton, SeparatorDesign, NgxParticlesComponent, NgxTypewriterComponent, CommonModule, ProjectCard, RouterLink, FaqSection, TestimonialCard],
+  imports: [Header, Footer, Container, AccentTitle, MyButton, SeparatorDesign, NgxParticlesComponent, NgxTypewriterComponent, CommonModule, ProjectCard, FaqSection, TestimonialCard],
   templateUrl: './home.html',
   styleUrl: './home.css',
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

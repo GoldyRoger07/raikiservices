@@ -1,4 +1,5 @@
 import { DOCUMENT } from '@angular/common';
+import { MyButton } from '../../../components/my-button/my-button';
 import { Component, DestroyRef, OnDestroy, OnInit, computed, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, RouterLink } from '@angular/router';
@@ -33,7 +34,7 @@ const JSON_LD_ID = 'blog-article-jsonld';
  */
 @Component({
   selector: 'app-blog-article',
-  imports: [Header, Footer, CtaSection, Container, SeparatorDesign, RouterLink],
+  imports: [MyButton, Header, Footer, CtaSection, Container, SeparatorDesign, RouterLink],
   templateUrl: './blog-article.html',
   styleUrl: './blog-article.css',
 })

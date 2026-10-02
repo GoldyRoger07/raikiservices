@@ -64,14 +64,9 @@
                  flottait au-dessus de l'illustration sans rien rattacher. Sous le bouton
                  quand la largeur manque, grâce au `flex-wrap`. -->
             <div class="mt-7 flex flex-wrap items-center gap-x-5 gap-y-3">
-              <a
-                routerLink="/contact"
-                [queryParams]="contactParams(launch.ctaSubject)"
-                class="bg-primary font-accent inline-flex items-center gap-2 rounded-full px-7 py-3 text-white transition-opacity hover:opacity-90"
-              >
+              <my-button link="/contact" [queryParams]="contactParams(launch.ctaSubject)">
                 {{ launch.ctaLabel }}
-                <i class="pi pi-arrow-right text-xs"></i>
-              </a>
+              </my-button>
              
             </div>
 
@@ -96,14 +91,13 @@
               </ul>
             </div>
 
-            <a
-              routerLink="/contact"
+            <my-button
+              class="mt-7 block"
+              link="/contact"
               [queryParams]="contactParams(standard.ctaSubject)"
-              class="bg-primary font-accent mt-7 inline-flex items-center gap-2 rounded-full px-7 py-3 text-white transition-opacity hover:opacity-90"
             >
               {{ standard.ctaLabel }}
-              <i class="pi pi-arrow-right text-xs"></i>
-            </a>
+            </my-button>
 
             <p class="font-body mt-4 max-w-2xl text-xs text-gray-500">{{ standard.smallPrint }}</p>
           }
@@ -180,19 +174,15 @@
             }
           </ul>
 
-          <a
-            routerLink="/contact"
+          <my-button
+            class="mt-6 block"
+            link="/contact"
             [queryParams]="contactParams('Formule ' + plan.name)"
-            class="font-accent mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full px-6 py-3 transition-opacity hover:opacity-90"
-            [class]="
-              plan.highlighted
-                ? 'bg-primary text-white'
-                : 'border border-gray-300 text-gray-800 hover:border-gray-400'
-            "
+            [variant]="plan.highlighted ? 'primary' : 'outline'"
+            [fluid]="true"
           >
             Demander un devis
-            <i class="pi pi-arrow-right text-xs"></i>
-          </a>
+          </my-button>
         </article>
       }
     </div>
